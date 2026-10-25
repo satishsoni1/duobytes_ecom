@@ -20,7 +20,6 @@ use Mail;
 use App\Mail\InvoiceEmailManager;
 use App\Models\OrdersExport;
 use App\Utility\NotificationUtility;
-use CoreComponentRepository;
 use App\Utility\SmsUtility;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;

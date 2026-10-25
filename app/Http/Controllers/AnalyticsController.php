@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
-use CoreComponentRepository;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Str;
@@ -76,8 +75,6 @@ class AnalyticsController extends Controller
 
     public function google_analytics_config(Request $request)
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
         return view('backend.setup_configurations.google_configuration.google_analytics');
     }
 
@@ -92,8 +89,6 @@ class AnalyticsController extends Controller
 
     public function pixel_conversation_api(Request $request)
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
         return view('backend.setup_configurations.facebook_configuration.pixel_capi');
     }
 

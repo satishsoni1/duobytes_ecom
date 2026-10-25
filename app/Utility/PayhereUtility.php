@@ -74,28 +74,6 @@ class PayhereUtility
             return false;
         }
 
-        if(Cache::get('app-activation', 'no') == 'no') {
-            try {
-                $gate = "https://activeitzone.com/activation/check/flutter/".$key;
-    
-                $stream = curl_init();
-                curl_setopt($stream, CURLOPT_URL, $gate);
-                curl_setopt($stream, CURLOPT_HEADER, 0);
-                curl_setopt($stream, CURLOPT_RETURNTRANSFER, 1);
-                $rn = curl_exec($stream);
-                curl_close($stream);
-    
-                if($rn == 'no') {
-                    return false;
-                }
-            } catch (\Exception $e) {
-    
-            }
-        }
-
-        Cache::rememberForever('app-activation', function () {
-            return 'yes';
-        });
 
         return true;
     }

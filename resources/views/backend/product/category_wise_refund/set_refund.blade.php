@@ -2,8 +2,8 @@
 
 @section('content')
     @php
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
+       
+        
     @endphp
     @php
         $isCategoryBasedRefund = get_setting('refund_type') == 'category_based_refund';

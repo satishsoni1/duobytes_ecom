@@ -9,7 +9,6 @@ use App\Models\Attribute;
 use App\Models\Color;
 use App\Models\AttributeTranslation;
 use App\Models\AttributeValue;
-use CoreComponentRepository;
 use Str;
 
 class AttributeController extends Controller
@@ -31,8 +30,6 @@ class AttributeController extends Controller
 
     public function index(Request $request)
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
         $sort_search = null;
         $attribute_tabs = ['All Attributes'];
         $attributes = Attribute::with('attribute_values')->orderBy('created_at', 'desc');

@@ -7,7 +7,6 @@ use App\Models\ElementStyle;
 use App\Models\ElementTranslation;
 use App\Models\ElementType;
 use Illuminate\Http\Request;
-use CoreComponentRepository;
 
 class ElementController extends Controller
 {
@@ -22,8 +21,7 @@ class ElementController extends Controller
 
     public function index(Request $request)
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
+        
         $elements = Element::orderBy('created_at', 'desc')->paginate(15);
         return view('backend.website_settings.pages.element.index', compact('elements'));
     }

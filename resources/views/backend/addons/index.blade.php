@@ -1,74 +1,9 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    <div class="">
-        <div class="row align-items-end">
-            <div class="col-md-6 order-2 order-md-1">
-                <div class="nav border-bottom aiz-nav-tabs">
-                    <a class="p-3 fs-16 text-reset show active" data-toggle="tab"
-                        href="#installed">{{ translate('Installed Addon') }}</a>
-                    <a class="p-3 fs-16 text-reset" data-toggle="tab"
-                        href="#available">{{ translate('Available Addon') }}</a>
-                </div>
-            </div>
-            <div class="col text-center text-md-right order-1 order-md-2">
-                <div class="d-flex justify-content-start justify-content-md-end">
-                    <div class="mr-3">
-                        <a href="https://activeitzone.com/activation/addon" class="btn btn-primary" target="_blank">
-                            {{ translate('Activate Addon Link') }}
-                        </a>
-                    </div>
-                    <div>
-                        <a href="{{ route('addons.create') }}"
-                            class="btn btn-primary">{{ translate('Install/Update Addon') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
+    
     <div class="tab-content filter-tab-content pb-5">
-        <div class="tab-pane fade in active show" id="installed">
-            <div class="addon-wrapper-grid">
-                @forelse($addons as $key => $addon)
-                        <div
-                            class="card border border-2 border-gray-200 card-no-shadow has-transition rounded-2 p-3 p-lg-4 overflow-hidden m-0">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <h5 class="fs-16 fw-bold my-0 flex-grow-1 text-truncate mr-3">
-                                    {{ ucfirst($addon->name) }} {{ translate('Addon') }}
-                                </h5>
-                                <label class="aiz-switch aiz-switch-blue mb-0">
-                                    <input type="checkbox" data-identifier="{{ $addon->unique_identifier }}"
-                                        onchange="updateStatus(this, {{ $addon->id }})" <?php    if ($addon->activated)
-                    echo "checked";?>>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="rounded-2 overflow-hidden my-2 img-container">
-                                <img src="{{ static_asset($addon->image) }}" class="img-fit w-100 h-100">
-                            </div>
-                            <div class="py-2 border-bottom-dashed">
-                                <p class="fs-12 fw-semibold text-dark mb-2">{{ translate('Version No.') }} </p>
-                                <span class="fs-12 fw-400 text-muted">{{ $addon->version }} </span>
-                            </div>
-                            @if (env('DEMO_MODE') != 'On')
-                                <div class="mt-2">
-                                    <p class="fs-12 fw-semibold text-dark mb-2">{{ translate('Purchase Code') }} </p>
-                                    <span class="fs-12 fw-400 text-muted">{{ $addon->purchase_code }}
-                                    </span>
-                                </div>
-                            @endif
-                        </div>
-                @empty
-                    <li class="list-group-item">
-                        <div class="text-center">
-                            <img class="mw-100 h-200px" src="{{ static_asset('assets/img/nothing.svg') }}" alt="Image">
-                            <h5 class="mb-0 h5 mt-3">{{ translate('No Addon Installed')}}</h5>
-                        </div>
-                    </li>
-                @endforelse
-            </div>
-        </div>
+        
 
         <div class="tab-pane fade" id="available">
             <!-- MOBILE APPS -->
