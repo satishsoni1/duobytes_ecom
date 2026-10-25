@@ -1,0 +1,4 @@
+*
+!public/
+!channel-partner-documents/
+!.gitignore
