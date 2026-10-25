@@ -22,8 +22,6 @@ yarn-error.log
 .idea/
 /public/*
 updates/
-composer.lock
-*.lock
 resources/lang/en.json
 updates.zip
 ecommerce.zip
@@ -35,3 +33,15 @@ public/uploads.zip
 .env
 public/all
 
+
+# Custom front-end assets (everything else in /public stays ignored).
+# composer.lock is committed so `composer install` uses the tested versions.
+!/public/assets/
+/public/assets/*
+!/public/assets/css/
+/public/assets/css/*
+!/public/assets/css/channel-partner.css
+!/public/assets/css/home-modern.css
+!/public/assets/js/
+/public/assets/js/*
+!/public/assets/js/channel-partner.js
