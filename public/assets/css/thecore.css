@@ -1,0 +1,221 @@
+.aiz-thecore .rounded-75{
+     border-radius: 0.75rem !important;
+}
+
+/* slider */
+.thecore-square-box {
+    width: 100%;
+    border-radius: 0.5rem; 
+}
+
+.thecore-square-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;        /* crop the overflow */
+    object-position: center;  /* keep centered */
+}
+
+/* Countdown Circle */
+.aiz-count-down-circle {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+    background-color: rgba(255, 255, 255, 0.6)!important;
+    padding: 1rem;
+    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.16);
+}
+
+.aiz-count-down-circle #time {
+    display: flex;
+}
+
+.aiz-count-down-circle #time .circle {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aiz-count-down-circle #time .circle svg {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    transform: rotate(270deg);
+}
+
+.aiz-count-down-circle #time .circle svg circle {
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+    stroke-width: 1;
+    stroke: #f7f2f2;
+    stroke-linecap: round;
+    transform: translate(5px, 5px);
+}
+
+.aiz-count-down-circle #time .circle svg circle:nth-child(2) {
+    stroke: #000000;
+    stroke-width: 2;
+    stroke-dasharray: 138;
+    stroke-dashoffset: 138;
+}
+
+
+
+.aiz-count-down-circle #time div {
+    position: absolute;
+    text-align: center;
+    font-weight: 700;
+    color: #1b1b28;
+    font-size: 14px;
+}
+
+.aiz-count-down-circle #time div span {
+    position: absolute;
+    transform: translateX(-50%) translateY(-10%);
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+[dir="rtl"] .aiz-count-down-circle #time div span {
+    transform: translateX(50%) translateY(-10%);
+}
+
+@media (max-width: 767px) {
+
+     .aiz-count-down-circle {
+        box-shadow: 0px 3px 20px rgb(0 0 0 / 16%);
+    }
+
+}
+
+
+/* Hide arrows by default */
+.hot-categories .carousel-arrow .slick-arrow {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+/* Show arrows on hover */
+.hot-categories .carousel-arrow:hover .slick-arrow {
+    opacity: 1;
+    visibility: visible;
+}
+.aiz-carousel .slick-arrow {
+    width: 24px !important;
+    height: 64px !important;
+    background: #ffffff00;
+    box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0), 0 3px 1px 0 rgba(255, 255, 255, 0);
+}
+.aiz-carousel .slick-arrow:hover{
+    background:#ffffff;
+    box-shadow: 0 0 1px 1px rgba(20, 23, 28, 0.1), 0 3px 1px 0 rgba(20, 23, 28, 0.1);
+}
+.aiz-thecore .featured-categories .aiz-carousel .slick-next {
+    right: -15px !important;
+}
+.aiz-thecore .featured-categories .aiz-carousel .slick-prev {
+    left: -15px !important;
+}
+
+
+/* carosel arrow btn */
+
+@media (max-width: 576px) {
+    .aiz-thecore .featured-categories .slick-list {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .aiz-thecore .featured-categories .aiz-carousel .slick-next,
+    .aiz-thecore .featured-categories .aiz-carousel .slick-prev{
+        display: none!important;
+    }
+}
+.aiz-thecore .featured-categories .slick-list {
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+
+.aiz-thecore .todays-deal .slick-list {
+    margin-left: 3rem !important;
+    margin-right: 3rem !important;
+}
+
+.aiz-thecore .featured-categories .aiz-carousel .slick-next,
+.aiz-thecore .todays-deal .aiz-carousel .slick-next {
+    border-radius: 5px 0 0 5px !important;
+}
+
+.aiz-thecore .featured-categories .aiz-carousel .slick-prev,
+.aiz-thecore .todays-deal .aiz-carousel .slick-prev {
+    border-radius: 0 5px 5px 0 !important;
+}
+
+.aiz-thecore .featured-categories .aiz-carousel .slick-next i,
+.aiz-thecore .todays-deal .aiz-carousel .slick-next i {
+    display: inline-block;
+    margin-right: 1rem !important;
+    transition: transform 0.3s ease;
+}
+
+.aiz-thecore .featured-categories .aiz-carousel .slick-next:hover i,
+.aiz-thecore .todays-deal .aiz-carousel .slick-next:hover i {
+    transform: translateX(5px);
+}
+
+.aiz-thecore .featured-categories .aiz-carousel .slick-prev i,
+.aiz-thecore .todays-deal .aiz-carousel .slick-prev i {
+    display: inline-block;
+    margin-left: 0.8rem !important; 
+    transition: transform 0.3s ease;
+}
+
+.aiz-thecore .featured-categories .aiz-carousel .slick-prev:hover i,
+.aiz-thecore .todays-deal .aiz-carousel .slick-prev:hover i {
+    transform: translateX(-8px); 
+}
+
+/* Hover animation for products */
+.hov-animate-outline-2 {
+    position: relative;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.hov-animate-outline-2::before,
+.hov-animate-outline-2::after {
+    content: "";
+    position: absolute;
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.hov-animate-outline-2:hover::before {
+    border-top-color: black;
+    border-right-color: black;
+    width: 100%;
+    height: 100%;
+    transition:
+        width 0.3s ease-out,
+        height 0.3s ease-out 0.3s;
+}
+
+.hov-animate-outline-2:hover::after {
+    border-bottom-color: black;
+    border-left-color: black;
+    width: 100%;
+    height: 100%;
+    transition:
+        height 0.3s ease-out,
+        width 0.3s ease-out 0.3s;
+}

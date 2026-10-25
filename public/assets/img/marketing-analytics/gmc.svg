@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1" y1="1" x2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#4385f5"/>
+      <stop offset="1" stop-color="#3569d3"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_39533" data-name="Group 39533" transform="translate(-582 -228)">
+    <rect id="Rectangle_24146" data-name="Rectangle 24146" width="64" height="64" rx="8" transform="translate(582 228)" fill="#4758b8" opacity="0.08"/>
+    <g id="google-merchant-center-seeklogo" transform="translate(599.8 245.8)">
+      <path id="Path_54464" data-name="Path 54464" d="M.2,98.333h28v18.959a2.333,2.333,0,0,1-2.333,2.333H2.533A2.333,2.333,0,0,1,.2,117.292Z" transform="translate(0 -91.425)" fill="#518ff5" fill-rule="evenodd"/>
+      <path id="Path_54465" data-name="Path 54465" d="M144.713,203.6l7.271-6.649L162.848,207.8l-.005,1.37A2.344,2.344,0,0,1,160.5,211.5h-7.852Z" transform="translate(-134.634 -183.301)" fill-rule="evenodd" fill="url(#linear-gradient)"/>
+      <path id="Path_54466" data-name="Path 54466" d="M.2,2.533A2.333,2.333,0,0,1,2.533.2H25.867A2.333,2.333,0,0,1,28.2,2.533V6.908H.2Z" fill="#4758b8" fill-rule="evenodd"/>
+      <path id="Path_54467" data-name="Path 54467" d="M136.259,27.258h-2.771a1.021,1.021,0,0,0,0,2.042h7.876a1.021,1.021,0,0,0,0-2.042h-2.771v-.292a1.167,1.167,0,1,0-2.333,0Z" transform="translate(-123.225 -23.85)" fill="#fff" fill-rule="evenodd"/>
+      <g id="Group_39913" data-name="Group 39913" transform="translate(7.091 10.372)">
+        <path id="Path_54468" data-name="Path 54468" d="M103.495,152.555a1.06,1.06,0,1,1,1.06-1.06A1.06,1.06,0,0,1,103.495,152.555Zm11.3,3.256-6.4-6.4a1.413,1.413,0,0,0-1-.412h-4.977A1.417,1.417,0,0,0,101,150.422V155.4a1.39,1.39,0,0,0,.419,1l6.391,6.4a1.449,1.449,0,0,0,1.01.419,1.419,1.419,0,0,0,1-.419l4.977-4.977a1.39,1.39,0,0,0,.419-1A1.423,1.423,0,0,0,114.8,155.811Z" transform="translate(-101 -149)"/>
+        <path id="Path_54469" data-name="Path 54469" d="M103.495,152.555a1.06,1.06,0,1,1,1.06-1.06A1.06,1.06,0,0,1,103.495,152.555Zm11.3,3.256-6.4-6.4a1.413,1.413,0,0,0-1-.412h-4.977A1.417,1.417,0,0,0,101,150.422V155.4a1.39,1.39,0,0,0,.419,1l6.391,6.4a1.449,1.449,0,0,0,1.01.419,1.419,1.419,0,0,0,1-.419l4.977-4.977a1.39,1.39,0,0,0,.419-1A1.423,1.423,0,0,0,114.8,155.811Z" transform="translate(-101 -149)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

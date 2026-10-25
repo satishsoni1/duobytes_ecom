@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24.009" height="24" viewBox="0 0 24.009 24">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.088" y1="0.452" x2="0.937" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#9168c0"/>
+      <stop offset="0.07" stop-color="#9168c0"/>
+      <stop offset="0.34" stop-color="#5684d1"/>
+      <stop offset="0.67" stop-color="#1ba1e3"/>
+      <stop offset="1" stop-color="#1ba1e3"/>
+    </linearGradient>
+  </defs>
+  <path id="gemini-icon-logo-brandlogos.net_b7h3u35iu" d="M12,24a11.461,11.461,0,0,0-.96-4.68,11.927,11.927,0,0,0-2.554-3.814A11.867,11.867,0,0,0,4.68,12.96,11.461,11.461,0,0,0,0,12a11.731,11.731,0,0,0,4.68-.934,12.292,12.292,0,0,0,3.806-2.58A12.031,12.031,0,0,0,11.04,4.68,11.461,11.461,0,0,0,12,0a11.731,11.731,0,0,0,.934,4.68,12.292,12.292,0,0,0,2.58,3.806,12.332,12.332,0,0,0,3.814,2.58,11.881,11.881,0,0,0,4.68.934,11.461,11.461,0,0,0-4.68.96,11.9,11.9,0,0,0-3.814,2.546,12.332,12.332,0,0,0-2.58,3.814A11.881,11.881,0,0,0,12,24Z" fill="url(#linear-gradient)"/>
+</svg>

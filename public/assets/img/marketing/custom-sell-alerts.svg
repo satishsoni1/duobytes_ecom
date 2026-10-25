@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Group_39090" data-name="Group 39090" transform="translate(-582 -228)">
+    <rect id="Rectangle_24146" data-name="Rectangle 24146" width="64" height="64" rx="8" transform="translate(582 228)" fill="#247c8d" opacity="0.08"/>
+    <g id="Group_39538" data-name="Group 39538">
+      <rect id="Rectangle_24434" data-name="Rectangle 24434" width="32" height="32" rx="3" transform="translate(598 244)" fill="#247c8d"/>
+      <rect id="Rectangle_24442" data-name="Rectangle 24442" width="20" height="7" rx="1" transform="translate(602 257)" fill="#fff" opacity="0.5"/>
+      <rect id="Rectangle_24443" data-name="Rectangle 24443" width="5" height="5" rx="1" transform="translate(603 258)" fill="#247c8d"/>
+      <rect id="Rectangle_24445" data-name="Rectangle 24445" width="6" height="1" rx="0.5" transform="translate(611 267)" fill="#ffaa01" opacity="0.7"/>
+      <rect id="Rectangle_24436" data-name="Rectangle 24436" width="20" height="7" rx="1" transform="translate(602 265)" fill="#fff"/>
+      <rect id="Rectangle_24435" data-name="Rectangle 24435" width="5" height="5" rx="1" transform="translate(603 266)" fill="#247c8d"/>
+      <rect id="Rectangle_24440" data-name="Rectangle 24440" width="11" height="1" rx="0.5" transform="translate(609 267)" fill="#247c8d" opacity="0.3"/>
+      <rect id="Rectangle_24446" data-name="Rectangle 24446" width="11" height="1" rx="0.5" transform="translate(609 259)" fill="#fff" opacity="0.3"/>
+      <rect id="Rectangle_24441" data-name="Rectangle 24441" width="6" height="1" rx="0.5" transform="translate(609 269)" fill="#247c8d" opacity="0.7"/>
+      <rect id="Rectangle_24447" data-name="Rectangle 24447" width="6" height="1" rx="0.5" transform="translate(609 261)" fill="#fff" opacity="0.7"/>
+    </g>
+  </g>
+</svg>

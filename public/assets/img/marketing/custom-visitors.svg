@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Group_39093" data-name="Group 39093" transform="translate(-582 -228)">
+    <rect id="Rectangle_24146" data-name="Rectangle 24146" width="64" height="64" rx="8" transform="translate(582 228)" fill="#401177" opacity="0.08"/>
+    <g id="Group_39539" data-name="Group 39539" transform="translate(-2.462 -5)">
+      <g id="e0e41a29241404805e64fa1b3a5b8944" transform="translate(608.463 251)" opacity="0.5">
+        <path id="Path_45675" data-name="Path 45675" d="M17.819,14.25a5.386,5.386,0,0,1,5.291,4.379l.324,1.7a3.949,3.949,0,0,1-3.88,4.686H5.2a3.949,3.949,0,0,1-3.879-4.686l.324-1.7A5.385,5.385,0,0,1,6.935,14.25Z" transform="translate(-1.251 2.981)" fill="#401177" fill-rule="evenodd"/>
+        <path id="Path_45677" data-name="Path 45677" d="M11.07,2.25A6.821,6.821,0,1,1,4.249,9.071,6.82,6.82,0,0,1,11.07,2.25Z" transform="translate(0.056 -2.25)" fill="#401177" fill-rule="evenodd"/>
+      </g>
+      <g id="e0e41a29241404805e64fa1b3a5b8944-2" data-name="e0e41a29241404805e64fa1b3a5b8944" transform="translate(601.463 251)">
+        <path id="Path_45675-2" data-name="Path 45675" d="M17.819,14.25a5.386,5.386,0,0,1,5.291,4.379l.324,1.7a3.949,3.949,0,0,1-3.88,4.686H5.2a3.949,3.949,0,0,1-3.879-4.686l.324-1.7A5.385,5.385,0,0,1,6.935,14.25Z" transform="translate(-1.251 2.981)" fill="#401177" fill-rule="evenodd"/>
+        <path id="Path_45677-2" data-name="Path 45677" d="M11.07,2.25A6.821,6.821,0,1,1,4.249,9.071,6.82,6.82,0,0,1,11.07,2.25Z" transform="translate(0.056 -2.25)" fill="#401177" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>

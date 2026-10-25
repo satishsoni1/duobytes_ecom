@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Group_39533" data-name="Group 39533" transform="translate(-582 -228)">
+    <rect id="Rectangle_24146" data-name="Rectangle 24146" width="64" height="64" rx="8" transform="translate(582 228)" fill="#087ffa" opacity="0.08"/>
+    <g id="Group_39537" data-name="Group 39537" transform="translate(-426 -774.999)">
+      <path id="Subtraction_255" data-name="Subtraction 255" d="M15685.917-12646.331h-5.417v-9.67a1.5,1.5,0,0,0-1.5-1.5h-11v-3.418a2.5,2.5,0,0,1,.4-1.471,1.5,1.5,0,0,1,1.266-.611h16.249a2.085,2.085,0,0,1,2.083,2.082v12.5A2.088,2.088,0,0,1,15685.917-12646.331Zm-4.917-9.481v2.083h2v-2.083Z" transform="translate(-14638 13688)" fill="#087ffa" opacity="0.5"/>
+      <path id="Subtraction_256" data-name="Subtraction 256" d="M15685.917-12646.331H15681v-7.4h2v-2.083h-2v-.188a2,2,0,0,0-2-2h-11v-2.918a2.5,2.5,0,0,1,.4-1.471,1.5,1.5,0,0,1,1.266-.611h16.249a2.085,2.085,0,0,1,2.083,2.082v12.5A2.088,2.088,0,0,1,15685.917-12646.331Z" transform="translate(-14631 13683)" fill="#087ffa" opacity="0.3"/>
+      <path id="_348acaae784f02fcf0b9000e0571a12e" data-name="348acaae784f02fcf0b9000e0571a12e" d="M81.917,64H65.667C64.521,64,64,64.937,64,66.083V84l3.333-3.333H81.917A2.089,2.089,0,0,0,84,78.583v-12.5A2.089,2.089,0,0,0,81.917,64ZM71,73.271H69V71.188h2Zm4,0H73V71.188h2Zm4,0H77V71.188h2Z" transform="translate(959 966)" fill="#087ffa"/>
+    </g>
+  </g>
+</svg>

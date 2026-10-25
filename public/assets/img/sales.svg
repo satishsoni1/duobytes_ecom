@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Group_39953" data-name="Group 39953" transform="translate(4392 6958)">
+    <rect id="Rectangle_24877" data-name="Rectangle 24877" width="64" height="64" rx="8" transform="translate(-4392 -6958)" fill="#087ffa" opacity="0.1"/>
+    <g id="Group_39949" data-name="Group 39949" transform="translate(0 3)">
+      <g id="Group_39947" data-name="Group 39947" transform="translate(511 -348.77)">
+        <g id="_933b51e394c578bb5d48c3e107fb05b4" data-name="933b51e394c578bb5d48c3e107fb05b4" transform="translate(-4890.25 -6597.499)">
+          <path id="Path_54995" data-name="Path 54995" d="M4.414,14.436a1.164,1.164,0,0,1-.823-1.987L9.8,6.239a1.163,1.163,0,0,1,1.343-.219L16.6,8.749l7.17-7.168A1.164,1.164,0,0,1,25.42,3.227l-7.763,7.763a1.166,1.166,0,0,1-1.343.219l-5.46-2.729L5.237,14.094a1.155,1.155,0,0,1-.823.342Z" fill="#0b80fd"/>
+        </g>
+      </g>
+      <g id="Group_39948" data-name="Group 39948">
+        <rect id="Rectangle_24904" data-name="Rectangle 24904" width="8" height="13" rx="2" transform="translate(-4376 -6926)" fill="#087ffa" opacity="0.6"/>
+        <rect id="Rectangle_24905" data-name="Rectangle 24905" width="8" height="19" rx="2" transform="translate(-4364 -6932)" fill="#087ffa" opacity="0.3"/>
+        <rect id="Rectangle_24906" data-name="Rectangle 24906" width="8" height="28" rx="2" transform="translate(-4352 -6941)" fill="#087ffa" opacity="0.7"/>
+      </g>
+    </g>
+  </g>
+</svg>

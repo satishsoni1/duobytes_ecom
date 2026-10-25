@@ -1,0 +1,64 @@
+.fs-48 {
+    font-size: 48px !important;
+}
+@media (min-width: 768px) {
+    .fs-md-12 {
+        font-size: 12px !important;
+    }
+
+    .fs-md-13 {
+        font-size: 13px !important;
+    }
+
+    .fs-md-14 {
+        font-size: 14px !important;
+    }
+
+    .fs-md-20 {
+        font-size: 20px !important;
+    }
+
+    .fs-md-24 {
+        font-size: 24px !important;
+    }
+
+
+    .gutters-md-16 {
+        margin-right: -16px;
+        margin-left: -16px;
+    }
+
+    .gutters-md-16>.col,
+    .gutters-md-16>[class*="col-"] {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .image-show-overlay .overlay-img {
+        padding-left: 20%;
+        padding-right: 20%;
+        padding-bottom: 50px;
+    }
+
+    .page-content {
+        margin-left: -25px;
+        margin-right: -25px;
+    }
+}
+
+.border-2 {
+    border-width: 2px !important;
+
+}
+
+.border-3 {
+    border: 2px solid !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.text-soft-white {
+    color: #dbdde0 !important;
+}
