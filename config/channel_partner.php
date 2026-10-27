@@ -10,7 +10,7 @@ return [
     | Channel partners replace the public seller sign-up. Partners onboard
     | with business details + KYC documents, are approved by an admin, and
     | then order at contract prices that are agreed offline and entered by
-    | the admin as pricing rules.
+    | the admin as pricing rules. Orders are paid upfront (no credit).
     |
     */
 
@@ -26,24 +26,29 @@ return [
     // Document types shown in onboarding. `required` ones must be uploaded
     // before the application can be submitted for review.
     'document_types' => [
-        'gst_certificate' => [
-            'label' => 'GST Registration Certificate',
-            'hint' => 'GST certificate or tax registration (PDF or photo)',
-            'required' => true,
-        ],
         'pan_card' => [
-            'label' => 'Business PAN Card',
-            'hint' => 'PAN of the business or proprietor',
+            'label' => 'PAN Card',
+            'hint' => 'Your PAN card (front side)',
             'required' => true,
         ],
-        'address_proof' => [
-            'label' => 'Business Address Proof',
-            'hint' => 'Utility bill, rent agreement or trade licence',
+        'aadhaar_card' => [
+            'label' => 'Aadhaar Card',
+            'hint' => 'Front and back of your Aadhaar card',
             'required' => true,
         ],
         'cancelled_cheque' => [
-            'label' => 'Cancelled Cheque / Bank Letter',
-            'hint' => 'For payouts and credit set-up',
+            'label' => 'Cancelled Cheque',
+            'hint' => 'Cancelled cheque of your bank account, or a bank letter',
+            'required' => true,
+        ],
+        'gst_certificate' => [
+            'label' => 'GST Registration Certificate',
+            'hint' => 'Only if you are registered under GST',
+            'required' => false,
+        ],
+        'address_proof' => [
+            'label' => 'Address Proof',
+            'hint' => 'Utility bill, rent agreement or trade licence',
             'required' => false,
         ],
         'other' => [
@@ -63,7 +68,8 @@ return [
     ],
 
     // Payment type stored on orders placed through the partner portal.
-    'payment_type' => 'partner_credit',
+    // Partners pay the full order value upfront; there is no credit.
+    'payment_type' => 'advance_payment',
 
     // Value stored in orders.order_from for partner orders.
     'order_from' => 'channel_partner',

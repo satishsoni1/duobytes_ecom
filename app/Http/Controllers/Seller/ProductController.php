@@ -153,7 +153,7 @@ class ProductController extends Controller
         ]));
 
         // Product Translations
-        $request->merge(['lang' => env('DEFAULT_LANGUAGE')]);
+        $request->merge(['lang' => config('app.default_language')]);
         ProductTranslation::create($request->only([
             'lang', 'name', 'unit', 'description', 'product_id'
         ]));
@@ -262,7 +262,7 @@ class ProductController extends Controller
             ProductTranslation::updateOrCreate(
                 [
                     'product_id' => $product->id, 
-                    'lang' => env('DEFAULT_LANGUAGE', 'en')
+                    'lang' => config('app.default_language')
                 ],
                 [
                     'name' => $request->name,
@@ -301,7 +301,7 @@ class ProductController extends Controller
         if ($product->digital == 1) {
              return redirect()->route('seller.digitalproducts.edit', [
                 'id'   => $id,
-                'lang' => request('lang', env('DEFAULT_LANGUAGE'))
+                'lang' => request('lang', config('app.default_language'))
             ]);
         }
 
@@ -537,7 +537,7 @@ class ProductController extends Controller
         $this->frequentlyBoughtProductService->product_duplicate_store($product->frequently_bought_products, $product_new);
         
 
-        $redirrect_url = route('seller.products.edit', ['id' => $product_new->id, 'lang' => env('DEFAULT_LANGUAGE')]);
+        $redirrect_url = route('seller.products.edit', ['id' => $product_new->id, 'lang' => config('app.default_language')]);
 
         return response()->json([
                 'success' => true,

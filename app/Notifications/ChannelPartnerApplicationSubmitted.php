@@ -23,9 +23,9 @@ class ChannelPartnerApplicationSubmitted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(translate('New channel partner application') . ': ' . $this->partner->company_name)
+            ->subject(translate('New channel partner application') . ': ' . $this->partner->displayName())
             ->greeting(translate('New partner application'))
-            ->line($this->partner->company_name . ' (' . $this->partner->contact_person . ') ' . translate('has submitted their documents for review.'))
+            ->line(($this->partner->company_name ? $this->partner->company_name . ' (' . $this->partner->contact_person . ')' : $this->partner->contact_person) . ' ' . translate('has submitted their documents for review.'))
             ->action(translate('Review application'), route('admin.channel_partners.show', $this->partner->id));
     }
 }

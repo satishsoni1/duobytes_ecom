@@ -1931,7 +1931,7 @@
                             @endcan
                             @can('edit_website_page')
                                 <li class="aiz-side-nav-item">
-                                    <a href="{{ route('custom-pages.edit', ['id' => 'home', 'lang' => env('DEFAULT_LANGUAGE'), 'page' => 'home']) }}"
+                                    <a href="{{ route('custom-pages.edit', ['id' => 'home', 'lang' => config('app.default_language'), 'page' => 'home']) }}"
                                         class="aiz-side-nav-link {{ (request('id') == 'home' || request('page') == 'home') ? 'active' : '' }}">
                                         <span class="aiz-side-nav-text"
                                             style="color: {{ get_setting('navbar_text_color') }}">{{translate('Homepage Settings')}}</span>
@@ -3065,7 +3065,7 @@
                                 </a>
                             </li>
                             <li class="aiz-side-nav-item">
-                                <a href="{{ route('custom-pages.edit', ['id' => 'portfolio', 'lang' => env('DEFAULT_LANGUAGE'), 'page' => 'portfolio']) }}"
+                                <a href="{{ route('custom-pages.edit', ['id' => 'portfolio', 'lang' => config('app.default_language'), 'page' => 'portfolio']) }}"
                                     class="aiz-side-nav-link {{ (request('id') == 'portfolio' || request('page') == 'portfolio') ? 'active' : '' }}">
                                     <span class="aiz-side-nav-text" style="color: {{ get_setting('navbar_text_color') }}">{{translate('Landing Page')}}</span>
                                 </a>

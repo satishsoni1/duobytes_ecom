@@ -13,7 +13,7 @@
         <a href="{{ route('admin.channel_partners.index') }}" class="fs-13 text-muted"><i class="las la-arrow-left"></i> {{ translate('Channel Partners') }}</a>
         <div class="row align-items-center mt-2">
             <div class="col-md">
-                <h1 class="h3 mb-1">{{ $partner->company_name ?: translate('Unnamed partner') }}
+                <h1 class="h3 mb-1">{{ $partner->displayName() ?: translate('Unnamed partner') }}
                     <span class="badge badge-inline badge-{{ $partner->statusBadgeClass() }} align-middle fs-12">{{ translate(ucfirst($partner->status)) }}</span>
                 </h1>
                 <div class="text-muted fs-13">
@@ -134,16 +134,8 @@
                                 <small class="text-muted">{{ translate('Applies when no rule matches') }}</small>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="fs-13">{{ translate('Credit limit') }}</label>
-                                <input type="number" step="0.01" min="0" name="credit_limit" class="form-control" value="{{ old('credit_limit', $partner->credit_limit) }}" placeholder="{{ translate('No limit') }}">
-                            </div>
-                            <div class="form-group col-md-4">
                                 <label class="fs-13">{{ translate('Minimum order value') }}</label>
                                 <input type="number" step="0.01" min="0" name="min_order_value" class="form-control" value="{{ old('min_order_value', $partner->min_order_value) }}">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="fs-13">{{ translate('Payment terms') }}</label>
-                                <input type="text" name="payment_terms" class="form-control" value="{{ old('payment_terms', $partner->payment_terms) }}" placeholder="{{ translate('e.g. Net 30') }}">
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="fs-13">{{ translate('Contract reference') }}</label>

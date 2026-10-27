@@ -62,7 +62,7 @@ class CategoryBulkUpload implements ToCollection, WithHeadingRow
             $category->save();
 
             $translation = CategoryTranslation::firstOrNew([
-                'lang' => env('DEFAULT_LANGUAGE'),
+                'lang' => config('app.default_language'),
                 'category_id' => $category->id
             ]);
 

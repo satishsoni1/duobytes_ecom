@@ -90,28 +90,6 @@ abstract class PartnerController extends Controller
             'totals' => $totals,
             'has_issues' => $hasIssues,
             'min_order_shortfall' => $minOrderShortfall,
-            'credit' => $this->creditPosition($partner, $totals['grand']),
-        ];
-    }
-
-    /**
-     * Unpaid partner order value vs. credit limit (null limit = no limit).
-     */
-    protected function creditPosition(ChannelPartner $partner, float $newOrderTotal = 0): array
-    {
-        $outstanding = (float) \App\Models\Order::where('user_id', $partner->user_id)
-            ->where('order_from', config('channel_partner.order_from'))
-            ->where('payment_status', '!=', 'paid')
-            ->where('delivery_status', '!=', 'cancelled')
-            ->sum('grand_total');
-
-        $limit = $partner->credit_limit;
-
-        return [
-            'limit' => $limit,
-            'outstanding' => round($outstanding, 2),
-            'available' => $limit === null ? null : round($limit - $outstanding, 2),
-            'exceeded' => $limit !== null && ($outstanding + $newOrderTotal) > $limit,
         ];
     }
 

@@ -74,7 +74,7 @@ class NoteController extends Controller
         $note->description = $request->description;
         $note->save();
 
-        $note_translation = NoteTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'note_id' => $note->id]);
+        $note_translation = NoteTranslation::firstOrNew(['lang' => config('app.default_language'), 'note_id' => $note->id]);
         $note_translation->description = $request->description;
         $note_translation->save();
 
@@ -117,7 +117,7 @@ class NoteController extends Controller
         
         $note = Note::findOrFail($id);
         $note->note_type = $request->note_type;
-        if($request->lang == env("DEFAULT_LANGUAGE")){
+        if($request->lang == config('app.default_language')){
             $note->description = $request->description;
         }
         $note->save();
@@ -172,7 +172,7 @@ class NoteController extends Controller
         $note->description = $request->description;
         $note->save();
 
-        $note_translation = NoteTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'note_id' => $note->id]);
+        $note_translation = NoteTranslation::firstOrNew(['lang' => config('app.default_language'), 'note_id' => $note->id]);
         $note_translation->description = $request->description;
         $note_translation->save();
 

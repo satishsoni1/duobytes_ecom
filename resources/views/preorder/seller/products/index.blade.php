@@ -256,7 +256,7 @@
                                     </a>
 
                                     <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
-                                        href="{{ route('seller.preorder-product.edit', ['id'=>$product->id, 'lang'=>env('DEFAULT_LANGUAGE')]) }}"
+                                        href="{{ route('seller.preorder-product.edit', ['id'=>$product->id, 'lang'=>config('app.default_language')]) }}"
                                         title="{{ translate('Edit') }}">
                                         <i class="las la-edit"></i>
                                     </a>

@@ -6,7 +6,7 @@
 		<h6 class="fw-600">{{ translate('Home Page Settings') }}</h6>
 		@php 
 			$activeLanguages = get_all_active_language();
-			$defaultLanguage = env('DEFAULT_LANGUAGE');
+			$defaultLanguage = config('app.default_language');
 		@endphp
 
 		{{-- Home Slider --}}

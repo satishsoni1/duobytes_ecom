@@ -4,8 +4,7 @@
 
 @php
     $t = $summary['totals'];
-    $credit = $summary['credit'];
-    $blocked = $summary['has_issues'] || $summary['min_order_shortfall'] > 0 || $credit['exceeded'];
+    $blocked = $summary['has_issues'] || $summary['min_order_shortfall'] > 0;
     $user = auth()->user();
 @endphp
 
@@ -18,12 +17,6 @@
     @if ($errors->any())
         <div class="cp-alert cp-alert-danger" style="margin-bottom:16px" role="alert">
             <x-cp-icon name="alert" class="cp-icon-sm" /><div>{{ translate('Please check the highlighted fields.') }}</div>
-        </div>
-    @endif
-    @if ($credit['exceeded'])
-        <div class="cp-alert cp-alert-danger" style="margin-bottom:16px" role="alert">
-            <x-cp-icon name="credit" class="cp-icon-sm" />
-            <div>{{ translate('This order exceeds your available credit of') }} <strong>{{ single_price(max(0, $credit['available'])) }}</strong>. {{ translate('Please reduce the order or contact your account manager.') }}</div>
         </div>
     @endif
 
@@ -108,18 +101,10 @@
             <div class="cp-alert cp-alert-info" style="margin-bottom:14px">
                 <x-cp-icon name="credit" class="cp-icon-sm" />
                 <div>
-                    <strong>{{ translate('On account') }}</strong>
-                    @if ($partner->payment_terms) · {{ $partner->payment_terms }} @endif
-                    <div class="cp-small">{{ translate('We will confirm the order and share the invoice. Payment as per your contract.') }}</div>
+                    <strong>{{ translate('Advance payment') }}</strong>
+                    <div class="cp-small">{{ translate('Orders are paid in full upfront. Our team will share payment details to confirm the order; it is dispatched once payment is received.') }}</div>
                 </div>
             </div>
-            @if ($credit['limit'] !== null)
-                <div class="cp-summary" style="margin-bottom:10px">
-                    <div><span class="cp-muted">{{ translate('Credit limit') }}</span><span>{{ single_price($credit['limit']) }}</span></div>
-                    <div><span class="cp-muted">{{ translate('Available credit') }}</span><span>{{ single_price(max(0, $credit['available'])) }}</span></div>
-                </div>
-                <hr class="cp-divider">
-            @endif
             <div class="cp-summary">
                 <div><span class="cp-muted">{{ translate('List price') }}</span><span>{{ single_price($t['list']) }}</span></div>
                 @if ($t['discount'] > 0)

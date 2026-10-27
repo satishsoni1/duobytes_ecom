@@ -225,7 +225,7 @@
                             if (Session::has('locale')) {
                                 $locale = Session::get('locale', Config::get('app.locale'));
                             } else {
-                                $locale = env('DEFAULT_LANGUAGE');
+                                $locale = config('app.default_language');
                             }
                         @endphp
                         <div class="custom-dropdown-submenu">
@@ -445,7 +445,7 @@
                             @endcan
                             @can('edit_website_page')
                                 <li>
-                                    <a href="{{ route('custom-pages.edit', ['id' => 'home', 'lang' => env('DEFAULT_LANGUAGE'), 'page' => 'home']) }}" class="fs-12 fw-500 text-blue hov-opacity-80 has-transition">{{ translate('Homepage Settings') }}</a>
+                                    <a href="{{ route('custom-pages.edit', ['id' => 'home', 'lang' => config('app.default_language'), 'page' => 'home']) }}" class="fs-12 fw-500 text-blue hov-opacity-80 has-transition">{{ translate('Homepage Settings') }}</a>
                                 </li>
                             @endcan
                             @can('footer_setup')

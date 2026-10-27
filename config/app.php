@@ -102,6 +102,10 @@ return [
 
     'locale' => env('DEFAULT_LANGUAGE', 'en'),
 
+    // Language that translations (products, categories, ...) are saved under by default.
+    // Read it with config(), not env(), so it still works when config is cached.
+    'default_language' => env('DEFAULT_LANGUAGE', 'en'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

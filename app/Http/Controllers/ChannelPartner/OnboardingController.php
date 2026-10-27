@@ -47,7 +47,7 @@ class OnboardingController extends Controller
         ]);
 
         $data = $request->validate([
-            'company_name' => ['required', 'string', 'max:150'],
+            'company_name' => ['nullable', 'string', 'max:150'],
             'business_type' => ['required', Rule::in(array_keys(config('channel_partner.business_types')))],
             'contact_person' => ['required', 'string', 'max:100'],
             'designation' => ['nullable', 'string', 'max:100'],

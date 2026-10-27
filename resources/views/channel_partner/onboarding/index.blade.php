@@ -40,7 +40,7 @@
 
     {{-- ===================== STEP 2: BUSINESS ===================== --}}
     @if ($step === 'business')
-        <h1 class="cp-auth-title">{{ translate('Business details') }}</h1>
+        <h1 class="cp-auth-title">{{ translate('Your details') }}</h1>
         <p class="cp-auth-sub">{{ translate('This appears on your invoices and contract.') }}</p>
 
         <form method="POST" action="{{ route('channel_partner.onboarding.business') }}" data-cp-ajax
@@ -48,8 +48,9 @@
             @csrf
             <div class="cp-card cp-card-pad">
                 <div class="cp-field">
-                    <label class="cp-label" for="company_name">{{ translate('Registered business name') }} <span class="req">*</span></label>
-                    <input id="company_name" name="company_name" class="cp-input" value="{{ old('company_name', $partner->company_name) }}" autocomplete="organization" required maxlength="150">
+                    <label class="cp-label" for="company_name">{{ translate('Business / company name') }} <span class="cp-muted cp-small">({{ translate('optional') }})</span></label>
+                    <input id="company_name" name="company_name" class="cp-input" value="{{ old('company_name', $partner->company_name) }}" autocomplete="organization" maxlength="150">
+                    <div class="cp-muted cp-small">{{ translate('Leave blank if you are applying as an individual.') }}</div>
                 </div>
                 <div class="cp-field">
                     <span class="cp-label">{{ translate('Business type') }} <span class="req">*</span></span>
@@ -240,7 +241,7 @@
                 <a href="{{ route('channel_partner.onboarding', ['step' => 'business']) }}" class="cp-small">{{ translate('Edit') }}</a>
             </div>
             <dl class="cp-review-list" style="padding:0 16px">
-                <div><dt>{{ translate('Business') }}</dt><dd>{{ $partner->company_name }}</dd></div>
+                <div><dt>{{ translate('Business') }}</dt><dd>{{ $partner->company_name ?: '—' }}</dd></div>
                 <div><dt>{{ translate('Type') }}</dt><dd>{{ translate($businessTypes[$partner->business_type] ?? '-') }}</dd></div>
                 <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}{{ $partner->designation ? ', ' . $partner->designation : '' }}</dd></div>
                 <div><dt>{{ translate('GSTIN') }}</dt><dd>{{ $partner->gst_number ?: '—' }}</dd></div>
@@ -272,7 +273,7 @@
             @csrf
             <label class="cp-check cp-card cp-card-pad">
                 <input type="checkbox" name="declaration" value="1" required>
-                <span>{{ translate('I confirm that the information and documents provided are true and belong to my business.') }}</span>
+                <span>{{ translate('I confirm that the information and documents provided are true and belong to me or my business.') }}</span>
             </label>
             @error('declaration')<div class="cp-error">{{ $message }}</div>@enderror
 

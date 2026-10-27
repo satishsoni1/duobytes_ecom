@@ -216,7 +216,7 @@
 
                                     $params = [
                                         'id' => $product->id,
-                                        'lang' => env('DEFAULT_LANGUAGE'),
+                                        'lang' => config('app.default_language'),
                                     ];
                                     $params['source'] = $source;
                                 @endphp

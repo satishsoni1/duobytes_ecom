@@ -91,7 +91,7 @@
                                                    {{ translate('View') }}
                                                </a>
                                                @can('product_edit')
-                                               <a href="{{route('products.seller.edit', ['id'=>$product->id, 'lang'=>env('DEFAULT_LANGUAGE')] )}}" class="dropdown-item  fs-13">
+                                               <a href="{{route('products.seller.edit', ['id'=>$product->id, 'lang'=>config('app.default_language')] )}}" class="dropdown-item  fs-13">
                                                    {{ translate('Edit') }}
                                                </a>
                                                @endcan

@@ -274,7 +274,7 @@ class ProductService
 
 
 
-        if (isset($collection['lang']) && $collection['lang'] != env('DEFAULT_LANGUAGE')) {
+        if (isset($collection['lang']) && $collection['lang'] != config('app.default_language')) {
             unset($collection['name']);
             unset($collection['unit']);
             unset($collection['description']);

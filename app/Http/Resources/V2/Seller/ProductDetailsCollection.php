@@ -55,7 +55,7 @@ class ProductDetailsCollection extends JsonResource
                 ->map(function ($product) {
                     return [
                         'id' => $product->id,
-                        'name' => $product->getTranslation('name', $this->lang ?? env('DEFAULT_LANGUAGE')),
+                        'name' => $product->getTranslation('name', $this->lang ?? config('app.default_language')),
                         'catgeory' => $product->main_category->name,
                         'thumnail_img' => uploaded_asset($product->thumbnail_img)
                     ];
@@ -70,7 +70,7 @@ class ProductDetailsCollection extends JsonResource
                 if ($category) {
                     $fq_bought_product_category = [
                         'id' => $category->id,
-                        'name' => $category->getTranslation('name', $this->lang ?? env('DEFAULT_LANGUAGE')),
+                        'name' => $category->getTranslation('name', $this->lang ?? config('app.default_language')),
                     ];
                 }
             }

@@ -52,7 +52,7 @@ class TopBannerController extends Controller
         $topBanner->save();
 
         if ($request->text != null) {
-            $top_banner_translation = TopBannerTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'top_banner_id' => $topBanner->id]);
+            $top_banner_translation = TopBannerTranslation::firstOrNew(['lang' => config('app.default_language'), 'top_banner_id' => $topBanner->id]);
             $top_banner_translation->text = $request->text;
             $top_banner_translation->save();
         }
@@ -71,7 +71,7 @@ class TopBannerController extends Controller
     public function update(Request $request, $id)
     {
         $topBanner = TopBanner::findOrFail($id);
-        if ($request->lang == env("DEFAULT_LANGUAGE")) {
+        if ($request->lang == config('app.default_language')) {
             $topBanner->text     = $request->text;
         }
         $topBanner->link   = $request->link;

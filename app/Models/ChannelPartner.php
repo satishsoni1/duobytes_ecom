@@ -105,12 +105,21 @@ class ChannelPartner extends Model
 
     public function businessDetailsComplete(): bool
     {
-        foreach (['company_name', 'business_type', 'contact_person', 'address_line', 'city', 'state', 'postal_code'] as $field) {
+        // Company name is optional: most partners are individuals.
+        foreach (['business_type', 'contact_person', 'address_line', 'city', 'state', 'postal_code'] as $field) {
             if (blank($this->{$field})) {
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * Business name when given, otherwise the partner's own name.
+     */
+    public function displayName(): string
+    {
+        return $this->company_name ?: (string) $this->contact_person;
     }
 
     public function statusBadgeClass(): string

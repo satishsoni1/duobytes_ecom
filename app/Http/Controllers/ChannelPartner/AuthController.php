@@ -31,7 +31,7 @@ class AuthController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:100'],
-            'company_name' => ['required', 'string', 'max:150'],
+            'company_name' => ['nullable', 'string', 'max:150'],
             'email' => ['required', 'email:rfc', 'max:150', 'unique:users,email'],
             'phone' => ['required', 'string', 'regex:/^\+?[0-9\s\-]{8,18}$/'],
             'password' => ['required', 'string', Password::min(8)->letters()->numbers()],
@@ -61,7 +61,7 @@ class AuthController extends Controller
 
             ChannelPartner::create([
                 'user_id' => $user->id,
-                'company_name' => $data['company_name'],
+                'company_name' => $data['company_name'] ?? null,
                 'contact_person' => $data['name'],
                 'status' => ChannelPartner::STATUS_DRAFT,
             ]);

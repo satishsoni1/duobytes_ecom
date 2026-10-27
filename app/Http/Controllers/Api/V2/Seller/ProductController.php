@@ -165,7 +165,7 @@ class ProductController extends Controller
         ]));
 
         // Product Translations
-        $request->merge(['lang' => env('DEFAULT_LANGUAGE')]);
+        $request->merge(['lang' => config('app.default_language')]);
         ProductTranslation::create($request->only([
             'lang', 'name', 'unit', 'description', 'product_id'
         ]));
@@ -185,7 +185,7 @@ class ProductController extends Controller
         if (auth()->user()->id != $product->user_id) {
             return $this->failed(translate('This product is not yours.'));
         }
-        $product->lang =  $request->lang == null ? env("DEFAULT_LANGUAGE") : $request->lang;
+        $product->lang =  $request->lang == null ? config('app.default_language') : $request->lang;
 
         return new ProductDetailsCollection($product);
     }

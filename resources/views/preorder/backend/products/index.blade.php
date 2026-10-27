@@ -263,7 +263,7 @@
                                     </a>
                                     @can('edit_preorder_product')
                                         <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
-                                            href="{{ route('preorder-product.edit', ['id'=>$product->id, 'lang'=>env('DEFAULT_LANGUAGE')]) }}"
+                                            href="{{ route('preorder-product.edit', ['id'=>$product->id, 'lang'=>config('app.default_language')]) }}"
                                             title="{{ translate('Edit') }}">
                                             <i class="las la-edit"></i>
                                         </a>

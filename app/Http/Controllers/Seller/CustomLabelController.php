@@ -117,7 +117,7 @@ class CustomLabelController extends Controller
         $custom_label->save();
 
         $custom_label_translation = CustomLabelTranslation::firstOrNew([
-            'lang' => env('DEFAULT_LANGUAGE'),
+            'lang' => config('app.default_language'),
             'custom_label_id' => $custom_label->id
         ]);
         $custom_label_translation->text = $request->text;
@@ -155,7 +155,7 @@ class CustomLabelController extends Controller
         $unselected_products = $all_products->whereNotIn('id', $selected_products_ids);
         $products = $selected_products->merge($unselected_products);
 
-        $lang = $request->lang ?? env('DEFAULT_LANGUAGE');
+        $lang = $request->lang ?? config('app.default_language');
         $custom_label = CustomLabel::findOrFail($id);
         $is_admin_added = $custom_label->user_id == 0 || optional($custom_label->user)->user_type === 'admin';
 
@@ -180,7 +180,7 @@ class CustomLabelController extends Controller
 
         $is_admin_added = optional($custom_label->user)->user_type === 'admin';
 
-        if ($request->lang == env("DEFAULT_LANGUAGE")) {
+        if ($request->lang == config('app.default_language')) {
             $custom_label->text     = $request->text;
         }
 

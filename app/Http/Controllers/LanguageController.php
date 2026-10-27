@@ -95,7 +95,7 @@ class LanguageController extends Controller
             return back();
         }
         $language = Language::findOrFail($id);
-        if (env('DEFAULT_LANGUAGE') == $language->code && env('DEFAULT_LANGUAGE') != $request->code) {
+        if (config('app.default_language') == $language->code && config('app.default_language') != $request->code) {
             flash(translate('Default language code cannot be edited'))->error();
             return back();
         } elseif ($language->code == 'en' && $request->code != 'en') {
@@ -144,7 +144,7 @@ class LanguageController extends Controller
     public function update_status(Request $request)
     {
         $language = Language::findOrFail($request->id);
-        if($language->code == env('DEFAULT_LANGUAGE') && $request->status == 0) {
+        if($language->code == config('app.default_language') && $request->status == 0) {
             flash(translate('Default language cannot be inactive'))->error();
             return 1;
         }
@@ -170,14 +170,14 @@ class LanguageController extends Controller
     public function destroy($id)
     {
         $language = Language::findOrFail($id);
-        if (env('DEFAULT_LANGUAGE') == $language->code) {
+        if (config('app.default_language') == $language->code) {
             flash(translate('Default language cannot be deleted'))->error();
         } elseif($language->code == 'en') {
             flash(translate('English language cannot be deleted'))->error();
         }
         else {
             if($language->code == Session::get('locale')){
-                Session::put('locale', env('DEFAULT_LANGUAGE'));
+                Session::put('locale', config('app.default_language'));
             }
             Language::destroy($id);
             flash(translate('Language has been deleted successfully'))->success();

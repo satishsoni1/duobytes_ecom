@@ -85,7 +85,7 @@ class FlashDealController extends Controller
             }
 
             $flash_deal_translation = FlashDealTranslation::firstOrNew([
-                'lang' => env('DEFAULT_LANGUAGE'),
+                'lang' => config('app.default_language'),
                 'flash_deal_id' => $flash_deal->id
             ]);
             $flash_deal_translation->title = $request->title;
@@ -134,7 +134,7 @@ class FlashDealController extends Controller
 
         $flash_deal->background_color = $request->background_color;
 
-        if ($request->lang == env("DEFAULT_LANGUAGE")) {
+        if ($request->lang == config('app.default_language')) {
             $flash_deal->title = $request->title;
             if (($flash_deal->slug == null) || ($flash_deal->title != $request->title)) {
                 $flash_deal->slug = strtolower(str_replace(' ', '-', $request->title) . '-' . Str::random(5));
@@ -400,7 +400,7 @@ class FlashDealController extends Controller
         $flash_deal->save();
 
         $flash_deal_translation = FlashDealTranslation::firstOrNew([
-            'lang' => env('DEFAULT_LANGUAGE'),
+            'lang' => config('app.default_language'),
             'flash_deal_id' => $flash_deal->id
         ]);
 

@@ -73,7 +73,7 @@ class AttributeController extends Controller
         $attribute->name = $request->name;
         $attribute->save();
 
-        $attribute_translation = AttributeTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'attribute_id' => $attribute->id]);
+        $attribute_translation = AttributeTranslation::firstOrNew(['lang' => config('app.default_language'), 'attribute_id' => $attribute->id]);
         $attribute_translation->name = $request->name;
         $attribute_translation->save();
 
@@ -93,7 +93,7 @@ class AttributeController extends Controller
 
     public function edit(Request $request)
     {
-        $lang      = $request->lang ?? env("DEFAULT_LANGUAGE");
+        $lang      = $request->lang ?? config('app.default_language');
         $attribute = Attribute::with('attribute_values')->findOrFail($request->id);
         return view('backend.product.attribute.edit', compact('attribute','lang'));
     }
@@ -101,7 +101,7 @@ class AttributeController extends Controller
     public function update(AttributeRequest $request)
     {
         $attribute = Attribute::findOrFail($request->id);
-        if($request->lang == env("DEFAULT_LANGUAGE")){
+        if($request->lang == config('app.default_language')){
           $attribute->name = $request->name;
         }
         $attribute->save();
@@ -195,7 +195,7 @@ class AttributeController extends Controller
         $attribute->name = $request->name;
         $attribute->save();
 
-        $attribute_translation = AttributeTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'attribute_id' => $attribute->id]);
+        $attribute_translation = AttributeTranslation::firstOrNew(['lang' => config('app.default_language'), 'attribute_id' => $attribute->id]);
         $attribute_translation->name = $request->name;
         $attribute_translation->save();
 

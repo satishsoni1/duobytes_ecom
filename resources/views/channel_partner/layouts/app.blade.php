@@ -37,7 +37,7 @@
                 </button>
                 <div class="cp-menu-panel">
                     <div class="cp-small cp-muted" style="padding:8px 12px 4px">
-                        <strong style="color:var(--cp-ink)">{{ $cpPartner->company_name ?? auth()->user()->name }}</strong><br>
+                        <strong style="color:var(--cp-ink)">{{ $cpPartner?->displayName() ?: auth()->user()->name }}</strong><br>
                         {{ $cpPartner->partner_code ?? '' }}
                     </div>
                     <a href="{{ route('channel_partner.account') }}"><x-cp-icon name="user" class="cp-icon-sm" /> {{ translate('My account') }}</a>

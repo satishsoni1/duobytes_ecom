@@ -156,7 +156,7 @@
                                 <div class="table-options">
                                     <!--Edit-->
                                     @can('edit_flash_deal')
-                                        <a href="{{route('flash_deals.edit', ['id'=>$flash_deal->id, 'lang'=>env('DEFAULT_LANGUAGE')] )}}" title="{{ translate('Edit') }}"
+                                        <a href="{{route('flash_deals.edit', ['id'=>$flash_deal->id, 'lang'=>config('app.default_language')] )}}" title="{{ translate('Edit') }}"
                                             class="d-flex align-items-center px-20px py-10px hov-bg-light hov-text-blue text-dark ">
                                             <span
                                                 class="fs-14 fw-500 pl-10px">{{ translate('Edit') }}</span>

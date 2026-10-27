@@ -106,7 +106,7 @@ class CityController extends Controller
     public function update(Request $request, $id)
     {
         $city = City::findOrFail($id);
-        if ($request->lang == env("DEFAULT_LANGUAGE")) {
+        if ($request->lang == config('app.default_language')) {
             $city->name = $request->name;
         }
         //if request country changed , state should null if $request->country_id is not null and $request->state_id is null

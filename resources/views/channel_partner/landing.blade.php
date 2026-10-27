@@ -22,7 +22,6 @@
         @foreach ([
             ['percent', translate('Contract pricing'), translate('Your negotiated discounts apply automatically on every product.')],
             ['tag', translate('Bulk tiers'), translate('Order more, pay less per unit. See the next price break as you shop.')],
-            ['credit', translate('Order on account'), translate('Place purchase orders against agreed credit and payment terms.')],
             ['truck', translate('Track every order'), translate('Live status, invoices and one-tap re-order from your history.')],
         ] as [$icon, $title, $text])
             <div class="cp-card cp-card-pad cp-row" style="align-items:flex-start;gap:14px">

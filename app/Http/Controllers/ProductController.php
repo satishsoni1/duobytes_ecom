@@ -349,7 +349,7 @@ class ProductController extends Controller
         ]));
 
         // Product Translations
-        $request->merge(['lang' => env('DEFAULT_LANGUAGE')]);
+        $request->merge(['lang' => config('app.default_language')]);
         ProductTranslation::create($request->only([
             'lang',
             'name',
@@ -464,7 +464,7 @@ class ProductController extends Controller
             ProductTranslation::updateOrCreate(
                 [
                     'product_id' => $product->id, 
-                    'lang' => env('DEFAULT_LANGUAGE', 'en')
+                    'lang' => config('app.default_language')
                 ],
                 [
                     'name' => $request->name,
@@ -522,7 +522,7 @@ class ProductController extends Controller
         if ($product->digital == 1) {
              return redirect()->route('digitalproducts.edit', [
                 'id'   => $id,
-                'lang' => request('lang', env('DEFAULT_LANGUAGE')),
+                'lang' => request('lang', config('app.default_language')),
                 'source' => $request->source,
             ]);
         }
@@ -578,7 +578,7 @@ class ProductController extends Controller
         if ($product->digital == 1) {
             return redirect()->route('digitalproducts.seller.edit', [
             'id'   => $id,
-            'lang' => request('lang', env('DEFAULT_LANGUAGE')),
+            'lang' => request('lang', config('app.default_language')),
             'source'=> $source,
         ]);
         }
@@ -808,9 +808,9 @@ class ProductController extends Controller
 
         $redirrect_url = '';
         if ($request->has('type') && $request->type == 'Seller') {
-            $redirrect_url = route('products.seller.edit', ['id' => $product_new->id, 'lang' => env('DEFAULT_LANGUAGE'), 'source' => 'all']);
+            $redirrect_url = route('products.seller.edit', ['id' => $product_new->id, 'lang' => config('app.default_language'), 'source' => 'all']);
         } else {
-            $redirrect_url = route('products.admin.edit', ['id' => $product_new->id, 'lang' => env('DEFAULT_LANGUAGE'), 'source' => 'all']);
+            $redirrect_url = route('products.admin.edit', ['id' => $product_new->id, 'lang' => config('app.default_language'), 'source' => 'all']);
         }
         return response()->json([
                 'success' => true,

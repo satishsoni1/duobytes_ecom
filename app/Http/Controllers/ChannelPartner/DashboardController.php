@@ -40,7 +40,6 @@ class DashboardController extends PartnerController
             'recentOrders' => $recentOrders,
             'rules' => $rules,
             'featured' => $featured,
-            'credit' => $this->creditPosition($partner),
         ]);
     }
 

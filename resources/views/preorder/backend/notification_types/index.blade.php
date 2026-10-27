@@ -82,7 +82,7 @@
                                 <td class="text-right">
                                     @can('edit_preorder_notification_type')
                                         <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
-                                            href="{{ route('preorder.notification-type.edit', ['id' => $notificationType->id, 'lang' => env('DEFAULT_LANGUAGE')]) }}"
+                                            href="{{ route('preorder.notification-type.edit', ['id' => $notificationType->id, 'lang' => config('app.default_language')]) }}"
                                             title="{{ translate('Edit') }}">
                                             <i class="las la-edit"></i>
                                         </a>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\ChannelPartner;
 
-use App\Http\Controllers\InvoiceController;
 use App\Models\ChannelPartner;
 use App\Models\ChannelPartnerCartItem;
 use App\Models\ChannelPartnerOrder;
@@ -11,11 +10,13 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ProductStock;
+use App\Services\GstInvoiceBuilder;
 use App\Utility\NotificationUtility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use PDF;
 use RuntimeException;
 
 class OrderController extends PartnerController
@@ -61,23 +62,19 @@ class OrderController extends PartnerController
             flash(translate('Your contract minimum order value is') . ' ' . single_price($partner->min_order_value))->warning();
             return redirect()->route('channel_partner.cart');
         }
-        if ($summary['credit']['exceeded']) {
-            flash(translate('This order exceeds your available credit of') . ' ' . single_price(max(0, $summary['credit']['available'])) . '. ' . translate('Please contact your account manager.'))->error();
-            return redirect()->route('channel_partner.checkout');
-        }
 
         $address = [
             'name' => $data['shipping_name'],
             'email' => $request->user()->email,
             'address' => $data['shipping_address'],
-            'country' => $data['shipping_country'] ?: ($partner->country ?: ''),
+            'country' => ($data['shipping_country'] ?? null) ?: ($partner->country ?: ''),
             'state' => $data['shipping_state'],
             'city' => $data['shipping_city'],
             'postal_code' => $data['shipping_postal_code'],
             'phone' => $data['shipping_phone'],
         ];
         $billing = [
-            'name' => $partner->company_name,
+            'name' => $partner->displayName(),
             'email' => $request->user()->email,
             'address' => $partner->address_line,
             'country' => $partner->country ?: '',
@@ -138,8 +135,10 @@ class OrderController extends PartnerController
     public function invoice(Request $request, string $code)
     {
         $order = $this->partnerOrders($this->partner($request))->where('code', $code)->firstOrFail();
+        $invoice = app(GstInvoiceBuilder::class)->fromOrder($order);
 
-        return (new InvoiceController)->invoice_download($order->id);
+        return PDF::loadView('invoices.gst_tax_invoice', ['invoice' => $invoice, 'font_family' => 'freeserif'])
+            ->download('tax-invoice-' . $order->code . '.pdf');
     }
 
     public function reorder(Request $request, string $code)
@@ -195,7 +194,8 @@ class OrderController extends PartnerController
         $stocks = ProductStock::whereIn('product_id', $items->pluck('product_id'))->lockForUpdate()->get();
 
         $gstActive = addon_is_activated('gst_system');
-        $notes = trim(($data['po_number'] ? 'PO: ' . $data['po_number'] . "\n" : '') . ($data['notes'] ?? ''));
+        $poNumber = $data['po_number'] ?? null;
+        $notes = trim(($poNumber ? 'PO: ' . $poNumber . "\n" : '') . ($data['notes'] ?? ''));
 
         $combinedOrder = new CombinedOrder;
         $combinedOrder->user_id = $userId;

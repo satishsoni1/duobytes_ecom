@@ -53,7 +53,7 @@
                             @php
                                 $product_id     = $notification->data['id'];
                                 $product_type   = $notification->data['type'];
-                                $lang           = env('DEFAULT_LANGUAGE');
+                                $lang           = config('app.default_language');
                                 $productName = "<span class='text-blue'>".$notification->data['name']."</span>";
                                 $notifyContent = str_replace('[[product_name]]', $productName, $notifyContent);
                             @endphp

@@ -285,7 +285,7 @@ class ProductsImport implements ToCollection, WithHeadingRow, WithMultipleSheets
                     ]);
 
                     $translation = new ProductTranslation();
-                    $translation->lang        = env('DEFAULT_LANGUAGE', 'en');
+                    $translation->lang        = config('app.default_language');
                     $translation->name        = $row['name'];
                     $translation->unit        = $row['unit_id'];
                     $translation->description = $row['description'] ?? null;

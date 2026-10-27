@@ -37,7 +37,7 @@
                                         @endcan
                                         @can('edit_element')
                                             <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
-                                                href="{{ route('elements.edit', ['id' => $element->id, 'lang' => env('DEFAULT_LANGUAGE')]) }}"
+                                                href="{{ route('elements.edit', ['id' => $element->id, 'lang' => config('app.default_language')]) }}"
                                                 title="{{ translate('Edit') }}">
                                                 <i class="las la-edit"></i>
                                             </a>

@@ -77,7 +77,7 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-xs">
                                                 @can('top_banner_edit')
-                                                    <a class="dropdown-item" href="{{route('top_banner.edit', ['id'=>$topBanner->id, 'lang'=>env('DEFAULT_LANGUAGE')])}}">
+                                                    <a class="dropdown-item" href="{{route('top_banner.edit', ['id'=>$topBanner->id, 'lang'=>config('app.default_language')])}}">
                                                         {{translate('Edit')}}
                                                     </a>
                                                 @endcan

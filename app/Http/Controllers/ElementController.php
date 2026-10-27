@@ -34,7 +34,7 @@ class ElementController extends Controller
         $element->name = $request->name;
         $element->save();
 
-        $element_translation = ElementTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'element_id' => $element->id]);
+        $element_translation = ElementTranslation::firstOrNew(['lang' => config('app.default_language'), 'element_id' => $element->id]);
         $element_translation->name = $request->name;
         $element_translation->save();
 
@@ -62,7 +62,7 @@ class ElementController extends Controller
     public function update(Request $request, $id)
     {
         $element = Element::findOrFail($id);
-        if ($request->lang == env("DEFAULT_LANGUAGE")) {
+        if ($request->lang == config('app.default_language')) {
             $element->name = $request->name;
         }
         $element->save();

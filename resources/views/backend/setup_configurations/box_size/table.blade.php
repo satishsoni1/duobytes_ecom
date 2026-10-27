@@ -122,7 +122,7 @@
                                         <div class="table-options">
                                             <!--Edit-->
                                             @can('shipping_box_size_edit')
-                                                <a href="{{ route('shipping_box_size.edit', ['id' => $shipping_box_size->id, 'lang' => env('DEFAULT_LANGUAGE')]) }}"
+                                                <a href="{{ route('shipping_box_size.edit', ['id' => $shipping_box_size->id, 'lang' => config('app.default_language')]) }}"
                                                     class="d-flex align-items-center px-20px py-10px hov-bg-light hov-text-blue">
                                                     <span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="11.985"

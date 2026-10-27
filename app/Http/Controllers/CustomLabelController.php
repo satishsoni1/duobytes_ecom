@@ -127,7 +127,7 @@ class CustomLabelController extends Controller
         $custom_label->save();
 
         $custom_label_translation = CustomLabelTranslation::firstOrNew([
-            'lang' => env('DEFAULT_LANGUAGE'),
+            'lang' => config('app.default_language'),
             'custom_label_id' => $custom_label->id
         ]);
         $custom_label_translation->text = $request->text;
@@ -144,7 +144,7 @@ class CustomLabelController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $lang = $request->lang ?? env('DEFAULT_LANGUAGE');
+        $lang = $request->lang ?? config('app.default_language');
         $custom_label = CustomLabel::findOrFail($id);
 
         $categories = Category::where('parent_id', 0)
@@ -185,7 +185,7 @@ class CustomLabelController extends Controller
         $custom_label = CustomLabel::findOrFail($id);
         $isProtectedLabel = $request->lang == 'en' && in_array($custom_label->id, [200, 201, 202, 203]);
 
-        if (!$isProtectedLabel && $request->lang == env('DEFAULT_LANGUAGE')) {
+        if (!$isProtectedLabel && $request->lang == config('app.default_language')) {
             $custom_label->text = $request->text;
         }
 

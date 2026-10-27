@@ -154,7 +154,7 @@ class NotificationController extends Controller
         elseif($notification->type == 'App\Notifications\ShopProductNotification'){
             $productId     = $notification->data['id'];
             $productType   = $notification->data['type'];
-            $lang           = env('DEFAULT_LANGUAGE');
+            $lang           = config('app.default_language');
             if($userType == 'admin'){
                 if($productType == 'physical'){
                     return redirect()->route('products.seller.edit', ['id'=>$productId, 'lang'=>$lang]);

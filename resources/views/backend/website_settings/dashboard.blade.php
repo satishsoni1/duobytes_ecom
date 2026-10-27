@@ -180,7 +180,7 @@
                                 </a>
                                 @endcan
                                 @can('edit_website_page')
-                                <a href="{{ route('custom-pages.edit', ['id' => 'home', 'lang' => env('DEFAULT_LANGUAGE'), 'page' => 'home']) }}"
+                                <a href="{{ route('custom-pages.edit', ['id' => 'home', 'lang' => config('app.default_language'), 'page' => 'home']) }}"
                                     class="fs-14 fw-400 text-reset bg-light hov-bg-soft-blue rounded-1 py-2 px-3 d-flex align-items-center justify-content-between">
                                     <span>{{ translate('Edit Homepage') }} </span>
                                     <i class="las la-angle-right flex-shrink-0 fs-16 text-gray"></i>

@@ -17,7 +17,7 @@
 
     <section class="cp-hero">
         <div class="cp-small" style="opacity:.85">{{ translate('Welcome back') }}</div>
-        <h1 style="margin-top:2px">{{ $partner->company_name }}</h1>
+        <h1 style="margin-top:2px">{{ $partner->displayName() }}</h1>
         <p>{{ translate('Partner code') }} {{ $partner->partner_code }}@if ($partner->default_discount > 0) · {{ rtrim(rtrim(number_format($partner->default_discount, 2), '0'), '.') }}% {{ translate('partner discount') }}@endif</p>
         <div class="cp-row" style="margin-top:16px;flex-wrap:wrap">
             <a href="{{ route('channel_partner.catalog') }}" class="cp-btn" style="background:#fff;color:var(--cp-primary) !important"><x-cp-icon name="grid" class="cp-icon-sm" /> {{ translate('Browse catalogue') }}</a>
@@ -31,21 +31,6 @@
         <div class="cp-card cp-stat"><div class="cp-stat-label">{{ translate('Purchases') }}</div><div class="cp-stat-value" style="font-size:18px">{{ single_price($stats['spend']) }}</div></div>
         <div class="cp-card cp-stat"><div class="cp-stat-label">{{ translate('You saved') }}</div><div class="cp-stat-value cp-savings" style="font-size:18px">{{ single_price($stats['saved']) }}</div></div>
     </section>
-
-    @if ($credit['limit'] !== null)
-        @php $used = $credit['limit'] > 0 ? min(100, round($credit['outstanding'] / $credit['limit'] * 100)) : 100; @endphp
-        <section class="cp-card cp-card-pad" style="margin-top:16px">
-            <div class="cp-between">
-                <h3>{{ translate('Credit') }}</h3>
-                <span class="cp-small cp-muted">{{ $partner->payment_terms }}</span>
-            </div>
-            <div class="cp-progress" style="height:8px;margin-top:12px"><span style="width:{{ $used }}%;background:{{ $used > 85 ? 'var(--cp-danger)' : 'var(--cp-primary)' }}"></span></div>
-            <div class="cp-between cp-small" style="margin-top:8px">
-                <span>{{ translate('Outstanding') }} <strong>{{ single_price($credit['outstanding']) }}</strong></span>
-                <span>{{ translate('Available') }} <strong>{{ single_price(max(0, $credit['available'])) }}</strong></span>
-            </div>
-        </section>
-    @endif
 
     <div class="cp-grid cp-md-2" style="margin-top:16px;align-items:start">
         <section class="cp-card">

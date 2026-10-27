@@ -62,7 +62,7 @@ class WarrantyController extends Controller
         $warranty->logo = $request->logo;
         $warranty->save();
 
-        $warranty_translation = WarrantyTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'warranty_id' => $warranty->id]);
+        $warranty_translation = WarrantyTranslation::firstOrNew(['lang' => config('app.default_language'), 'warranty_id' => $warranty->id]);
         $warranty_translation->text = $request->text;
         $warranty_translation->save();
 
@@ -71,7 +71,7 @@ class WarrantyController extends Controller
 
     public function edit(Request $request)
     {
-        $lang   = $request->lang ?? env("DEFAULT_LANGUAGE");
+        $lang   = $request->lang ?? config('app.default_language');
         $warranty  = Warranty::findOrFail($request->id);
         return view('backend.product.warranties.edit', compact('warranty','lang'));
     }
@@ -79,7 +79,7 @@ class WarrantyController extends Controller
     public function update(Request $request)
     {
         $warranty = Warranty::findOrFail($request->id);
-        if($request->lang == env("DEFAULT_LANGUAGE")){
+        if($request->lang == config('app.default_language')){
             $warranty->text = $request->text;
         }
         $warranty->logo = $request->logo;
@@ -138,7 +138,7 @@ class WarrantyController extends Controller
         $warranty->logo = $request->warranty_logo;
         $warranty->save();
 
-        $warranty_translation = WarrantyTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'warranty_id' => $warranty->id]);
+        $warranty_translation = WarrantyTranslation::firstOrNew(['lang' => config('app.default_language'), 'warranty_id' => $warranty->id]);
         $warranty_translation->text = $request->warranty_text;
         $warranty_translation->save();
 

@@ -12,18 +12,44 @@ use App\Models\ChannelPartnerPriceRule;
 use App\Models\Order;
 use App\Models\Product;
 use App\Notifications\ChannelPartnerStatusChanged;
+use App\Services\GstInvoiceBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use PDF;
 
 class ChannelPartnerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:view_channel_partners'])->only('index', 'show', 'document');
+        $this->middleware(['permission:view_channel_partners'])->only('index', 'show', 'document', 'invoiceSample');
         $this->middleware(['permission:manage_channel_partners'])->only('updateStatus', 'updateTerms', 'documentStatus');
         $this->middleware(['permission:manage_channel_partner_pricing'])->only('storeRule', 'updateRule', 'destroyRule');
+    }
+
+    /**
+     * Preview of the GST Tax Invoice layout with sample data.
+     * ?type=customer for a direct (inter-state) customer, ?download=1 for the PDF.
+     */
+    public function invoiceSample(Request $request, GstInvoiceBuilder $builder)
+    {
+        $type = $request->query('type') === 'customer' ? 'customer' : 'partner';
+        $invoice = $builder->sample($type);
+
+        if ($request->boolean('download')) {
+            return PDF::loadView('invoices.gst_tax_invoice', ['invoice' => $invoice, 'font_family' => 'freeserif'])
+                ->download('sample-tax-invoice-' . $type . '.pdf');
+        }
+
+        return view('invoices.gst_tax_invoice', [
+            'invoice' => $invoice,
+            'actions' => [
+                translate('Channel partner sample') => route('admin.channel_partners.invoice_sample'),
+                translate('Direct customer sample') => route('admin.channel_partners.invoice_sample', ['type' => 'customer']),
+                translate('Download PDF') => route('admin.channel_partners.invoice_sample', ['type' => $type, 'download' => 1]),
+            ],
+        ]);
     }
 
     public function index(Request $request)
@@ -37,6 +63,7 @@ class ChannelPartnerController extends Controller
             ->when($search !== '', function ($q) use ($search) {
                 $q->where(function ($q) use ($search) {
                     $q->where('company_name', 'like', "%{$search}%")
+                        ->orWhere('contact_person', 'like', "%{$search}%")
                         ->orWhere('partner_code', 'like', "%{$search}%")
                         ->orWhere('gst_number', 'like', "%{$search}%")
                         ->orWhere('city', 'like', "%{$search}%")
@@ -126,9 +153,7 @@ class ChannelPartnerController extends Controller
     {
         $data = $request->validate([
             'default_discount' => ['required', 'numeric', 'min:0', 'max:100'],
-            'credit_limit' => ['nullable', 'numeric', 'min:0'],
             'min_order_value' => ['nullable', 'numeric', 'min:0'],
-            'payment_terms' => ['nullable', 'string', 'max:100'],
             'contract_reference' => ['nullable', 'string', 'max:100'],
             'contract_valid_until' => ['nullable', 'date'],
             'admin_notes' => ['nullable', 'string', 'max:5000'],

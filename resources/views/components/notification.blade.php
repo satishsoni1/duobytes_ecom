@@ -81,7 +81,7 @@
                                 @php
                                     $product_id     = $notification->data['id'];
                                     $product_type   = $notification->data['type'];
-                                    $lang           = env('DEFAULT_LANGUAGE');
+                                    $lang           = config('app.default_language');
                                     $route = $user_type == 'admin'
                                         ? ( $product_type == 'physical'
                                             ? route('products.seller.edit', ['id'=>$product_id, 'lang'=>$lang])

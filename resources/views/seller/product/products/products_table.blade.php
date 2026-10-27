@@ -172,8 +172,8 @@
                                 @if($ptoduct_type != 'pos_product_list')
                                 <!--Edit-->
                                 <a href="{{ $product->digital == 1 
-                                        ? route('seller.digitalproducts.edit', ['id'=>$product->id, 'lang'=>env('DEFAULT_LANGUAGE')]) 
-                                        : route('seller.products.edit', ['id'=>$product->id, 'lang'=>env('DEFAULT_LANGUAGE')]) }}"
+                                        ? route('seller.digitalproducts.edit', ['id'=>$product->id, 'lang'=>config('app.default_language')]) 
+                                        : route('seller.products.edit', ['id'=>$product->id, 'lang'=>config('app.default_language')]) }}"
                                     class="d-flex align-items-center px-20px py-10px hov-bg-light hov-text-blue">
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="11.985"

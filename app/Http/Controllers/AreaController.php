@@ -143,7 +143,7 @@ class AreaController extends Controller
     public function update(Request $request, $id)
     {
        $area = Area::findOrFail($id);
-        if($request->lang == env("DEFAULT_LANGUAGE")){
+        if($request->lang == config('app.default_language')){
             $area->name = $request->name;
         }
 

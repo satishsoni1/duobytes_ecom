@@ -75,6 +75,7 @@ Route::prefix('admin/channel-partners')
     ->controller(AdminChannelPartnerController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/invoice-sample', 'invoiceSample')->name('invoice_sample');
         Route::get('/{partner}', 'show')->name('show')->whereNumber('partner');
         Route::post('/{partner}/status', 'updateStatus')->name('status');
         Route::post('/{partner}/terms', 'updateTerms')->name('terms');

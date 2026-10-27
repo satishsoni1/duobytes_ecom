@@ -79,7 +79,7 @@ class NotificationTypeController extends Controller
 
         if($notificationType->save()){
 
-            $notificationTypeTranslation = NotificationTypeTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'notification_type_id' => $notificationType->id]);
+            $notificationTypeTranslation = NotificationTypeTranslation::firstOrNew(['lang' => config('app.default_language'), 'notification_type_id' => $notificationType->id]);
             $notificationTypeTranslation->name = $request->name;
             $notificationTypeTranslation->default_text = $notificationType->default_text;
             $notificationTypeTranslation->save();
@@ -127,7 +127,7 @@ class NotificationTypeController extends Controller
         $notificationType = NotificationType::findOrFail($id);
         $notificationType->image = $request->image;
         $default_text = str_replace( array( '\'', '"', ',', ';','{', '}','\r', '\n' ), '', $request->default_text);
-        if($request->lang == env("DEFAULT_LANGUAGE")){
+        if($request->lang == config('app.default_language')){
             $notificationType->name = $request->name;
             $notificationType->default_text = $default_text;
         }

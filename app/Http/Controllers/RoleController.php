@@ -55,7 +55,7 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->name]);
         $role->givePermissionTo($request->permissions);
 
-        $role_translation = RoleTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'role_id' => $role->id]);
+        $role_translation = RoleTranslation::firstOrNew(['lang' => config('app.default_language'), 'role_id' => $role->id]);
         $role_translation->name = $request->name;
         $role_translation->save();
 
@@ -97,7 +97,7 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $role = Role::findOrFail($id);
-        if ($request->lang == env("DEFAULT_LANGUAGE")) {
+        if ($request->lang == config('app.default_language')) {
             $role->name = $request->name;
         }
         $role->syncPermissions($request->permissions);

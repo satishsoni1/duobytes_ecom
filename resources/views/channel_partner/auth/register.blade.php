@@ -28,8 +28,8 @@
         </div>
 
         <div class="cp-field">
-            <label class="cp-label" for="company_name">{{ translate('Business / company name') }} <span class="req">*</span></label>
-            <input id="company_name" name="company_name" type="text" class="cp-input @error('company_name') is-invalid @enderror" value="{{ old('company_name') }}" autocomplete="organization" required maxlength="150">
+            <label class="cp-label" for="company_name">{{ translate('Business / company name') }} <span class="cp-muted cp-small">({{ translate('optional') }})</span></label>
+            <input id="company_name" name="company_name" type="text" class="cp-input @error('company_name') is-invalid @enderror" value="{{ old('company_name') }}" autocomplete="organization" maxlength="150">
             @error('company_name')<div class="cp-error">{{ $message }}</div>@enderror
         </div>
 

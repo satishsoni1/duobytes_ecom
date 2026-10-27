@@ -179,7 +179,7 @@
                                     <div class="table-options">
                                         <!--Edit-->
                                         @can('edit_product_category')
-                                            <a href="{{ route('categories.edit', ['id' => $category->id, 'lang' => env('DEFAULT_LANGUAGE')]) }}"
+                                            <a href="{{ route('categories.edit', ['id' => $category->id, 'lang' => config('app.default_language')]) }}"
                                                 class="d-flex align-items-center px-20px py-10px hov-bg-light hov-text-blue">
                                                 <span>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="11.985"

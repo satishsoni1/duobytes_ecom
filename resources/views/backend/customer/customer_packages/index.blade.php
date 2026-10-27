@@ -36,7 +36,7 @@
                     </div>
                     <div class="mar-top mt-4 d-flex align-items-center" style="gap: 8px;">
                         @can('edit_classified_package')
-                            <a href="{{route('customer_packages.edit', ['id'=>$customer_package->id, 'lang'=>env('DEFAULT_LANGUAGE')] )}}" class="btn btn-sm btn-info d-flex justify-content-center text-center w-100 rounded-2">
+                            <a href="{{route('customer_packages.edit', ['id'=>$customer_package->id, 'lang'=>config('app.default_language')] )}}" class="btn btn-sm btn-info d-flex justify-content-center text-center w-100 rounded-2">
                                 <i class="las la-edit fs-18"></i> 
                                 <span class="ml-1">{{translate('Edit')}}</span>
                             </a>

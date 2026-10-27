@@ -10,7 +10,7 @@
             <div class="cp-card-head"><h3>{{ translate('Business profile') }}</h3><span class="cp-pill cp-pill-success">{{ translate('Approved') }}</span></div>
             <dl class="cp-review-list" style="padding:0 16px">
                 <div><dt>{{ translate('Partner code') }}</dt><dd>{{ $partner->partner_code }}</dd></div>
-                <div><dt>{{ translate('Business') }}</dt><dd>{{ $partner->company_name }}</dd></div>
+                <div><dt>{{ translate('Business') }}</dt><dd>{{ $partner->company_name ?: '—' }}</dd></div>
                 <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}</dd></div>
                 <div><dt>{{ translate('Email') }}</dt><dd>{{ auth()->user()->email }}</dd></div>
                 <div><dt>{{ translate('Mobile') }}</dt><dd>{{ auth()->user()->phone }}</dd></div>
@@ -26,8 +26,7 @@
                 <dl class="cp-review-list" style="padding:0 16px 6px">
                     <div><dt>{{ translate('Reference') }}</dt><dd>{{ $partner->contract_reference ?: '—' }}</dd></div>
                     <div><dt>{{ translate('Valid until') }}</dt><dd>{{ $partner->contract_valid_until ? $partner->contract_valid_until->format('d M Y') : '—' }}</dd></div>
-                    <div><dt>{{ translate('Payment terms') }}</dt><dd>{{ $partner->payment_terms ?: '—' }}</dd></div>
-                    <div><dt>{{ translate('Credit limit') }}</dt><dd>{{ $partner->credit_limit !== null ? single_price($partner->credit_limit) : translate('Not set') }}</dd></div>
+                    <div><dt>{{ translate('Payment') }}</dt><dd>{{ translate('Advance payment') }}</dd></div>
                     <div style="border-bottom:0"><dt>{{ translate('Minimum order') }}</dt><dd>{{ $partner->min_order_value > 0 ? single_price($partner->min_order_value) : '—' }}</dd></div>
                 </dl>
             </section>

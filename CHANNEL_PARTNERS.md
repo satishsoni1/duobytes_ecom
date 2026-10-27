@@ -1,7 +1,8 @@
 # Channel Partner Program & Home Page Redesign
 
-Channel partners replace public seller sign-up. A partner registers, uploads KYC
-documents, is approved by an admin, and then orders from a dedicated portal at
+Channel partners replace public seller sign-up. A partner (usually an individual; business
+name is optional) registers, uploads KYC documents (PAN, Aadhaar and a cancelled cheque are
+required; GST certificate and address proof are optional), is approved by an admin, and then orders from a dedicated portal at
 contract prices that are agreed offline and entered by the admin.
 
 ## Deploying
@@ -42,8 +43,7 @@ Header and footer "Become a Seller" links now point to the partner program in ev
 2. Open the application, view the documents (each can be marked verified/rejected with a remark).
 3. **Approve** (partner gets a code like `CP00001`) or **Request changes** with a reason. The partner
    sees the reason, fixes the application and resubmits.
-4. Fill **Contract terms**: default discount %, credit limit, minimum order value, payment terms,
-   contract reference and expiry. Ordering pauses automatically after the expiry date.
+4. Fill **Contract terms**: default discount %, minimum order value, contract reference and expiry. Ordering pauses automatically after the expiry date.
 5. Add **Pricing rules**.
 6. **Suspend** / **Reactivate** at any time.
 
@@ -66,13 +66,13 @@ start/end dates. Partners see the next price break ("Add 20 more to pay ₹X eac
 
 ## Partner orders
 
-* Created as normal orders (`order_from = channel_partner`, `payment_type = partner_credit`,
-  unpaid), so they appear in **Sales → All Orders** with the usual invoice, status and notifications.
+* Partners pay the full order value upfront; there is no credit or "order on account".
+* Created as normal orders (`order_from = channel_partner`, `payment_type = advance_payment`,
+  unpaid until the admin marks the payment received), so they appear in **Sales → All Orders** with the usual invoice, status and notifications.
 * PO number and notes are saved in the order's additional info. The price breakdown per line is
   kept in `channel_partner_orders.pricing_snapshot` for audit.
 * No shipping charge is added (freight is per contract). Stock is reserved with row locks and
   prices are re-checked when the order is placed.
-* The credit limit counts unpaid, non-cancelled partner orders.
 
 ## Home page (nexa theme)
 

@@ -11,6 +11,9 @@
                 <a href="{{ route('channel_partner.landing') }}" target="_blank" class="btn btn-soft-primary btn-sm">
                     <i class="las la-external-link-alt"></i> {{ translate('Partner sign-up page') }}
                 </a>
+                <a href="{{ route('admin.channel_partners.invoice_sample') }}" target="_blank" class="btn btn-soft-secondary btn-sm">
+                    <i class="las la-file-invoice"></i> {{ translate('Sample tax invoice') }}
+                </a>
             </div>
         </div>
     </div>
@@ -66,7 +69,7 @@
                     @forelse ($partners as $partner)
                         <tr>
                             <td>
-                                <a href="{{ route('admin.channel_partners.show', $partner) }}" class="fw-600 text-reset">{{ $partner->company_name ?: '—' }}</a>
+                                <a href="{{ route('admin.channel_partners.show', $partner) }}" class="fw-600 text-reset">{{ $partner->displayName() ?: '—' }}</a>
                                 <div class="fs-12 text-muted">{{ $partner->partner_code ?: translate('No code yet') }} · {{ translate(config('channel_partner.business_types.' . $partner->business_type, '-')) }}</div>
                             </td>
                             <td>
