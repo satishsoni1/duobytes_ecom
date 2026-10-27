@@ -153,7 +153,7 @@ class DigitalProductController extends Controller
             }
         }
         
-        $lang = $request->lang;
+        $lang = $request->lang ?: config('app.default_language');
         $source = $request->source;
         $product = Product::findOrFail($id);
         $categories = Category::where('parent_id', 0)
@@ -215,7 +215,8 @@ class DigitalProductController extends Controller
             'product_id', 'frequently_bought_selection_type', 'fq_bought_product_ids', 'fq_bought_product_category_id'
         ]));
 
-        // Product Translations
+        // Product Translations (blank lang -> default language)
+        $request->merge(['lang' => $request->lang ?: config('app.default_language')]);
         ProductTranslation::updateOrCreate(
             $request->only(['lang', 'product_id']),
             $request->only(['name', 'description'])
