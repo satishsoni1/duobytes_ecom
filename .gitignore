@@ -36,3 +36,6 @@ public/all
 # Theme and custom front-end assets are versioned (everything else in /public stays ignored).
 # composer.lock is committed so `composer install` uses the tested versions.
 !/public/assets/
+
+# Runtime logs are server-specific; never commit them.
+/storage/logs/*.log
