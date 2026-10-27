@@ -57,7 +57,8 @@
                     </div>
                     <div class="cp-field">
                         <label class="cp-label" for="password">{{ translate('New password') }}</label>
-                        <input id="password" name="password" type="password" class="cp-input @error('password') is-invalid @enderror" autocomplete="new-password" required>
+                        <input id="password" name="password" type="password" class="cp-input @error('password') is-invalid @enderror" autocomplete="new-password" minlength="6" required>
+                        <div class="cp-hint">{{ translate('At least 6 characters.') }}</div>
                         @error('password')<div class="cp-error">{{ $message }}</div>@enderror
                     </div>
                     <div class="cp-field">

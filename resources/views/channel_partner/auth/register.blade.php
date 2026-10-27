@@ -48,12 +48,12 @@
         <div class="cp-field">
             <label class="cp-label" for="password">{{ translate('Create password') }} <span class="req">*</span></label>
             <div class="cp-input-group">
-                <input id="password" name="password" type="password" class="cp-input @error('password') is-invalid @enderror" autocomplete="new-password" minlength="8" required>
+                <input id="password" name="password" type="password" class="cp-input @error('password') is-invalid @enderror" autocomplete="new-password" minlength="6" required>
                 <button type="button" class="cp-icon-btn cp-input-addon" data-cp-toggle-password aria-label="{{ translate('Show password') }}" aria-pressed="false">
                     <x-cp-icon name="eye" /><x-cp-icon name="eye-off" style="display:none" />
                 </button>
             </div>
-            <div class="cp-hint">{{ translate('At least 8 characters with letters and numbers.') }}</div>
+            <div class="cp-hint">{{ translate('At least 6 characters.') }}</div>
             @error('password')<div class="cp-error">{{ $message }}</div>@enderror
         </div>
 

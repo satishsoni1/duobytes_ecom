@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -34,7 +33,7 @@ class AuthController extends Controller
             'company_name' => ['nullable', 'string', 'max:150'],
             'email' => ['required', 'email:rfc', 'max:150', 'unique:users,email'],
             'phone' => ['required', 'string', 'regex:/^\+?[0-9\s\-]{8,18}$/'],
-            'password' => ['required', 'string', Password::min(8)->letters()->numbers()],
+            'password' => ['required', 'string', 'min:6'],
             'terms' => ['accepted'],
         ], [
             'email.unique' => translate('An account with this email already exists. Please log in.'),
