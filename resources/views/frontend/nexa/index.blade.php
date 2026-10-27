@@ -139,15 +139,21 @@
                     <div><h2>{{ translate('Shop by category') }}</h2></div>
                     <a href="{{ route('categories.all') }}" class="tz-link">{{ translate('View all') }} <i class="las la-angle-right"></i></a>
                 </div>
-                <div class="tz-rail tz-cats">
+                <div class="tz-cats">
                     @foreach ($categories as $category)
-                        @php $catImg = uploaded_asset($category->icon ?: ($category->cover_image ?: $category->banner)); @endphp
+                        @php
+                            // Cover/banner art first: icons are small and often have padding baked in.
+                            $catImg = uploaded_asset($category->cover_image ?: ($category->banner ?: $category->icon));
+                        @endphp
                         <a href="{{ route('products.category', $category->slug) }}" class="tz-cat">
+                            <span class="tz-cat-text">
+                                <span class="tz-cat-name">{{ $category->getTranslation('name') }}</span>
+                                <span class="tz-cat-cta">{{ translate('Shop now') }} <i class="las la-arrow-right"></i></span>
+                            </span>
                             <span class="tz-cat-img">
                                 <img src="{{ $catImg ?: static_asset('assets/img/placeholder.jpg') }}" alt="" loading="lazy" decoding="async"
                                      onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                             </span>
-                            <span>{{ $category->getTranslation('name') }}</span>
                         </a>
                     @endforeach
                 </div>

@@ -86,15 +86,29 @@
 .tz-usp span { font-size: 12px; color: var(--tz-ink-3); }
 
 /* Category rail */
-.tz-cats { grid-auto-columns: 84px; gap: 14px; }
-@media (min-width: 992px) { .tz-cats { grid-auto-columns: 120px; gap: 22px; } }
-.tz-cat { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; color: var(--tz-ink) !important; }
-.tz-cat:hover { text-decoration: none; }
-.tz-cat-img { width: 76px; height: 76px; border-radius: 50%; overflow: hidden; background: var(--tz-bg); border: 2px solid #fff; box-shadow: 0 0 0 1.5px var(--tz-line); transition: box-shadow .2s, transform .2s; }
-.tz-cat:hover .tz-cat-img { box-shadow: 0 0 0 2px var(--primary); transform: translateY(-2px); }
-.tz-cat-img img { width: 100%; height: 100%; object-fit: cover; }
-@media (min-width: 992px) { .tz-cat-img { width: 108px; height: 108px; } }
-.tz-cat span { font-size: 13px; font-weight: 600; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* Category cards: grid that fills the row, so a few categories still look intentional */
+.tz-cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 768px) { .tz-cats { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; } }
+.tz-cat { --tz-cat-tint: #eef6ec; position: relative; display: flex; flex-direction: column-reverse; gap: 10px; padding: 14px; border-radius: var(--tz-radius); background: var(--tz-cat-tint); color: var(--tz-ink) !important; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+.tz-cat:nth-child(4n+2) { --tz-cat-tint: #eaf1fb; }
+.tz-cat:nth-child(4n+3) { --tz-cat-tint: #fdf3e6; }
+.tz-cat:nth-child(4n+4) { --tz-cat-tint: #f1edfb; }
+.tz-cat:hover { text-decoration: none; transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20, 22, 31, .10); }
+.tz-cat-img { display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 3; border-radius: var(--tz-radius-sm); background: #fff; overflow: hidden; }
+.tz-cat-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; transition: transform .3s; }
+.tz-cat:hover .tz-cat-img img { transform: scale(1.05); }
+.tz-cat-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tz-cat-name { font-size: 15px; font-weight: 800; line-height: 1.25; letter-spacing: -.01em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tz-cat-cta { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: var(--primary); }
+.tz-cat:hover .tz-cat-cta i { transform: translateX(3px); }
+.tz-cat-cta i { transition: transform .2s; }
+@media (min-width: 768px) {
+  .tz-cat { flex-direction: row; align-items: center; gap: 18px; padding: 20px 20px 20px 26px; min-height: 180px; }
+  .tz-cat-text { flex: 1; gap: 10px; }
+  .tz-cat-name { font-size: 22px; }
+  .tz-cat-cta { font-size: 14px; }
+  .tz-cat-img { flex: 0 0 46%; max-width: 240px; aspect-ratio: 1 / 1; }
+}
 
 /* Product card */
 .tz-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
