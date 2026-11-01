@@ -215,6 +215,28 @@ $middleHeaderTextColor = get_setting('middle_header_text_color');
                                 </li>
                             </ul>
                             @endif
+                            <!-- Language Switcher -->
+                            @if (get_setting('show_language_switcher') == 'on')
+                            <div class="dropdown ml-4 mb-1 z-1045 py-1">
+                                <button class="btn btn-link p-0 fs-12 d-flex align-items-center top-text-color-visibility"
+                                    type="button" data-toggle="dropdown" aria-expanded="false"
+                                    aria-label="{{ translate('Language') }}" style="color: {{ $topHeaderTextColor }};">
+                                    <i class="las la-globe fs-16 mr-1"></i>
+                                    <span>{{ $system_language->name }}</span>
+                                    <i class="las la-angle-down ml-1"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right py-0" style="min-width: 150px;">
+                                    @foreach (get_all_active_language() as $language)
+                                    <a href="javascript:void(0)"
+                                        class="dropdown-item fs-13 py-2 @if ($language->code == $system_language->code) active @endif"
+                                        lang="{{ $language->code }}"
+                                        onclick="changeLanguage('{{ $language->code }}')">
+                                        {{ $language->name }}
+                                    </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
                             <!-- Gear Icon Dropdown Toggle -->
                             <div class="dropdown ml-4 mb-1 z-1045 py-1">
                                 <button class="btn btn-link p-0 gear-toggle" type="button" data-toggle="dropdown"
@@ -234,35 +256,6 @@ $middleHeaderTextColor = get_setting('middle_header_text_color');
 
                                 <!-- Dropdown Menu -->
                                 <div class="dropdown-menu dropdown-menu-right py-0" style="min-width: 200px;">
-                                    <!-- Language Switcher -->
-                                    @if (get_setting('show_language_switcher') == 'on')
-                                    <div class="dropdown-submenu px-2 py-2 mt-1 ml-1 border-bottom border-soft-light hover-bg-light"
-                                        style="min-height: 40px;">
-                                        <div class="form-control form-control-sm border-0 bg-transparent p-0 w-100 cursor-pointer hover-text-primary h-100 d-flex align-items-center justify-content-between"
-                                            onclick="toggleChildDropdown(this, event)">
-                                            <span>{{ $system_language->name }}</span>
-                                            <i class="la la-angle-right"></i>
-                                        </div>
-
-                                        <!-- Language Child Dropdown -->
-                                        <div class="dropdown-menu dropdown-menu-right py-0 header-drop child-dropdown"
-                                            style="min-width: 200px; left: 100%; top: 1px!important; margin-top: -1px;">
-                                            @foreach (get_all_active_language() as $language)
-                                            <div class="px-2 py-1 border-bottom border-soft-light hover-bg-light">
-                                                <a href="javascript:void(0)" class="d-block text-dark"
-                                                    data-flag="{{ $language->code }}"
-                                                    onclick="changeLanguage('{{ $language->code }}')">
-                                                    <img src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                        data-src="{{ static_asset('assets/img/flags/' . $language->code . '.png') }}"
-                                                        class="mr-1 lazyload" alt="{{ $language->name }}" height="11">
-                                                    {{ $language->name }}
-                                                </a>
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    @endif
-
 
 
                                     <!-- Currency Switcher -->
@@ -488,12 +481,6 @@ $middleHeaderTextColor = get_setting('middle_header_text_color');
                                         <div class="row pt-4">
                                             <div class="col-4">
                                                 <ul class="list-unstyled mb-3">
-                                                    <li class="fs-14 fw-700 mb-2">
-                                                        <a class="text-reset hov-text-primary"
-                                                            href="{{ route('flash-deals') }}">
-                                                            {{ translate('Flash Sales') }}
-                                                        </a>
-                                                    </li>
                                                     <li class="fs-14 fw-700 mb-2">
                                                         <a class="text-reset hov-text-primary"
                                                             href="{{ route('todays-deal') }}">

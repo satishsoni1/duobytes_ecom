@@ -146,9 +146,9 @@ Route::controller(HomeController::class)->group(function () {
     //category dropdown menu ajax call
     Route::post('/category/nav-element-list', 'get_category_items')->name('category.elements');
 
-    //Flash Deal Details Page
-    Route::get('/flash-deals', 'all_flash_deals')->name('flash-deals')->middleware(['portfolio-view', 'facebook_page_view']);
-    Route::get('/flash-deal/{slug}', 'flash_deal_details')->name('flash-deal-details')->middleware(['portfolio-view', 'facebook_page_view']);
+    //Flash Deal pages are disabled for now; route names kept so existing links resolve to home
+    Route::redirect('/flash-deals', '/')->name('flash-deals');
+    Route::redirect('/flash-deal/{slug}', '/')->name('flash-deal-details');
 
     //Todays Deal Details Page
     Route::get('/todays-deal', 'todays_deal')->name('todays-deal')->middleware(['portfolio-view', 'facebook_page_view']);
@@ -518,6 +518,8 @@ Route::controller(BlogController::class)->group(function () {
     Route::post('/blog/generate-slug', 'generateSlug')->name('generate.slug');
 
 });
+
+Route::view('/about-us', 'frontend.about_us')->name('about-us');
 
 Route::controller(PageController::class)->group(function () {
     //mobile app balnk page for webview
