@@ -483,12 +483,6 @@ $middleHeaderTextColor = get_setting('middle_header_text_color');
                                                 <ul class="list-unstyled mb-3">
                                                     <li class="fs-14 fw-700 mb-2">
                                                         <a class="text-reset hov-text-primary"
-                                                            href="{{ route('todays-deal') }}">
-                                                            {{ translate("Today's Deals") }}
-                                                        </a>
-                                                    </li>
-                                                    <li class="fs-14 fw-700 mb-2">
-                                                        <a class="text-reset hov-text-primary"
                                                             href="{{ route('brands.all') }}">
                                                             {{ translate('Brands') }}
                                                         </a>

@@ -76,20 +76,16 @@
             </div>
 
             <div class="cp-card cp-card-pad" style="margin-top:16px">
-                <h3 style="margin-bottom:14px">{{ translate('Tax & registration') }}</h3>
+                <h3 style="margin-bottom:14px">{{ translate('KYC details') }}</h3>
                 <div class="cp-grid cp-md-2">
                     <div class="cp-field">
-                        <label class="cp-label" for="gst_number">{{ translate('GSTIN') }}</label>
-                        <input id="gst_number" name="gst_number" class="cp-input" value="{{ old('gst_number', $partner->gst_number) }}" maxlength="15" autocapitalize="characters" spellcheck="false" placeholder="27ABCDE1234F1Z5" style="text-transform:uppercase">
+                        <label class="cp-label" for="aadhaar_number">{{ translate('Aadhaar Card number') }}</label>
+                        <input id="aadhaar_number" name="aadhaar_number" class="cp-input" value="{{ old('aadhaar_number', $partner->aadhaar_number) }}" inputmode="numeric" maxlength="14" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012">
                     </div>
                     <div class="cp-field">
                         <label class="cp-label" for="pan_number">{{ translate('PAN') }}</label>
                         <input id="pan_number" name="pan_number" class="cp-input" value="{{ old('pan_number', $partner->pan_number) }}" maxlength="10" autocapitalize="characters" spellcheck="false" placeholder="ABCDE1234F" style="text-transform:uppercase">
                     </div>
-                </div>
-                <div class="cp-field">
-                    <label class="cp-label" for="registration_number">{{ translate('Trade licence / registration no.') }}</label>
-                    <input id="registration_number" name="registration_number" class="cp-input" value="{{ old('registration_number', $partner->registration_number) }}">
                 </div>
             </div>
 
@@ -244,7 +240,7 @@
                 <div><dt>{{ translate('Business') }}</dt><dd>{{ $partner->company_name ?: '—' }}</dd></div>
                 <div><dt>{{ translate('Type') }}</dt><dd>{{ translate($businessTypes[$partner->business_type] ?? '-') }}</dd></div>
                 <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}{{ $partner->designation ? ', ' . $partner->designation : '' }}</dd></div>
-                <div><dt>{{ translate('GSTIN') }}</dt><dd>{{ $partner->gst_number ?: '—' }}</dd></div>
+                <div><dt>{{ translate('Aadhaar') }}</dt><dd>{{ $partner->aadhaar_number ? 'XXXX XXXX ' . substr($partner->aadhaar_number, -4) : '—' }}</dd></div>
                 <div><dt>{{ translate('PAN') }}</dt><dd>{{ $partner->pan_number ?: '—' }}</dd></div>
                 <div style="border-bottom:0"><dt>{{ translate('Address') }}</dt><dd>{{ $partner->address_line }}, {{ $partner->city }}, {{ $partner->state }} {{ $partner->postal_code }}</dd></div>
             </dl>

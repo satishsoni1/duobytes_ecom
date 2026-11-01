@@ -40,10 +40,6 @@
         ? get_flash_deal_products($flashDeal->id)->pluck('product')->filter(fn ($p) => $p && $p->published == 1)->take(15)
         : collect();
 
-    $todaysDeals = get_setting('enable_todays_deal') == 1
-        ? filter_products(\App\Models\Product::where('todays_deal', '1'))->with('thumbnail', 'taxes', 'product_translations')->latest('id')->limit(15)->get()
-        : collect();
-
     $featuredProducts = get_setting('enable_featured_products') == 1 ? get_featured_products()->take(10) : collect();
     $bestSellers = (get_setting('enable_best_selling_products') == 1 && get_setting('best_selling') == 1) ? get_best_selling_products(15) : collect();
 
@@ -92,25 +88,21 @@
                     @endif
                 </div>
 
-                <div class="tz-hero-side">
+                <div class="tz-hero-side {{ $sideTiles->isEmpty() ? 'single' : '' }}">
                     @forelse ($sideTiles as $tile)
                         <a class="tz-tile" href="{{ $tile['link'] ?: 'javascript:void(0)' }}">
                             <img src="{{ $tile['src'] }}" alt="{{ $siteName }} {{ translate('promotion') }}" loading="lazy" decoding="async">
                         </a>
                     @empty
-                        <a class="tz-tile tz-tile-accent" href="{{ get_setting('enable_todays_deal') == 1 ? route('todays-deal') : route('search') }}">
-                            <span class="tz-tile-title">{{ translate("Today's deals") }}</span>
-                            <span class="tz-tile-sub">{{ translate('Fresh offers every day') }} →</span>
-                        </a>
                         @if (channel_partner_program_enabled())
-                            <a class="tz-tile tz-tile-dark" href="{{ route('channel_partner.landing') }}">
+                            <a class="tz-tile tz-tile-accent tz-tile-lg" href="{{ route('channel_partner.landing') }}">
                                 <span class="tz-tile-title">{{ translate('Buying in bulk?') }}</span>
                                 <span class="tz-tile-sub">{{ translate('Become a channel partner') }} →</span>
                             </a>
                         @else
-                            <a class="tz-tile tz-tile-dark" href="{{ route('categories.all') }}">
+                            <a class="tz-tile tz-tile-accent tz-tile-lg" href="{{ route('categories.all') }}">
                                 <span class="tz-tile-title">{{ translate('All categories') }}</span>
-                                <span class="tz-tile-sub">{{ translate('Find the perfect gift') }} →</span>
+                                <span class="tz-tile-sub">{{ translate('Shop by category') }} →</span>
                             </a>
                         @endif
                     @endforelse
@@ -126,7 +118,6 @@
                 <div class="tz-usp"><i class="las la-shipping-fast"></i><div><strong>{{ translate('Fast delivery') }}</strong><span>{{ translate('Quick dispatch on every order') }}</span></div></div>
                 <div class="tz-usp"><i class="las la-shield-alt"></i><div><strong>{{ translate('Secure payments') }}</strong><span>{{ translate('100% protected checkout') }}</span></div></div>
                 <div class="tz-usp"><i class="las la-undo-alt"></i><div><strong>{{ translate('Easy returns') }}</strong><span>{{ translate('Hassle-free return policy') }}</span></div></div>
-                <div class="tz-usp"><i class="las la-certificate"></i><div><strong>{{ translate('Genuine products') }}</strong><span>{{ translate('Safety-checked for kids') }}</span></div></div>
             </div>
         </div>
     </section>
@@ -182,30 +173,6 @@
                         <button type="button" class="tz-rail-nav prev" data-tz-rail-prev aria-label="{{ translate('Previous') }}"><i class="las la-angle-left"></i></button>
                         <button type="button" class="tz-rail-nav next" data-tz-rail-next aria-label="{{ translate('Next') }}"><i class="las la-angle-right"></i></button>
                     </div>
-                </div>
-            </div>
-        </section>
-    @endif
-
-    {{-- ============ TODAY'S DEALS ============ --}}
-    @if ($todaysDeals->isNotEmpty())
-        <section class="tz-section">
-            <div class="tz-wrap">
-                <div class="tz-head">
-                    <div>
-                        <h2>{{ translate("Today's deals") }}</h2>
-                        @if (get_setting('todays_deal_title_sub_text'))<p>{{ get_setting('todays_deal_title_sub_text') }}</p>@endif
-                    </div>
-                    <a href="{{ route('todays-deal') }}" class="tz-link">{{ translate('View all') }} <i class="las la-angle-right"></i></a>
-                </div>
-                <div class="tz-rail-wrap">
-                    <div class="tz-rail tz-rail-products" data-tz-rail>
-                        @foreach ($todaysDeals as $product)
-                            @include('frontend.nexa.partials.modern_product_card', ['product' => $product])
-                        @endforeach
-                    </div>
-                    <button type="button" class="tz-rail-nav prev" data-tz-rail-prev aria-label="{{ translate('Previous') }}"><i class="las la-angle-left"></i></button>
-                    <button type="button" class="tz-rail-nav next" data-tz-rail-next aria-label="{{ translate('Next') }}"><i class="las la-angle-right"></i></button>
                 </div>
             </div>
         </section>
@@ -289,16 +256,12 @@
                     <div>
                         <span class="tz-eyebrow"><i class="las la-handshake"></i> {{ translate('For businesses') }}</span>
                         <h2>{{ translate('Become a') }} {{ $siteName }} {{ translate('channel partner') }}</h2>
-                        <p>{{ translate('Distributors, retailers and schools get contract pricing, bulk discounts and a dedicated ordering portal.') }}</p>
                         <div class="tz-hero-ctas" style="margin-top:18px">
                             <a href="{{ route('channel_partner.landing') }}" class="tz-btn tz-btn-light">{{ translate('Apply now') }} <i class="las la-arrow-right"></i></a>
                             <a href="{{ route('channel_partner.login') }}" class="tz-btn tz-btn-ghost">{{ translate('Partner login') }}</a>
                         </div>
                     </div>
                     <ul>
-                        <li><i class="las la-percent"></i> {{ translate('Contract pricing on every product') }}</li>
-                        <li><i class="las la-layer-group"></i> {{ translate('Bulk quantity price breaks') }}</li>
-                        <li><i class="las la-file-invoice"></i> {{ translate('Order on account with GST invoices') }}</li>
                         <li><i class="las la-mobile"></i> {{ translate('Onboard in minutes from your phone') }}</li>
                     </ul>
                 </div>

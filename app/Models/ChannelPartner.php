@@ -23,7 +23,7 @@ class ChannelPartner extends Model
     // Fields the partner may edit during onboarding.
     public const BUSINESS_FIELDS = [
         'company_name', 'business_type', 'contact_person', 'designation',
-        'gst_number', 'pan_number', 'registration_number',
+        'gst_number', 'pan_number', 'aadhaar_number', 'registration_number',
         'address_line', 'city', 'state', 'postal_code', 'country',
         'website', 'expected_monthly_volume',
     ];

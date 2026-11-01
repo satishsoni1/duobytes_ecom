@@ -159,12 +159,6 @@
 
     <!--Todays Deal Start-->
     <div class="mt-4 mb-3">
-        @if($detailedProduct->todays_deal)
-            <div class="bg-dark py-10px px-20px rounded-corner-8px d-flex flex-wrap align-items-center justify-content-between">
-                <span class="fs-14 fw-bold text-orange">{{ translate('Todays Deal')}}</span>
-                <span class="fs-14 fw-semibold text-orange">{{ translate('Exclusive for today only')}}</span>
-            </div>
-        @endif
         <!--Todays Deal End-->
 
         <!--Flash Sale Start-->

@@ -26,27 +26,6 @@
             </span>
         </a>
     </div>
-    <!-- Today's Deal -->
-    <div class="aiz-floating-button">
-        <a href="{{ route('todays-deal') }}">
-            <span class="circle">
-                <span class="">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                        <g id="a47ac3ccd1557f7fbdb769f1c535b2b9" transform="translate(0 0)">
-                          <path id="Path_41552" data-name="Path 41552" d="M10,0A10,10,0,1,0,20,10,10,10,0,0,0,10,0Zm0,18.333A8.333,8.333,0,1,1,18.333,10,8.333,8.333,0,0,1,10,18.333Z" fill="#fff"/>
-                          <path id="Path_41553" data-name="Path 41553" d="M17.515,14.143,13,11.434V6a1,1,0,0,0-2,0v6a1.075,1.075,0,0,0,.485.857l5,3a1,1,0,1,0,1.03-1.714Z" transform="translate(-2.588 -1.538)" fill="#fff"/>
-                        </g>
-                    </svg>
-                </span>
-            </span>
-            <span class="text">
-                <span class="w-120px mr-3">{{ translate("Today's Deal") }}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="7.073" height="12" viewBox="0 0 7.073 12">
-                    <path id="Path_41557" data-name="Path 41557" d="M12.913,3.173,11.834,2.1,5.84,8.1l6,6,1.073-1.073L7.985,8.1Z" transform="translate(12.913 14.1) rotate(180)" fill="#fff"/>
-                </svg>
-            </span>
-        </a>
-    </div>
     @if(addon_is_activated('auction'))
     <!-- Auction -->
     <div class="aiz-floating-button">

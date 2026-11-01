@@ -151,7 +151,8 @@ Route::controller(HomeController::class)->group(function () {
     Route::redirect('/flash-deal/{slug}', '/')->name('flash-deal-details');
 
     //Todays Deal Details Page
-    Route::get('/todays-deal', 'todays_deal')->name('todays-deal')->middleware(['portfolio-view', 'facebook_page_view']);
+    //Today's Deal page is disabled for now; route name kept so existing links resolve to home
+    Route::redirect('/todays-deal', '/')->name('todays-deal');
 
     //Best Selling Page
     Route::get('/best-selling', 'best_selling')->name('best-selling')->middleware(['portfolio-view', 'facebook_page_view']);

@@ -42,7 +42,7 @@ class OnboardingController extends Controller
         abort_unless($partner->canEditApplication(), 403, translate('Your application is locked while it is being reviewed.'));
 
         $request->merge([
-            'gst_number' => $request->filled('gst_number') ? strtoupper(preg_replace('/\s+/', '', $request->gst_number)) : null,
+            'aadhaar_number' => $request->filled('aadhaar_number') ? preg_replace('/\D+/', '', $request->aadhaar_number) : null,
             'pan_number' => $request->filled('pan_number') ? strtoupper(preg_replace('/\s+/', '', $request->pan_number)) : null,
         ]);
 
@@ -51,9 +51,8 @@ class OnboardingController extends Controller
             'business_type' => ['required', Rule::in(array_keys(config('channel_partner.business_types')))],
             'contact_person' => ['required', 'string', 'max:100'],
             'designation' => ['nullable', 'string', 'max:100'],
-            'gst_number' => ['nullable', 'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/'],
+            'aadhaar_number' => ['nullable', 'regex:/^[2-9][0-9]{11}$/'],
             'pan_number' => ['nullable', 'regex:/^[A-Z]{5}[0-9]{4}[A-Z]$/'],
-            'registration_number' => ['nullable', 'string', 'max:50'],
             'address_line' => ['required', 'string', 'max:500'],
             'city' => ['required', 'string', 'max:100'],
             'state' => ['required', 'string', 'max:100'],
@@ -62,7 +61,7 @@ class OnboardingController extends Controller
             'website' => ['nullable', 'url', 'max:255'],
             'expected_monthly_volume' => ['nullable', 'string', 'max:50'],
         ], [
-            'gst_number.regex' => translate('Enter a valid 15-character GSTIN, e.g. 27ABCDE1234F1Z5.'),
+            'aadhaar_number.regex' => translate('Enter a valid 12-digit Aadhaar number.'),
             'pan_number.regex' => translate('Enter a valid 10-character PAN, e.g. ABCDE1234F.'),
         ]);
 

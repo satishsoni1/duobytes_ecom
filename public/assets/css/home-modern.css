@@ -76,6 +76,11 @@
 .tz-tile-accent { background: linear-gradient(135deg, #ff7a59, #ffb057); }
 .tz-tile-dark { background: linear-gradient(135deg, #1b1f2c, #353c55); }
 @media (min-width: 992px) { .tz-tile { min-height: 0; padding: 22px; } .tz-tile-title { font-size: 20px; } }
+.tz-hero-side.single { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.tz-tile-lg { min-height: 140px; padding: 22px; }
+.tz-tile-lg .tz-tile-title { font-size: 26px; }
+.tz-tile-lg .tz-tile-sub { font-size: 17px; font-weight: 600; opacity: .95; margin-top: 6px; }
+@media (min-width: 992px) { .tz-tile-lg { padding: 32px; } .tz-tile-lg .tz-tile-title { font-size: 34px; } .tz-tile-lg .tz-tile-sub { font-size: 19px; } }
 
 /* USP strip */
 .tz-usps { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 10px; overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--tz-gutter)); padding: 0 var(--tz-gutter); }

@@ -14,7 +14,7 @@
                 <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}</dd></div>
                 <div><dt>{{ translate('Email') }}</dt><dd>{{ auth()->user()->email }}</dd></div>
                 <div><dt>{{ translate('Mobile') }}</dt><dd>{{ auth()->user()->phone }}</dd></div>
-                <div><dt>{{ translate('GSTIN') }}</dt><dd>{{ $partner->gst_number ?: '—' }}</dd></div>
+                <div><dt>{{ translate('Aadhaar') }}</dt><dd>{{ $partner->aadhaar_number ? 'XXXX XXXX ' . substr($partner->aadhaar_number, -4) : '—' }}</dd></div>
                 <div style="border-bottom:0"><dt>{{ translate('Address') }}</dt><dd>{{ $partner->address_line }}, {{ $partner->city }}, {{ $partner->state }} {{ $partner->postal_code }}</dd></div>
             </dl>
             <p class="cp-small cp-muted" style="padding:0 16px 16px;margin:0">{{ translate('To change business details, please contact your account manager.') }}</p>
