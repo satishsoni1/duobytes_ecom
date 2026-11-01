@@ -25,14 +25,9 @@ class OnboardingController extends Controller
             return redirect()->route('channel_partner.dashboard');
         }
 
-        $documents = $partner->documents()->latest()->get()->groupBy('document_type');
-
         return view('channel_partner.onboarding.index', [
             'partner' => $partner,
-            'documents' => $documents,
-            'documentTypes' => config('channel_partner.document_types'),
             'businessTypes' => config('channel_partner.business_types'),
-            'missingDocuments' => $partner->missingRequiredDocuments(),
         ]);
     }
 
@@ -41,23 +36,16 @@ class OnboardingController extends Controller
         $partner = $this->partner($request);
         abort_unless($partner->canEditApplication(), 403, translate('Your application is locked while it is being reviewed.'));
 
-        $request->merge([
-            'aadhaar_number' => $request->filled('aadhaar_number') ? preg_replace('/\D+/', '', $request->aadhaar_number) : null,
-        ]);
-
         $data = $request->validate([
             'company_name' => ['nullable', 'string', 'max:150'],
             'business_type' => ['required', Rule::in(array_keys(config('channel_partner.business_types')))],
             'contact_person' => ['required', 'string', 'max:100'],
             'designation' => ['nullable', 'string', 'max:100'],
-            'aadhaar_number' => ['nullable', 'regex:/^[2-9][0-9]{11}$/'],
             'address_line' => ['required', 'string', 'max:500'],
             'city' => ['required', 'string', 'max:100'],
             'state' => ['required', 'string', 'max:100'],
             'postal_code' => ['required', 'string', 'max:20'],
             'country' => ['nullable', 'string', 'max:100'],
-        ], [
-            'aadhaar_number.regex' => translate('Enter a valid 12-digit Aadhaar number.'),
         ]);
 
         $partner->fill($data)->save();
@@ -67,7 +55,7 @@ class OnboardingController extends Controller
         }
 
         flash(translate('Business details saved'))->success();
-        return redirect()->route('channel_partner.onboarding', ['step' => 'documents']);
+        return redirect()->route('channel_partner.onboarding', ['step' => 'review']);
     }
 
     public function uploadDocument(Request $request)
@@ -146,13 +134,6 @@ class OnboardingController extends Controller
         if (!$partner->businessDetailsComplete()) {
             flash(translate('Please complete your business details first.'))->warning();
             return redirect()->route('channel_partner.onboarding', ['step' => 'business']);
-        }
-
-        $missing = $partner->missingRequiredDocuments();
-        if (!empty($missing)) {
-            $labels = collect($missing)->map(fn ($t) => translate(config('channel_partner.document_types.' . $t . '.label')))->implode(', ');
-            flash(translate('Please upload') . ': ' . $labels)->warning();
-            return redirect()->route('channel_partner.onboarding', ['step' => 'documents']);
         }
 
         $request->validate(['declaration' => ['accepted']], [

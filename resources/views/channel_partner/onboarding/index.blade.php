@@ -7,16 +7,16 @@
     $requested = request('step');
     if (!$editable) {
         $step = 'status';
-    } elseif (in_array($requested, ['business', 'documents', 'review'], true)) {
+    } elseif (in_array($requested, ['business', 'review'], true)) {
         $step = $requested;
     } else {
-        $step = $partner->businessDetailsComplete() ? (empty($missingDocuments) ? 'review' : 'documents') : 'business';
+        $step = $partner->businessDetailsComplete() ? 'review' : 'business';
     }
     // Do not let partners jump ahead of an incomplete business step
-    if (in_array($step, ['documents', 'review'], true) && !$partner->businessDetailsComplete()) {
+    if ($step === 'review' && !$partner->businessDetailsComplete()) {
         $step = 'business';
     }
-    $stepNumber = ['business' => 2, 'documents' => 3, 'review' => 4, 'status' => 4][$step];
+    $stepNumber = ['business' => 2, 'review' => 3, 'status' => 3][$step];
 @endphp
 
 @section('title', translate('Partner application'))
@@ -41,10 +41,10 @@
     {{-- ===================== STEP 2: BUSINESS ===================== --}}
     @if ($step === 'business')
         <h1 class="cp-auth-title">{{ translate('Your details') }}</h1>
-        <p class="cp-auth-sub">{{ translate('This appears on your invoices and contract.') }}</p>
+        <p class="cp-auth-sub">{{ translate('Just your name, contact and address. This appears on your invoices.') }}</p>
 
         <form method="POST" action="{{ route('channel_partner.onboarding.business') }}" data-cp-ajax
-              data-cp-next="{{ route('channel_partner.onboarding', ['step' => 'documents']) }}" novalidate>
+              data-cp-next="{{ route('channel_partner.onboarding', ['step' => 'review']) }}" novalidate>
             @csrf
             <div class="cp-card cp-card-pad">
                 <div class="cp-field">
@@ -72,14 +72,6 @@
                         <label class="cp-label" for="designation">{{ translate('Designation') }}</label>
                         <input id="designation" name="designation" class="cp-input" value="{{ old('designation', $partner->designation) }}" placeholder="{{ translate('Owner, Purchase Manager…') }}">
                     </div>
-                </div>
-            </div>
-
-            <div class="cp-card cp-card-pad" style="margin-top:16px">
-                <h3 style="margin-bottom:14px">{{ translate('KYC details') }}</h3>
-                <div class="cp-field">
-                    <label class="cp-label" for="aadhaar_number">{{ translate('Aadhaar Card number') }}</label>
-                    <input id="aadhaar_number" name="aadhaar_number" class="cp-input" value="{{ old('aadhaar_number', $partner->aadhaar_number) }}" inputmode="numeric" maxlength="14" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012">
                 </div>
             </div>
 
@@ -117,91 +109,7 @@
         </form>
     @endif
 
-    {{-- ===================== STEP 3: DOCUMENTS ===================== --}}
-    @if ($step === 'documents')
-        <h1 class="cp-auth-title">{{ translate('Upload documents') }}</h1>
-        <p class="cp-auth-sub">{{ translate('Take a clear photo or upload a PDF. Max') }} {{ round(config('channel_partner.document_max_kb') / 1024) }} MB {{ translate('per file.') }}</p>
-
-        <div class="cp-alert cp-alert-info" style="margin-bottom:16px;{{ empty($missingDocuments) ? 'display:none' : '' }}" data-docs-missing-wrap>
-            <x-cp-icon name="info" class="cp-icon-sm" />
-            <div><span data-docs-missing>{{ count($missingDocuments) }}</span> {{ translate('required document(s) still needed') }}</div>
-        </div>
-
-        <div class="cp-stack">
-            @foreach ($documentTypes as $type => $meta)
-                @php $files = $documents->get($type, collect()); @endphp
-                <section class="cp-doc {{ $files->isNotEmpty() ? 'is-complete' : '' }}" data-doc-type="{{ $type }}" data-required="{{ $meta['required'] ? 1 : 0 }}"
-                         data-upload-url="{{ route('channel_partner.onboarding.documents.store') }}">
-                    <div class="cp-doc-head">
-                        <span class="cp-doc-icon"><x-cp-icon name="file" /></span>
-                        <div style="flex:1;min-width:0">
-                            <div class="cp-between">
-                                <span class="cp-doc-title">{{ translate($meta['label']) }}</span>
-                                <span class="cp-pill cp-pill-success" data-doc-state @if ($files->isEmpty()) style="display:none" @endif>
-                                    <x-cp-icon name="check" class="cp-icon-sm" /> {{ translate('Added') }}
-                                </span>
-                                <span class="cp-pill {{ $meta['required'] ? 'cp-pill-warning' : 'cp-pill-muted' }}" data-doc-pending @if ($files->isNotEmpty()) style="display:none" @endif>
-                                    {{ $meta['required'] ? translate('Required') : translate('Optional') }}
-                                </span>
-                            </div>
-                            <div class="cp-muted cp-small">{{ translate($meta['hint']) }}</div>
-                        </div>
-                    </div>
-
-                    <ul class="cp-files">
-                        @foreach ($files as $doc)
-                            <li class="cp-file" data-doc-id="{{ $doc->id }}">
-                                @if ($doc->isImage())
-                                    <img class="cp-file-thumb" src="{{ route('channel_partner.documents.show', $doc) }}" alt="" loading="lazy">
-                                @else
-                                    <span class="cp-file-thumb"><x-cp-icon name="file" /></span>
-                                @endif
-                                <div style="min-width:0;flex:1">
-                                    <a class="cp-file-name" href="{{ route('channel_partner.documents.show', $doc) }}" target="_blank" rel="noopener">{{ $doc->original_name }}</a>
-                                    <div class="cp-file-meta">
-                                        {{ $doc->humanSize() }}
-                                        @if ($doc->status === 'rejected')
-                                            · <span style="color:var(--cp-danger)">{{ translate('Rejected') }}{{ $doc->remarks ? ': ' . $doc->remarks : '' }}</span>
-                                        @elseif ($doc->status === 'verified')
-                                            · <span style="color:var(--cp-success)">{{ translate('Verified') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                @if ($doc->status !== 'verified')
-                                    <button type="button" class="cp-icon-btn" data-doc-delete data-url="{{ route('channel_partner.onboarding.documents.destroy', $doc) }}" aria-label="{{ translate('Remove') }}">
-                                        <x-cp-icon name="trash" />
-                                    </button>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
-
-                    <div class="cp-doc-actions">
-                        <label class="cp-btn cp-btn-light">
-                            <x-cp-icon name="camera" class="cp-icon-sm" /> {{ translate('Take photo') }}
-                            <input type="file" accept="image/*" capture="environment" class="sr-only">
-                        </label>
-                        <label class="cp-btn cp-btn-light">
-                            <x-cp-icon name="upload" class="cp-icon-sm" /> {{ translate('Upload file') }}
-                            <input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" multiple class="sr-only">
-                        </label>
-                    </div>
-                </section>
-            @endforeach
-        </div>
-
-        <div class="cp-sticky-actions">
-            <a href="{{ route('channel_partner.onboarding', ['step' => 'business']) }}" class="cp-btn cp-btn-light" style="flex:0 0 auto">
-                <x-cp-icon name="arrow-left" class="cp-icon-sm" /><span class="sr-only">{{ translate('Back') }}</span>
-            </a>
-            <a href="{{ route('channel_partner.onboarding', ['step' => 'review']) }}" data-docs-next
-               class="cp-btn cp-btn-primary {{ empty($missingDocuments) ? '' : 'disabled' }}" aria-disabled="{{ empty($missingDocuments) ? 'false' : 'true' }}">
-                {{ translate('Continue to review') }} <x-cp-icon name="arrow-right" class="cp-icon-sm" />
-            </a>
-        </div>
-    @endif
-
-    {{-- ===================== STEP 4: REVIEW ===================== --}}
+    {{-- ===================== STEP 3: REVIEW ===================== --}}
     @if ($step === 'review')
         <h1 class="cp-auth-title">{{ translate('Review & submit') }}</h1>
         <p class="cp-auth-sub">{{ translate('Check everything once. Your partner account is activated as soon as you submit.') }}</p>
@@ -215,43 +123,25 @@
                 <div><dt>{{ translate('Business') }}</dt><dd>{{ $partner->company_name ?: '—' }}</dd></div>
                 <div><dt>{{ translate('Type') }}</dt><dd>{{ translate($businessTypes[$partner->business_type] ?? '-') }}</dd></div>
                 <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}{{ $partner->designation ? ', ' . $partner->designation : '' }}</dd></div>
-                <div><dt>{{ translate('Aadhaar') }}</dt><dd>{{ $partner->aadhaar_number ? 'XXXX XXXX ' . substr($partner->aadhaar_number, -4) : '—' }}</dd></div>
+                <div><dt>{{ translate('Email') }}</dt><dd>{{ auth()->user()->email }}</dd></div>
+                <div><dt>{{ translate('Mobile') }}</dt><dd>{{ auth()->user()->phone ?: '—' }}</dd></div>
                 <div style="border-bottom:0"><dt>{{ translate('Address') }}</dt><dd>{{ $partner->address_line }}, {{ $partner->city }}, {{ $partner->state }} {{ $partner->postal_code }}</dd></div>
             </dl>
-        </div>
-
-        <div class="cp-card" style="margin-top:16px">
-            <div class="cp-card-head">
-                <h3>{{ translate('Documents') }}</h3>
-                <a href="{{ route('channel_partner.onboarding', ['step' => 'documents']) }}" class="cp-small">{{ translate('Edit') }}</a>
-            </div>
-            <ul class="cp-list">
-                @foreach ($documentTypes as $type => $meta)
-                    @php $count = $documents->get($type, collect())->count(); @endphp
-                    @if ($count || $meta['required'])
-                        <li class="cp-row" style="padding:12px 16px">
-                            <x-cp-icon :name="$count ? 'check-circle' : 'alert'" class="cp-icon-sm" style="color:{{ $count ? 'var(--cp-success)' : 'var(--cp-danger)' }}" />
-                            <span>{{ translate($meta['label']) }}</span>
-                            <span class="cp-muted cp-small" style="margin-left:auto">{{ $count }} {{ translate('file(s)') }}</span>
-                        </li>
-                    @endif
-                @endforeach
-            </ul>
         </div>
 
         <form method="POST" action="{{ route('channel_partner.onboarding.submit') }}" style="margin-top:16px">
             @csrf
             <label class="cp-check cp-card cp-card-pad">
                 <input type="checkbox" name="declaration" value="1" required>
-                <span>{{ translate('I confirm that the information and documents provided are true and belong to me or my business.') }}</span>
+                <span>{{ translate('I confirm that the information provided is true.') }}</span>
             </label>
             @error('declaration')<div class="cp-error">{{ $message }}</div>@enderror
 
             <div class="cp-sticky-actions">
-                <a href="{{ route('channel_partner.onboarding', ['step' => 'documents']) }}" class="cp-btn cp-btn-light" style="flex:0 0 auto">
+                <a href="{{ route('channel_partner.onboarding', ['step' => 'business']) }}" class="cp-btn cp-btn-light" style="flex:0 0 auto">
                     <x-cp-icon name="arrow-left" class="cp-icon-sm" /><span class="sr-only">{{ translate('Back') }}</span>
                 </a>
-                <button type="submit" class="cp-btn cp-btn-primary" @if (!empty($missingDocuments)) disabled @endif>{{ translate('Submit & start ordering') }}</button>
+                <button type="submit" class="cp-btn cp-btn-primary">{{ translate('Submit & start ordering') }}</button>
             </div>
         </form>
     @endif

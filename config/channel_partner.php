@@ -23,25 +23,9 @@ return [
 
     'document_mimes' => ['pdf', 'jpg', 'jpeg', 'png', 'webp'],
 
-    // Document types shown in onboarding. `required` ones must be uploaded
-    // before the application can be submitted.
-    'document_types' => [
-        'aadhaar_card' => [
-            'label' => 'Aadhaar Card',
-            'hint' => 'Front and back of your Aadhaar card',
-            'required' => true,
-        ],
-        'gst_certificate' => [
-            'label' => 'GST Registration Certificate',
-            'hint' => 'Upload if you want to avail GST credit',
-            'required' => false,
-        ],
-        'other' => [
-            'label' => 'Other Supporting Document (if any)',
-            'hint' => 'Distributor agreement, catalogue, etc.',
-            'required' => false,
-        ],
-    ],
+    // Partners sign up with basic details only; no document upload step.
+    // Add types here (label, hint, required) to bring the upload step back.
+    'document_types' => [],
 
     'business_types' => [
         'distributor' => 'Distributor',

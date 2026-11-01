@@ -1,7 +1,7 @@
 @php
-    $cpSteps = [1 => translate('Account'), 2 => translate('Business'), 3 => translate('Documents'), 4 => translate('Review')];
+    $cpSteps = [1 => translate('Account'), 2 => translate('Details'), 3 => translate('Review')];
 @endphp
-<div class="cp-steps" aria-label="{{ translate('Step') }} {{ $current }} / 4">
+<div class="cp-steps" aria-label="{{ translate('Step') }} {{ $current }} / {{ count($cpSteps) }}">
     @foreach ($cpSteps as $n => $label)
         <div class="cp-step {{ $n < $current ? 'done' : ($n === $current ? 'active' : '') }}" @if ($n === $current) aria-current="step" @endif>
             <div class="cp-step-bar"></div>
