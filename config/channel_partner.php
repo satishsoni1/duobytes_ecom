@@ -24,35 +24,20 @@ return [
     'document_mimes' => ['pdf', 'jpg', 'jpeg', 'png', 'webp'],
 
     // Document types shown in onboarding. `required` ones must be uploaded
-    // before the application can be submitted for review.
+    // before the application can be submitted.
     'document_types' => [
-        'pan_card' => [
-            'label' => 'PAN Card',
-            'hint' => 'Your PAN card (front side)',
-            'required' => true,
-        ],
         'aadhaar_card' => [
             'label' => 'Aadhaar Card',
             'hint' => 'Front and back of your Aadhaar card',
             'required' => true,
         ],
-        'cancelled_cheque' => [
-            'label' => 'Cancelled Cheque',
-            'hint' => 'Cancelled cheque of your bank account, or a bank letter',
-            'required' => true,
-        ],
         'gst_certificate' => [
             'label' => 'GST Registration Certificate',
-            'hint' => 'Only if you are registered under GST',
-            'required' => false,
-        ],
-        'address_proof' => [
-            'label' => 'Address Proof',
-            'hint' => 'Utility bill, rent agreement or trade licence',
+            'hint' => 'Upload if you want to avail GST credit',
             'required' => false,
         ],
         'other' => [
-            'label' => 'Other Supporting Document',
+            'label' => 'Other Supporting Document (if any)',
             'hint' => 'Distributor agreement, catalogue, etc.',
             'required' => false,
         ],

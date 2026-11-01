@@ -43,7 +43,6 @@ class OnboardingController extends Controller
 
         $request->merge([
             'aadhaar_number' => $request->filled('aadhaar_number') ? preg_replace('/\D+/', '', $request->aadhaar_number) : null,
-            'pan_number' => $request->filled('pan_number') ? strtoupper(preg_replace('/\s+/', '', $request->pan_number)) : null,
         ]);
 
         $data = $request->validate([
@@ -52,17 +51,13 @@ class OnboardingController extends Controller
             'contact_person' => ['required', 'string', 'max:100'],
             'designation' => ['nullable', 'string', 'max:100'],
             'aadhaar_number' => ['nullable', 'regex:/^[2-9][0-9]{11}$/'],
-            'pan_number' => ['nullable', 'regex:/^[A-Z]{5}[0-9]{4}[A-Z]$/'],
             'address_line' => ['required', 'string', 'max:500'],
             'city' => ['required', 'string', 'max:100'],
             'state' => ['required', 'string', 'max:100'],
             'postal_code' => ['required', 'string', 'max:20'],
             'country' => ['nullable', 'string', 'max:100'],
-            'website' => ['nullable', 'url', 'max:255'],
-            'expected_monthly_volume' => ['nullable', 'string', 'max:50'],
         ], [
             'aadhaar_number.regex' => translate('Enter a valid 12-digit Aadhaar number.'),
-            'pan_number.regex' => translate('Enter a valid 10-character PAN, e.g. ABCDE1234F.'),
         ]);
 
         $partner->fill($data)->save();
@@ -164,8 +159,11 @@ class OnboardingController extends Controller
             'declaration.accepted' => translate('Please confirm that the information is correct.'),
         ]);
 
-        $partner->status = ChannelPartner::STATUS_SUBMITTED;
+        // Partners are approved automatically on submit and can order straight away
+        $partner->status = ChannelPartner::STATUS_APPROVED;
         $partner->submitted_at = now();
+        $partner->partner_code = $partner->partner_code ?: ChannelPartner::generateCode();
+        $partner->approved_at = $partner->approved_at ?: now();
         $partner->rejection_reason = null;
         $partner->save();
 
@@ -178,7 +176,8 @@ class OnboardingController extends Controller
             Log::warning('Channel partner submission mail failed: ' . $e->getMessage());
         }
 
-        return redirect()->route('channel_partner.onboarding');
+        flash(translate('Your partner account is active. You can start ordering now.'))->success();
+        return redirect()->route('channel_partner.dashboard');
     }
 
     public static function streamDocument(ChannelPartnerDocument $document)

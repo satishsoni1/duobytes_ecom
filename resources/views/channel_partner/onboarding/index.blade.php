@@ -77,15 +77,9 @@
 
             <div class="cp-card cp-card-pad" style="margin-top:16px">
                 <h3 style="margin-bottom:14px">{{ translate('KYC details') }}</h3>
-                <div class="cp-grid cp-md-2">
-                    <div class="cp-field">
-                        <label class="cp-label" for="aadhaar_number">{{ translate('Aadhaar Card number') }}</label>
-                        <input id="aadhaar_number" name="aadhaar_number" class="cp-input" value="{{ old('aadhaar_number', $partner->aadhaar_number) }}" inputmode="numeric" maxlength="14" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012">
-                    </div>
-                    <div class="cp-field">
-                        <label class="cp-label" for="pan_number">{{ translate('PAN') }}</label>
-                        <input id="pan_number" name="pan_number" class="cp-input" value="{{ old('pan_number', $partner->pan_number) }}" maxlength="10" autocapitalize="characters" spellcheck="false" placeholder="ABCDE1234F" style="text-transform:uppercase">
-                    </div>
+                <div class="cp-field">
+                    <label class="cp-label" for="aadhaar_number">{{ translate('Aadhaar Card number') }}</label>
+                    <input id="aadhaar_number" name="aadhaar_number" class="cp-input" value="{{ old('aadhaar_number', $partner->aadhaar_number) }}" inputmode="numeric" maxlength="14" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012">
                 </div>
             </div>
 
@@ -113,25 +107,6 @@
                     <div class="cp-field">
                         <label class="cp-label" for="country">{{ translate('Country') }}</label>
                         <input id="country" name="country" class="cp-input" value="{{ old('country', $partner->country ?: 'India') }}" autocomplete="country-name">
-                    </div>
-                </div>
-            </div>
-
-            <div class="cp-card cp-card-pad" style="margin-top:16px">
-                <h3 style="margin-bottom:14px">{{ translate('About your business') }} <span class="cp-muted cp-small">({{ translate('optional') }})</span></h3>
-                <div class="cp-grid cp-md-2">
-                    <div class="cp-field">
-                        <label class="cp-label" for="expected_monthly_volume">{{ translate('Expected monthly purchase') }}</label>
-                        <select id="expected_monthly_volume" name="expected_monthly_volume" class="cp-input">
-                            <option value="">{{ translate('Select') }}</option>
-                            @foreach (['< 50,000', '50,000 – 2 lakh', '2 – 10 lakh', '10 lakh +'] as $range)
-                                <option value="{{ $range }}" {{ old('expected_monthly_volume', $partner->expected_monthly_volume) === $range ? 'selected' : '' }}>{{ $range }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="cp-field">
-                        <label class="cp-label" for="website">{{ translate('Website') }}</label>
-                        <input id="website" name="website" type="url" inputmode="url" class="cp-input" value="{{ old('website', $partner->website) }}" placeholder="https://">
                     </div>
                 </div>
             </div>
@@ -229,7 +204,7 @@
     {{-- ===================== STEP 4: REVIEW ===================== --}}
     @if ($step === 'review')
         <h1 class="cp-auth-title">{{ translate('Review & submit') }}</h1>
-        <p class="cp-auth-sub">{{ translate('Check everything once. Our team usually reviews applications within 1–2 working days.') }}</p>
+        <p class="cp-auth-sub">{{ translate('Check everything once. Your partner account is activated as soon as you submit.') }}</p>
 
         <div class="cp-card">
             <div class="cp-card-head">
@@ -241,7 +216,6 @@
                 <div><dt>{{ translate('Type') }}</dt><dd>{{ translate($businessTypes[$partner->business_type] ?? '-') }}</dd></div>
                 <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}{{ $partner->designation ? ', ' . $partner->designation : '' }}</dd></div>
                 <div><dt>{{ translate('Aadhaar') }}</dt><dd>{{ $partner->aadhaar_number ? 'XXXX XXXX ' . substr($partner->aadhaar_number, -4) : '—' }}</dd></div>
-                <div><dt>{{ translate('PAN') }}</dt><dd>{{ $partner->pan_number ?: '—' }}</dd></div>
                 <div style="border-bottom:0"><dt>{{ translate('Address') }}</dt><dd>{{ $partner->address_line }}, {{ $partner->city }}, {{ $partner->state }} {{ $partner->postal_code }}</dd></div>
             </dl>
         </div>
@@ -277,7 +251,7 @@
                 <a href="{{ route('channel_partner.onboarding', ['step' => 'documents']) }}" class="cp-btn cp-btn-light" style="flex:0 0 auto">
                     <x-cp-icon name="arrow-left" class="cp-icon-sm" /><span class="sr-only">{{ translate('Back') }}</span>
                 </a>
-                <button type="submit" class="cp-btn cp-btn-primary" @if (!empty($missingDocuments)) disabled @endif>{{ translate('Submit application') }}</button>
+                <button type="submit" class="cp-btn cp-btn-primary" @if (!empty($missingDocuments)) disabled @endif>{{ translate('Submit & start ordering') }}</button>
             </div>
         </form>
     @endif

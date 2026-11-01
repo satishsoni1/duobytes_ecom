@@ -25,7 +25,7 @@ class ChannelPartnerApplicationSubmitted extends Notification
         return (new MailMessage)
             ->subject(translate('New channel partner application') . ': ' . $this->partner->displayName())
             ->greeting(translate('New partner application'))
-            ->line(($this->partner->company_name ? $this->partner->company_name . ' (' . $this->partner->contact_person . ')' : $this->partner->contact_person) . ' ' . translate('has submitted their documents for review.'))
-            ->action(translate('Review application'), route('admin.channel_partners.show', $this->partner->id));
+            ->line(($this->partner->company_name ? $this->partner->company_name . ' (' . $this->partner->contact_person . ')' : $this->partner->contact_person) . ' ' . translate('has joined as a channel partner. The account was activated automatically.'))
+            ->action(translate('View partner'), route('admin.channel_partners.show', $this->partner->id));
     }
 }

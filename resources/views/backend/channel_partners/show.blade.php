@@ -63,10 +63,7 @@
                             'Email' => optional($user)->email,
                             'Mobile' => optional($user)->phone,
                             'Aadhaar' => $partner->aadhaar_number ? trim(chunk_split($partner->aadhaar_number, 4, ' ')) : null,
-                            'PAN' => $partner->pan_number,
                             'Address' => trim($partner->address_line . ', ' . $partner->city . ', ' . $partner->state . ' ' . $partner->postal_code . ', ' . $partner->country, ', '),
-                            'Website' => $partner->website,
-                            'Expected monthly purchase' => $partner->expected_monthly_volume,
                         ] as $label => $value)
                             <tr><td class="text-muted pl-0" style="width:40%">{{ translate($label) }}</td><td class="fw-600 text-break">{{ $value ?: '—' }}</td></tr>
                         @endforeach
