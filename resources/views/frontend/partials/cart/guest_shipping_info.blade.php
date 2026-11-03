@@ -169,7 +169,7 @@
                 <div class="col-md-10">
                     <div class="form-group form-check px-0 py-1 m-0">
                         <label class="aiz-checkbox m-0">
-                            <input type="checkbox" id="sameAsShipping" name="same_as_shipping" value="1">
+                            <input type="checkbox" id="sameAsShipping" name="same_as_shipping" value="1" checked>
                             <span class="fs-14 fw-300 text-reset">{{ translate('Use this as billing address') }}</span>
                             <span class="aiz-square-check"></span>
                         </label>

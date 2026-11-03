@@ -267,12 +267,8 @@ class CheckoutController extends Controller
         try {
             EmailUtility::customer_registration_email('registration_from_system_email_to_customer', $user, $password);
         } catch (\Exception $e) {
-            $success = 0;
-            $user->delete();
-        }
-
-        if($success == 0){
-            return $success;
+            // A failed welcome email should not stop the customer from placing the order
+            \Log::error('Guest account email failed: ' . $e->getMessage());
         }
 
         // Sending email verification Notification

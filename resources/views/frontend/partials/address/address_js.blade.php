@@ -367,7 +367,7 @@
             if (billingTab.hasClass('active')) {
                 $('.nav-link:not(#profile-tab)').first().tab('show');
             }
-            billingPane.find('input, textarea, select').each(function () {
+            billingPane.find('input, textarea, select').not('[type=hidden]').each(function () {
                 $(this).val('');
             });
             billingPane.find('[required]').each(function () {
@@ -382,12 +382,16 @@
                 .attr('data-toggle', 'tab')
                 .attr('aria-disabled', 'false')
                 .css('pointer-events', '');
-            billingPane.find('[data-was-required]').each(function () {
-                $(this).attr('required', true).removeData('was-required');
+            billingPane.find('input, textarea, select').each(function () {
+                if ($(this).data('was-required')) {
+                    $(this).attr('required', true).removeData('was-required');
+                }
             });
             billingPane.show();
         }
     });
+
+    $('#sameAsShipping:checked').trigger('change');
 
 
 </script>
