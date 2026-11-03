@@ -115,9 +115,9 @@
     <section class="tz-section" style="padding-top:14px;padding-bottom:6px">
         <div class="tz-wrap">
             <div class="tz-usps">
-                <div class="tz-usp"><i class="las la-shipping-fast"></i><div><strong>{{ translate('Fast delivery') }}</strong><span>{{ translate('Quick dispatch on every order') }}</span></div></div>
-                <div class="tz-usp"><i class="las la-shield-alt"></i><div><strong>{{ translate('Secure payments') }}</strong><span>{{ translate('100% protected checkout') }}</span></div></div>
-                <div class="tz-usp"><i class="las la-undo-alt"></i><div><strong>{{ translate('Easy returns') }}</strong><span>{{ translate('Hassle-free return policy') }}</span></div></div>
+                <div class="tz-usp"><i class="las la-shipping-fast"></i><div><strong>{{ translate('Fast delivery') }}</strong></div></div>
+                <div class="tz-usp"><i class="las la-shield-alt"></i><div><strong>{{ translate('Secure payments') }}</strong></div></div>
+                <div class="tz-usp"><i class="las la-undo-alt"></i><div><strong>{{ translate('Easy returns') }}</strong></div></div>
             </div>
         </div>
     </section>

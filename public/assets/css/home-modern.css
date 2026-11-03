@@ -88,7 +88,6 @@
 .tz-usp { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: var(--tz-radius-sm); background: var(--tz-bg); }
 .tz-usp i { font-size: 26px; color: var(--primary); }
 .tz-usp strong { display: block; font-size: 14px; color: var(--tz-ink); }
-.tz-usp span { font-size: 12px; color: var(--tz-ink-3); }
 
 /* Category rail */
 /* Category cards: grid that fills the row, so a few categories still look intentional */
