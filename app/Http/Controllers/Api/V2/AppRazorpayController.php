@@ -73,6 +73,7 @@ class AppRazorpayController extends Controller
                 ],
             ]);
         } catch (\Exception $e) {
+            \Log::warning('App Razorpay order create failed', ['combined_order_id' => $combinedOrder->id, 'error' => $e->getMessage()]);
             return response()->json(['result' => false, 'message' => translate('Could not start payment. Please try again.')], 502);
         }
 
@@ -131,12 +132,18 @@ class AppRazorpayController extends Controller
                 return response()->json(['result' => false, 'message' => translate('Payment does not match this order')], 422);
             }
             if ($payment['status'] === 'authorized') {
-                $payment = $payment->capture(['amount' => $payment['amount'], 'currency' => 'INR']);
+                try {
+                    $payment = $payment->capture(['amount' => $payment['amount'], 'currency' => 'INR']);
+                } catch (\Exception $e) {
+                    // Auto-capture may have won the race; re-read the real status.
+                    $payment = $api->payment->fetch($request->razorpay_payment_id);
+                }
             }
             if ($payment['status'] !== 'captured') {
                 return response()->json(['result' => false, 'message' => translate('Payment was not completed')], 422);
             }
         } catch (\Exception $e) {
+            \Log::warning('App Razorpay verify failed', ['combined_order_id' => $combinedOrder->id, 'payment_id' => $request->razorpay_payment_id, 'error' => $e->getMessage()]);
             return response()->json(['result' => false, 'message' => translate('Payment verification failed')], 422);
         }
 
