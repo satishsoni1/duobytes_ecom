@@ -239,6 +239,12 @@ Route::group(['prefix' => 'v2', 'middleware' => ['app_language']], function () {
         Route::get('online-pay/failed', 'paymentFailed');
     });
 
+    // ToYeZa mobile app: native Razorpay checkout with server-side verification
+    Route::middleware(['auth:sanctum', 'throttle:30,1'])->controller(AppRazorpayController::class)->group(function () {
+        Route::post('app/razorpay/order', 'createOrder');
+        Route::post('app/razorpay/verify', 'verify');
+    });
+
     Route::get('get-search-suggestions', [SearchSuggestionController::class, 'getList']);
     Route::get('languages', [LanguageController::class, 'getList']);
 
