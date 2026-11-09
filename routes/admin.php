@@ -45,6 +45,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PickupPointController;
 use App\Http\Controllers\ProductBulkUploadController;
+use App\Http\Controllers\ProductPriceStockController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductQueryController;
 use App\Http\Controllers\ProfileController;
@@ -252,6 +253,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
         Route::get('/digitalproducts/destroy/{id}', 'destroy')->name('digitalproducts.destroy');
         Route::get('/digitalproducts/download/{id}', 'download')->name('digitalproducts.download');
         Route::get('/seller/digitalproducts/{id}/edit', 'edit')->name('digitalproducts.seller.edit');
+    });
+
+    Route::controller(ProductPriceStockController::class)->group(function () {
+        Route::get('/product-price-stock', 'index')->name('product_price_stock.index');
+        Route::get('/product-price-stock/download', 'download')->name('product_price_stock.download');
+        Route::post('/product-price-stock/upload', 'upload')->name('product_price_stock.upload');
     });
 
     Route::controller(ProductBulkUploadController::class)->group(function () {

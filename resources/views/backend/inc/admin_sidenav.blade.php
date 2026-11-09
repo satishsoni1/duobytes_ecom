@@ -340,6 +340,14 @@
                                                 </a>
                                             </li>
                                         @endcan
+                                        @can('product_bulk_import')
+                                            <li class="aiz-side-nav-item">
+                                                <a href="{{ route('product_price_stock.index') }}" class="aiz-side-nav-link">
+                                                    <span class="aiz-side-nav-text"
+                                                        style="color: {{ get_setting('navbar_text_color') }}">{{ translate('Bulk Price & Stock Update') }}</span>
+                                                </a>
+                                            </li>
+                                        @endcan
                                         @can('product_bulk_export')
                                             <li class="aiz-side-nav-item">
                                                 <a href="{{route('product_bulk_export.index')}}" class="aiz-side-nav-link">
