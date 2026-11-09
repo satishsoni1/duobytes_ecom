@@ -95,9 +95,8 @@
                         </a>
                     @empty
                         @if (channel_partner_program_enabled())
-                            <a class="tz-tile tz-tile-accent tz-tile-lg" href="{{ route('channel_partner.landing') }}">
-                                <span class="tz-tile-title">{{ translate('Buying in bulk?') }}</span>
-                                <span class="tz-tile-sub">{{ translate('Become a channel partner') }} →</span>
+                            <a class="tz-tile tz-tile-accent tz-tile-lg tz-tile-center" href="{{ route('channel_partner.landing') }}">
+                                <span class="tz-tile-title">{{ translate('Become a channel partner') }}</span>
                             </a>
                         @else
                             <a class="tz-tile tz-tile-accent tz-tile-lg" href="{{ route('categories.all') }}">

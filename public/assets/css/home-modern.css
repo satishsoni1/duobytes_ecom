@@ -81,6 +81,9 @@
 .tz-tile-lg .tz-tile-title { font-size: 26px; }
 .tz-tile-lg .tz-tile-sub { font-size: 17px; font-weight: 600; opacity: .95; margin-top: 6px; }
 @media (min-width: 992px) { .tz-tile-lg { padding: 32px; } .tz-tile-lg .tz-tile-title { font-size: 34px; } .tz-tile-lg .tz-tile-sub { font-size: 19px; } }
+.tz-tile-center { justify-content: center; align-items: center; text-align: center; }
+.tz-tile-lg.tz-tile-center .tz-tile-title { font-size: 32px; text-transform: capitalize; }
+@media (min-width: 992px) { .tz-tile-lg.tz-tile-center .tz-tile-title { font-size: 44px; } }
 
 /* USP strip */
 .tz-usps { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 10px; overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--tz-gutter)); padding: 0 var(--tz-gutter); }
