@@ -1,12 +1,28 @@
 @php
-    $photos = $detailedProduct->photos != null ? explode(',', $detailedProduct->photos) : [];
+    // Each image appears once: variant slides stay (the variant picker jumps to them
+    // by image id), and gallery photos that repeat a variant image are dropped.
+    $variantStocks = collect();
+    if ($detailedProduct->digital == 0 && $detailedProduct->stocks && $detailedProduct->stocks->count()) {
+        $variantStocks = $detailedProduct->stocks
+            ->filter(fn ($stock) => $stock->image != null)
+            ->unique(fn ($stock) => (string) $stock->image)
+            ->values();
+    }
+    $variantImageIds = $variantStocks->map(fn ($stock) => (string) $stock->image)->all();
+
+    $photos = collect(explode(',', (string) $detailedProduct->photos))
+        ->map(fn ($photo) => trim($photo))
+        ->filter()
+        ->unique()
+        ->reject(fn ($photo) => in_array($photo, $variantImageIds, true))
+        ->values();
 
     $videos = $detailedProduct->video_link;
 
     $short_video = $detailedProduct->short_video != null ? explode(',', $detailedProduct->short_video) : [];
     $short_video_thumb =
     $detailedProduct->short_video != null ? explode(',', $detailedProduct->short_video_thumbnail) : [];
-    $total_gallery= count($photos)  +count($short_video) + (is_iterable($videos) ? count($videos) : 0);
+    $total_gallery= $variantStocks->count() + count($photos)  +count($short_video) + (is_iterable($videos) ? count($videos) : 0);
 
 @endphp
 <div class="row">
@@ -15,20 +31,14 @@
         <div class="thumb-container position-relative overflow-hidden rounded-corner-8px">
             <div class="swiper thumb-slider w-100 h-100">
                 <div class="swiper-wrapper">
-                    @if ($detailedProduct->digital == 0)
-                        @if($detailedProduct->stocks && $detailedProduct->stocks->count())
-                            @foreach ($detailedProduct->stocks as $key => $stock)
-                                @if ($stock->image != null)
-                                    <div class="swiper-slide rounded-corner-8px border border-light-gray bg-light cursor-pointer overflow-hidden d-flex align-items-center justify-content-center"
-                                        data-variation-image="{{ $stock->image }}">
-                                        <img src="{{ uploaded_asset($stock->image) }}"
-                                            class="img-fluid object-fit-cover object-position-center"
-                                            alt="">
-                                    </div>
-                                @endif
-                            @endforeach
-                        @endif
-                    @endif
+                    @foreach ($variantStocks as $stock)
+                        <div class="swiper-slide rounded-corner-8px border border-light-gray bg-light cursor-pointer overflow-hidden d-flex align-items-center justify-content-center"
+                            data-variation-image="{{ $stock->image }}">
+                            <img src="{{ uploaded_asset($stock->image) }}"
+                                class="img-fluid object-fit-cover object-position-center"
+                                alt="">
+                        </div>
+                    @endforeach
 
                     @foreach ($photos as $key => $photo)
                         <div class="swiper-slide rounded-corner-8px border border-light-gray bg-light cursor-pointer overflow-hidden d-flex align-items-center justify-content-center">
@@ -106,29 +116,23 @@
                 {{-- variant in digital ==0 --}}
 
                 
-                @if ($detailedProduct->digital == 0)
-                    @if($detailedProduct->stocks && $detailedProduct->stocks->count())
-                        @foreach ($detailedProduct->stocks as $key => $stock)
-                            @if ($stock->image != null)
-                                <div
-                                    class="swiper-slide rounded-corner-8px border  border-light-gray bg-light overflow-hidden lightbox-item"
-                                    data-variation="{{ $stock->variant }}">
-                                    <img src="{{ uploaded_asset($stock->image) }}" class="img-fluid w-100 h-100 lightbox-source" alt="">
-                                    <div class="img-preview-btn wd-show-product-gallery-wrap rounded-pill overflow-hidden">
-                                        <a href="#"
-                                            class="border-0 bg-transparent d-inline-flex align-items-center woodmart-show-product-gallery">
-                                            <span
-                                                class="preview-icon-container w-50px h-50px d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle bg-white">
-                                                <i class="las la-expand-arrows-alt fs-16 text-dark"></i>
-                                            </span>
-                                            <span class="fs-14 fw-400 text-dark preview-btn-text flex-shrink-0">{{translate('Click to Enlarge')}}</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    @endif
-                @endif
+                @foreach ($variantStocks as $stock)
+                    <div
+                        class="swiper-slide rounded-corner-8px border  border-light-gray bg-light overflow-hidden lightbox-item"
+                        data-variation="{{ $stock->variant }}">
+                        <img src="{{ uploaded_asset($stock->image) }}" class="img-fluid w-100 h-100 lightbox-source" alt="">
+                        <div class="img-preview-btn wd-show-product-gallery-wrap rounded-pill overflow-hidden">
+                            <a href="#"
+                                class="border-0 bg-transparent d-inline-flex align-items-center woodmart-show-product-gallery">
+                                <span
+                                    class="preview-icon-container w-50px h-50px d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle bg-white">
+                                    <i class="las la-expand-arrows-alt fs-16 text-dark"></i>
+                                </span>
+                                <span class="fs-14 fw-400 text-dark preview-btn-text flex-shrink-0">{{translate('Click to Enlarge')}}</span>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
 
                 @foreach ($photos as $key => $photo)
                 <!--Single-->

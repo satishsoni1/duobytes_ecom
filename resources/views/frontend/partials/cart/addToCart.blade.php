@@ -4,7 +4,25 @@
         <div class="col-lg-6">
             <div class="row gutters-10 flex-row-reverse">
                 @php
-                    $photos = explode(',',$product->photos);
+                    // Each image appears once: variant slides stay, and gallery photos
+                    // that repeat a variant image are dropped.
+                    $variantStocks = $product->stocks
+                        ->filter(fn ($stock) => $stock->image != null)
+                        ->unique(fn ($stock) => (string) $stock->image)
+                        ->values();
+                    $variantImageIds = $variantStocks->map(fn ($stock) => (string) $stock->image)->all();
+
+                    $photos = collect(explode(',', (string) $product->photos))
+                        ->map(fn ($photo) => trim($photo))
+                        ->filter()
+                        ->unique()
+                        ->reject(fn ($photo) => in_array($photo, $variantImageIds, true))
+                        ->values();
+
+                    // Keep the placeholder slide for products with no images at all.
+                    if ($photos->isEmpty() && $variantStocks->isEmpty()) {
+                        $photos = collect(['']);
+                    }
                 @endphp
                 <div class="col">
                     <div class="aiz-carousel product-gallery" data-nav-for='.product-gallery-thumb' data-fade='true' data-auto-height='true'>
@@ -16,15 +34,13 @@
                                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                         </div>
                         @endforeach
-                        @foreach ($product->stocks as $key => $stock)
-                            @if ($stock->image != null)
-                                <div class="carousel-box img-zoom rounded-0">
-                                    <img class="img-fluid lazyload"
-                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                        data-src="{{ uploaded_asset($stock->image) }}"
-                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                </div>
-                            @endif
+                        @foreach ($variantStocks as $stock)
+                            <div class="carousel-box img-zoom rounded-0">
+                                <img class="img-fluid lazyload"
+                                    src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                    data-src="{{ uploaded_asset($stock->image) }}"
+                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -38,15 +54,13 @@
                                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                         </div>
                         @endforeach
-                        @foreach ($product->stocks as $key => $stock)
-                            @if ($stock->image != null)
-                                <div class="carousel-box c-pointer border rounded-0" data-variation="{{ $stock->variant }}">
-                                    <img class="lazyload mw-100 size-50px mx-auto"
-                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                        data-src="{{ uploaded_asset($stock->image) }}"
-                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                </div>
-                            @endif
+                        @foreach ($variantStocks as $stock)
+                            <div class="carousel-box c-pointer border rounded-0" data-variation="{{ $stock->variant }}">
+                                <img class="lazyload mw-100 size-50px mx-auto"
+                                    src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                    data-src="{{ uploaded_asset($stock->image) }}"
+                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                            </div>
                         @endforeach
                     </div>
                 </div>
