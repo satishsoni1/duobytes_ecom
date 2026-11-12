@@ -37,7 +37,7 @@
 
     $flashDeal = get_setting('enable_flash_deal') == 1 ? get_featured_flash_deal() : null;
     $flashProducts = $flashDeal
-        ? get_flash_deal_products($flashDeal->id)->pluck('product')->filter(fn ($p) => $p && $p->published == 1)->take(15)
+        ? get_flash_deal_products($flashDeal->id)->pluck('product')->filter(fn ($p) => $p && $p->published == 1)->pipe(fn ($c) => sort_by_custom_order($c))->take(15)
         : collect();
 
     $featuredProducts = get_setting('enable_featured_products') == 1 ? get_featured_products()->take(10) : collect();

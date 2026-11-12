@@ -79,7 +79,7 @@ class HomeController extends Controller
 
     public function load_todays_deal_section()
     {
-        $todays_deal_products = filter_products(Product::where('todays_deal', '1'))->orderBy('id', 'desc')->get()->shuffle();
+        $todays_deal_products = filter_products(Product::where('todays_deal', '1'))->customOrder()->get();
         return view('frontend.' . get_setting('homepage_select') . '.partials.todays_deal', compact('todays_deal_products'));
     }
 
@@ -92,11 +92,10 @@ class HomeController extends Controller
             $page = max(1, (int)$request->page);
             $offset = ($page - 1) * $limit;
 
-            $newest_products = filter_products(Product::latest())
+            $newest_products = sort_by_custom_order(filter_products(Product::latest())
                 ->skip($offset)
                 ->take($limit)
-                ->get()
-                ->shuffle();
+                ->get());
 
             return view(
                 'frontend.' . get_setting('homepage_select') . '.partials.newest_products_section',
@@ -108,10 +107,9 @@ class HomeController extends Controller
             'newest_products_' . $limit,
             3600,
             function () use ($limit) {
-                return filter_products(Product::latest())
+                return sort_by_custom_order(filter_products(Product::latest())
                     ->take($limit)
-                    ->get()
-                    ->shuffle();
+                    ->get());
             }
         );
 

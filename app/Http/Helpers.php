@@ -168,7 +168,7 @@ if (!function_exists('get_cached_products')) {
     function get_cached_products($category_id = null)
     {
         return Cache::remember('products-category-' . $category_id, 86400, function () use ($category_id) {
-            return filter_products(Product::where('category_id', $category_id))->latest()->take(5)->get();
+            return filter_products(Product::where('category_id', $category_id))->customOrder()->take(5)->get();
         });
     }
 }
@@ -1956,7 +1956,7 @@ if (!function_exists('get_best_selling_products')) {
         if ($user_id) {
             $product_query = $product_query->where('user_id', $user_id);
         }
-        return filter_products($product_query->orderBy('num_of_sale', 'desc'))->limit($limit)->get();
+        return sort_by_custom_order(filter_products($product_query->orderBy('num_of_sale', 'desc'))->limit($limit)->get());
     }
 }
 
@@ -1969,7 +1969,7 @@ if (!function_exists('get_todays_deal_products')) {
         if ($user_id) {
             $product_query = $product_query->where('user_id', $user_id);
         }
-        return filter_products($product_query->where('todays_deal', '1'))->orderBy('id', 'desc')->limit($limit)->get();
+        return filter_products($product_query->where('todays_deal', '1'))->customOrder()->limit($limit)->get();
     }
 }
 
@@ -2113,7 +2113,7 @@ if (!function_exists('get_frequently_bought_products')) {
         $fqbProducts = [];
         if($productSelectionType == 'product'){
             $fqbProductIds = $product->frequently_bought_products()->where('category_id', null)->pluck('frequently_bought_product_id')->toArray();
-            $fqbProducts = filter_products(Product::whereIn('id', $fqbProductIds))->get();
+            $fqbProducts = filter_products(Product::whereIn('id', $fqbProductIds))->customOrder()->get();
         }
         elseif($productSelectionType == 'category'){
             $fqb_product_category = $product->frequently_bought_products()->where('category_id','!=', null)->first();
@@ -3679,7 +3679,7 @@ if (!function_exists('same_state_shipping_pos')) {
 if (!function_exists('get_same_seller_products')) {
     function get_same_seller_products($user_id, $limit = 20)
     {
-        $products = Product::where('user_id', $user_id)->isApprovedPublished()->take($limit)->get();
+        $products = Product::where('user_id', $user_id)->isApprovedPublished()->customOrder()->take($limit)->get();
         return $products;
     }
 }
@@ -3691,6 +3691,7 @@ if (!function_exists('get_related_products_by_category')) {
         $products = Product::isApprovedPublished()->whereHas('categories', function ($query) use ($category_id) {
                         $query->where('category_id', $category_id);
                     })
+                    ->customOrder()
                     ->take($limit)
                     ->get();
         return $products;
@@ -3822,5 +3823,16 @@ if (!function_exists('channel_partner_pending_count')) {
     function channel_partner_pending_count(): int
     {
         return \App\Models\ChannelPartner::where('status', \App\Models\ChannelPartner::STATUS_SUBMITTED)->count();
+    }
+}
+
+// Re-order an already-selected set of products by the admin "Order" number
+// (numbered products first, ascending; unnumbered after, newest first).
+if (!function_exists('sort_by_custom_order')) {
+    function sort_by_custom_order($products)
+    {
+        return collect($products)->sortBy(function ($product) {
+            return [$product->sort_order === null ? 1 : 0, (int) $product->sort_order, -$product->id];
+        })->values();
     }
 }

@@ -993,7 +993,8 @@ class ProductController extends Controller
         $product->sort_order = $request->filled('sort_order') ? (int) $request->sort_order : null;
         $product->save();
 
-        Cache::forget('featured_products');
+        // Homepage sections (featured, new arrivals, category blocks) are cached; same as updateFeatured
+        Artisan::call('cache:clear');
 
         return response()->json(['success' => true]);
     }
