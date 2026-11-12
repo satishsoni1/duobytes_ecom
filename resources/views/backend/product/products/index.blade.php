@@ -159,6 +159,9 @@
                         <select class="form-control  aiz-selectpicker mb-2 mb-md-0 bg-light" name="type"
                             id="type" onchange="sort_products()">
                             <option value="" class="hov-text-light text-white fs-14 fw-400">Sort</option>
+                            <option value="sort_order,asc" class="hov-bg-light text-secondary fs-14 fw-40"
+                                @isset($col_name, $query) @if ($col_name == 'sort_order') selected @endif @endisset>
+                                {{ translate('Display Order (Website)') }}</option>
                             <option value="rating,desc" class="hov-bg-light text-secondary fs-14 fw-40"
                                 @isset($col_name, $query) @if ($col_name == 'rating' && $query == 'desc') selected @endif @endisset>
                                 {{ translate('Rating (High > Low)') }}</option>
@@ -314,6 +317,24 @@
                     AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');
                 }
             });
+        }
+
+        function update_sort_order(el){
+            var value = el.value.trim();
+            if (value !== '' && !/^\d+$/.test(value)) {
+                AIZ.plugins.notify('danger', '{{ translate('Order must be a whole number') }}');
+                el.value = el.dataset.saved || '';
+                return;
+            }
+            $.post('{{ route('products.sort_order') }}', {_token:'{{ csrf_token() }}', id:el.dataset.id, sort_order:value})
+                .done(function(){
+                    el.dataset.saved = value;
+                    AIZ.plugins.notify('success', '{{ translate('Product order updated') }}');
+                })
+                .fail(function(){
+                    el.value = el.dataset.saved || '';
+                    AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');
+                });
         }
 
         function update_featured(el){

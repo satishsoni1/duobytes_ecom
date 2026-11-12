@@ -220,6 +220,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
         Route::post('/products/update/{product}', 'update')->name('products.update');
         Route::post('/products/todays_deal', 'updateTodaysDeal')->name('products.todays_deal');
         Route::post('/products/featured', 'updateFeatured')->name('products.featured');
+        Route::post('/products/sort-order', 'updateSortOrder')->name('products.sort_order');
         Route::post('/products/published', 'updatePublished')->name('products.published');
         Route::post('/products/approved', 'updateProductApproval')->name('products.approved');
         Route::post('/products/get_products_by_subcategory', 'get_products_by_subcategory')->name('products.get_products_by_subcategory');

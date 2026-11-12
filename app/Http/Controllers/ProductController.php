@@ -62,7 +62,7 @@ class ProductController extends Controller
         $this->middleware(['permission:show_all_products'])->only('all_products');
         $this->middleware(['permission:show_in_house_products'])->only('admin_products');
         $this->middleware(['permission:show_seller_products'])->only('seller_products');
-        $this->middleware(['permission:product_edit'])->only('admin_product_edit', 'seller_product_edit');
+        $this->middleware(['permission:product_edit'])->only('admin_product_edit', 'seller_product_edit', 'updateSortOrder');
         $this->middleware(['permission:product_duplicate'])->only('duplicate');
         $this->middleware(['permission:product_delete'])->only('destroy');
         $this->middleware(['permission:set_category_wise_discount'])->only('categoriesWiseProductDiscount');
@@ -189,7 +189,11 @@ class ProductController extends Controller
             $var = explode(",", $request->type);
             $col_name = $var[0];
             $query = $var[1];
-            $products = $products->orderBy($col_name, $query);
+            if ($col_name == 'sort_order') {
+                $products = $products->customOrder();
+            } else {
+                $products = $products->orderBy($col_name, $query);
+            }
             $sort_type = $request->type;
         }
 
@@ -976,6 +980,22 @@ class ProductController extends Controller
         Artisan::call('view:clear');
         Artisan::call('cache:clear');
         return 1;
+    }
+
+    public function updateSortOrder(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'sort_order' => 'nullable|integer|min:0|max:999999',
+        ]);
+
+        $product = Product::findOrFail($request->id);
+        $product->sort_order = $request->filled('sort_order') ? (int) $request->sort_order : null;
+        $product->save();
+
+        Cache::forget('featured_products');
+
+        return response()->json(['success' => true]);
     }
 
     public function updateFeatured(Request $request)

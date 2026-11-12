@@ -72,6 +72,11 @@ class AizUploadController extends Controller
 
     public function upload(Request $request)
     {
+        // Only logged-in users may upload; guests used to write files to disk before failing on Auth::user()->id
+        if (!Auth::check()) {
+            return response()->json(['message' => 'Unauthenticated.'], 401);
+        }
+
         $type = array(
             "jpg" => "image",
             "jpeg" => "image",

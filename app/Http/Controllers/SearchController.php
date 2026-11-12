@@ -146,7 +146,7 @@ class SearchController extends Controller
                     $products->orderBy('unit_price', 'desc');
                     break;
                 default:
-                    $products->orderBy('id', 'desc');
+                    $products->customOrder();
                     break;
             }
             $products = $products->with('taxes')->paginate(12, ['*'], 'preorder_product')->appends(request()->query());
@@ -277,7 +277,7 @@ class SearchController extends Controller
                 $products->orderBy('unit_price', 'desc');
                 break;
             default:
-                $products->orderBy('id', 'desc');
+                $products->customOrder();
                 break;
         }
 
@@ -439,7 +439,7 @@ class SearchController extends Controller
                     $products->orderBy('unit_price', 'desc');
                     break;
                 default:
-                    $products->orderBy('id', 'desc');
+                    $products->customOrder();
                     break;
             }
 
@@ -549,7 +549,7 @@ class SearchController extends Controller
                 $products->orderBy('unit_price', 'desc');
                 break;
             default:
-                $products->orderBy('id', 'desc');
+                $products->customOrder();
                 break;
         }
 

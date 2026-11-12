@@ -36,6 +36,7 @@
 
                 <th class="hide-xxl text-uppercase fs-12 fw-700 text-secondary"> {{ translate('Todays Deal') }}</th>
                 @endif
+                <th class="text-uppercase fs-12 fw-700 text-secondary" title="{{ translate('Lower numbers show first on the website. Leave empty for default.') }}">{{ translate('Order') }}</th>
                 <th class="text-right text-uppercase fs-10 fs-md-12 fw-700 text-secondary">{{ translate('Options') }}</th>
             </tr>
         </thead>
@@ -184,6 +185,12 @@
                     @endif
                 </td>
                 @endif
+
+                <td class="align-middle" data-label="Order">
+                    <input type="number" min="0" step="1" class="form-control form-control-sm" style="width:70px"
+                        value="{{ $product->sort_order }}" data-id="{{ $product->id }}" data-saved="{{ $product->sort_order }}"
+                        placeholder="—" onchange="update_sort_order(this)">
+                </td>
 
                 <td class="text-right align-middle">
                     <div class="dropdown float-right">

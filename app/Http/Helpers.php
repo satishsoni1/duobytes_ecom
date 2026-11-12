@@ -1944,7 +1944,7 @@ if (!function_exists('get_featured_products')) {
     {
         return Cache::remember('featured_products', 3600, function () {
             $product_query = Product::query();
-            return filter_products($product_query->where('featured', '1'))->latest()->limit(12)->get();
+            return filter_products($product_query->where('featured', '1'))->customOrder()->limit(12)->get();
         });
     }
 }

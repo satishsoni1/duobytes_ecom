@@ -564,7 +564,7 @@ class HomeController extends Controller
                         $products->orderBy('unit_price', 'desc');
                         break;
                     default:
-                        $products->orderBy('id', 'desc');
+                        $products->customOrder();
                         break;
                 }
 
@@ -644,7 +644,7 @@ class HomeController extends Controller
                         $products->orderBy('unit_price', 'desc');
                         break;
                     default:
-                        $products->orderBy('id', 'desc');
+                        $products->customOrder();
                         break;
                 }
 

@@ -108,6 +108,17 @@ class Product extends Model
         return $this->belongsTo(Upload::class, 'thumbnail_img');
     }
 
+    /**
+     * Admin-set display order: products with a number come first (1, 2, 3 ...),
+     * products without one follow, newest first.
+     */
+    public function scopeCustomOrder($query)
+    {
+        return $query->orderByRaw('products.sort_order IS NULL')
+            ->orderBy('products.sort_order', 'asc')
+            ->orderBy('products.id', 'desc');
+    }
+
     public function scopePhysical($query)
     {
         return $query->where('digital', 0);
