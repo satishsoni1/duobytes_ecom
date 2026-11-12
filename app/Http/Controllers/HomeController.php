@@ -971,7 +971,7 @@ class HomeController extends Controller
     public function todays_deal()
     {
         $todays_deal_products = Cache::rememberForever('todays_deal_products', function () {
-            return filter_products(Product::with('thumbnail')->where('todays_deal', '1'))->get();
+            return filter_products(Product::with('thumbnail')->where('todays_deal', '1'))->customOrder()->get();
         });
 
         return view("frontend.todays_deal", compact('todays_deal_products'));
@@ -980,7 +980,7 @@ class HomeController extends Controller
     public function best_selling()
     {
         $title= translate('Best Selling');
-        $best_selling_products =  filter_products(Product::orderBy('num_of_sale', 'desc'))->take(18)->get();
+        $best_selling_products = sort_by_custom_order(filter_products(Product::orderBy('num_of_sale', 'desc'))->take(18)->get());
         return view("frontend.best_selling", compact('best_selling_products','title'));
     }
 
@@ -989,7 +989,7 @@ class HomeController extends Controller
         $has_pagination =1;
         if ($slug === 'in-house') {
             $best_selling_products = filter_products(
-            Product::where('added_by', 'admin'))->paginate(18);
+            Product::where('added_by', 'admin'))->customOrder()->paginate(18);
             $title = translate('In-House');
             return view('frontend.best_selling', compact(
                 'best_selling_products',
@@ -998,7 +998,7 @@ class HomeController extends Controller
         }
         $shop = Shop::where('slug', $slug)->firstOrFail();
         $best_selling_products = filter_products(
-        Product::where('user_id', $shop->user_id))->paginate(18);
+        Product::where('user_id', $shop->user_id))->customOrder()->paginate(18);
         $title = $shop->name;
         return view('frontend.best_selling', compact(
             'best_selling_products',
@@ -1008,7 +1008,7 @@ class HomeController extends Controller
 
     public function featured_products()
     {
-        $featured_products =  filter_products(Product::where('featured', '1'))->latest()->limit(12)->get();
+        $featured_products =  filter_products(Product::where('featured', '1'))->customOrder()->limit(12)->get();
         return view("frontend.featured_products", compact('featured_products'));
     }
 
@@ -1037,7 +1037,7 @@ class HomeController extends Controller
 
     public function inhouse_products(Request $request)
     {
-        $products = filter_products(Product::where('added_by', 'admin'))->with('taxes')->paginate(12)->appends(request()->query());
+        $products = filter_products(Product::where('added_by', 'admin'))->customOrder()->with('taxes')->paginate(12)->appends(request()->query());
         return view('frontend.inhouse_products', compact('products'));
     }
 

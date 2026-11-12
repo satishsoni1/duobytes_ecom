@@ -310,7 +310,7 @@
                     <h2>{{ translate('New arrivals') }}</h2>
                     <p>{{ translate('Just landed in store') }}</p>
                 </div>
-                <a href="{{ route('search', ['sort_by' => 'newest']) }}" class="tz-link">{{ translate('View all') }} <i class="las la-angle-right"></i></a>
+                <a href="{{ route('search') }}" class="tz-link">{{ translate('View all') }} <i class="las la-angle-right"></i></a>
             </div>
             <div id="section_newest"></div>
             <div class="tz-loadmore d-none" id="view-more-container">

@@ -658,6 +658,7 @@ class SearchController extends Controller
                 WHEN name LIKE ? THEN 2
                 ELSE 3
                 END', [$case1, $case2]);
+        $products_query->customOrder();
         $products = $products_query->limit(3)->get();
 
         $categories = Category::where('name', 'like', '%' . $query . '%')->get()->take(3);

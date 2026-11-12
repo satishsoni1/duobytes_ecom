@@ -24,11 +24,11 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return new ProductMiniCollection(Product::latest()->paginate(10));
+        return new ProductMiniCollection(Product::customOrder()->paginate(10));
     }
     public function show()
     {
-        return new ProductMiniCollection(Product::latest()->paginate(10));
+        return new ProductMiniCollection(Product::customOrder()->paginate(10));
     }
 
     public function product_details($slug, $user_id)
@@ -157,7 +157,7 @@ class ProductController extends Controller
             $products = $products->where('name', 'like', '%' . $request->name . '%');
         }
         $products->where('published', 1);
-        return new ProductMiniCollection($products->latest()->paginate(10));
+        return new ProductMiniCollection($products->customOrder()->paginate(10));
     }
 
     public function categoryProducts($slug, Request $request)
@@ -170,7 +170,7 @@ class ProductController extends Controller
             $products = $products->where('name', 'like', '%' . $request->name . '%');
         }
 
-        return new ProductMiniCollection(filter_products($products)->latest()->paginate(10));
+        return new ProductMiniCollection(filter_products($products)->customOrder()->paginate(10));
     }
 
     public function brand($slug, Request $request)
@@ -180,7 +180,7 @@ class ProductController extends Controller
         if ($request->name != "" || $request->name != null) {
             $products = $products->where('name', 'like', '%' . $request->name . '%');
         }
-        return new ProductMiniCollection(filter_products($products)->latest()->paginate(10));
+        return new ProductMiniCollection(filter_products($products)->customOrder()->paginate(10));
     }
 
     public function getBrands()
@@ -193,7 +193,7 @@ class ProductController extends Controller
     public function todaysDeal()
     {
         $products = Product::where('todays_deal', 1)->physical();
-        return new ProductMiniCollection(filter_products($products)->limit(20)->latest()->get());
+        return new ProductMiniCollection(filter_products($products)->customOrder()->limit(20)->get());
     }
 
     public function flashDeal()
@@ -207,25 +207,25 @@ class ProductController extends Controller
     public function featured()
     {
         $products = Product::where('featured', 1)->physical();
-        return new ProductMiniCollection(filter_products($products)->latest()->paginate(10));
+        return new ProductMiniCollection(filter_products($products)->customOrder()->paginate(10));
     }
 
     public function inhouse()
     {
         $products = Product::where('added_by', 'admin');
-        return new ProductMiniCollection(filter_products($products)->latest()->paginate(12));
+        return new ProductMiniCollection(filter_products($products)->customOrder()->paginate(12));
     }
 
     public function digital()
     {
         $products = Product::digital();
-        return new ProductMiniCollection(filter_products($products)->latest()->paginate(10));
+        return new ProductMiniCollection(filter_products($products)->customOrder()->paginate(10));
     }
 
     public function bestSeller()
     {
         $products = Product::orderBy('num_of_sale', 'desc')->physical();
-        return new ProductMiniCollection(filter_products($products)->limit(20)->get());
+        return new ProductMiniCollection(sort_by_custom_order(filter_products($products)->limit(20)->get()));
     }
 
     public function frequentlyBought($slug)
@@ -239,7 +239,7 @@ class ProductController extends Controller
     {
         $product = Product::where("slug", $slug)->first();
         $products = Product::where('user_id', $product->user_id)->orderBy('num_of_sale', 'desc')->physical();
-        return new ProductMiniCollection(filter_products($products)->limit(10)->get());
+        return new ProductMiniCollection(sort_by_custom_order(filter_products($products)->limit(10)->get()));
     }
 
 
@@ -341,7 +341,7 @@ class ProductController extends Controller
                 break;
 
             default:
-                $products->orderBy('created_at', 'desc');
+                $products->customOrder();
                 break;
         }
 
@@ -377,7 +377,7 @@ class ProductController extends Controller
     {
         $product = Product::where("slug", $slug)->first();
         $products = Product::where('user_id', $product->user_id)->where('published', 1);
-        return new ProductMiniCollection(filter_products($products)->latest()->paginate(10));
+        return new ProductMiniCollection(filter_products($products)->customOrder()->paginate(10));
     }
 
     public function relatedProducts($slug)
@@ -386,7 +386,7 @@ class ProductController extends Controller
         $category = Category::with('childrenCategories')->find($product->category_id);
         $products = $category->products();
 
-        return new ProductMiniCollection(filter_products($products)->latest()->paginate(10));
+        return new ProductMiniCollection(filter_products($products)->customOrder()->paginate(10));
     }
 
     public function queriesProducts($slug, Request $request)

@@ -3831,7 +3831,8 @@ if (!function_exists('channel_partner_pending_count')) {
 if (!function_exists('sort_by_custom_order')) {
     function sort_by_custom_order($products)
     {
-        return collect($products)->sortBy(function ($product) {
+        $products = $products instanceof \Illuminate\Support\Collection ? $products : collect($products);
+        return $products->sortBy(function ($product) {
             return [$product->sort_order === null ? 1 : 0, (int) $product->sort_order, -$product->id];
         })->values();
     }

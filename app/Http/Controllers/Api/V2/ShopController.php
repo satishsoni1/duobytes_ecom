@@ -42,7 +42,7 @@ class ShopController extends Controller
     public function allProducts($id)
     {
         $shop = Shop::findOrFail($id);
-        return new ProductCollection(Product::where('user_id', $shop->user_id)->where('published', 1)->latest()->paginate(10));
+        return new ProductCollection(Product::where('user_id', $shop->user_id)->where('published', 1)->customOrder()->paginate(10));
     }
 
     public function topSellingProducts($id)
@@ -59,7 +59,7 @@ class ShopController extends Controller
         $shop = Shop::findOrFail($id);
 
         return Cache::remember("app.featured_products-$id", 86400, function () use ($shop) {
-            return new ProductMiniCollection(Product::where(['user_id' => $shop->user_id, 'seller_featured' => 1])->where('published', 1)->latest()->limit(10)->get());
+            return new ProductMiniCollection(Product::where(['user_id' => $shop->user_id, 'seller_featured' => 1])->where('published', 1)->customOrder()->limit(10)->get());
         });
     }
 
@@ -68,7 +68,7 @@ class ShopController extends Controller
         $shop = Shop::findOrFail($id);
 
         return Cache::remember("app.new_products-$id", 86400, function () use ($shop) {
-            return new ProductMiniCollection(Product::where('user_id', $shop->user_id)->where('published', 1)->orderBy('created_at', 'desc')->limit(10)->get());
+            return new ProductMiniCollection(sort_by_custom_order(Product::where('user_id', $shop->user_id)->where('published', 1)->orderBy('created_at', 'desc')->limit(10)->get()));
         });
     }
 
