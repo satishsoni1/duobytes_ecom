@@ -57,21 +57,15 @@
                     <div class="cp-variants" role="radiogroup">
                         @foreach ($businessTypes as $value => $label)
                             <div class="cp-variant">
-                                <input type="radio" id="bt_{{ $value }}" name="business_type" value="{{ $value }}" {{ old('business_type', $partner->business_type) === $value ? 'checked' : '' }}>
+                                <input type="radio" id="bt_{{ $value }}" name="business_type" value="{{ $value }}" {{ old('business_type', $partner->business_type) === $value || count($businessTypes) === 1 ? 'checked' : '' }}>
                                 <label for="bt_{{ $value }}">{{ translate($label) }}</label>
                             </div>
                         @endforeach
                     </div>
                 </div>
-                <div class="cp-grid cp-md-2">
-                    <div class="cp-field">
-                        <label class="cp-label" for="contact_person">{{ translate('Contact person') }} <span class="req">*</span></label>
-                        <input id="contact_person" name="contact_person" class="cp-input" value="{{ old('contact_person', $partner->contact_person) }}" autocomplete="name" required>
-                    </div>
-                    <div class="cp-field">
-                        <label class="cp-label" for="designation">{{ translate('Designation') }}</label>
-                        <input id="designation" name="designation" class="cp-input" value="{{ old('designation', $partner->designation) }}" placeholder="{{ translate('Owner, Purchase Manager…') }}">
-                    </div>
+                <div class="cp-field">
+                    <label class="cp-label" for="contact_person">{{ translate('Contact person') }} <span class="req">*</span></label>
+                    <input id="contact_person" name="contact_person" class="cp-input" value="{{ old('contact_person', $partner->contact_person) }}" autocomplete="name" required>
                 </div>
             </div>
 
@@ -81,25 +75,32 @@
                     <label class="cp-label" for="address_line">{{ translate('Address') }} <span class="req">*</span></label>
                     <textarea id="address_line" name="address_line" class="cp-input" rows="2" autocomplete="street-address" required>{{ old('address_line', $partner->address_line) }}</textarea>
                 </div>
-                <div class="cp-grid cp-grid-2">
-                    <div class="cp-field">
-                        <label class="cp-label" for="city">{{ translate('City') }} <span class="req">*</span></label>
-                        <input id="city" name="city" class="cp-input" value="{{ old('city', $partner->city) }}" autocomplete="address-level2" required>
-                    </div>
-                    <div class="cp-field">
-                        <label class="cp-label" for="postal_code">{{ translate('PIN code') }} <span class="req">*</span></label>
-                        <input id="postal_code" name="postal_code" class="cp-input" value="{{ old('postal_code', $partner->postal_code) }}" inputmode="numeric" autocomplete="postal-code" required>
-                    </div>
-                </div>
+                @php
+                    $selectedState = old('state', $partner->state);
+                    $selectedCity = old('city', $partner->city);
+                @endphp
                 <div class="cp-grid cp-grid-2">
                     <div class="cp-field">
                         <label class="cp-label" for="state">{{ translate('State') }} <span class="req">*</span></label>
-                        <input id="state" name="state" class="cp-input" value="{{ old('state', $partner->state) }}" autocomplete="address-level1" required>
+                        <select id="state" name="state" class="cp-input" autocomplete="address-level1" required>
+                            <option value="">{{ translate('Select state') }}</option>
+                            @foreach ($states as $stateName)
+                                <option value="{{ $stateName }}" {{ $selectedState === $stateName ? 'selected' : '' }}>{{ $stateName }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="cp-field">
-                        <label class="cp-label" for="country">{{ translate('Country') }}</label>
-                        <input id="country" name="country" class="cp-input" value="{{ old('country', $partner->country ?: 'India') }}" autocomplete="country-name">
+                        <label class="cp-label" for="city">{{ translate('City') }} <span class="req">*</span></label>
+                        <select id="city" name="city" class="cp-input" autocomplete="address-level2" required
+                                data-cities-url="{{ route('channel_partner.onboarding.cities') }}"
+                                data-selected="{{ $selectedCity }}" {{ $selectedState ? '' : 'disabled' }}>
+                            <option value="">{{ $selectedState ? translate('Loading cities…') : translate('Select state first') }}</option>
+                        </select>
                     </div>
+                </div>
+                <div class="cp-field">
+                    <label class="cp-label" for="postal_code">{{ translate('PIN code') }} <span class="req">*</span></label>
+                    <input id="postal_code" name="postal_code" class="cp-input" value="{{ old('postal_code', $partner->postal_code) }}" inputmode="numeric" autocomplete="postal-code" required style="max-width:240px">
                 </div>
             </div>
 
@@ -122,7 +123,7 @@
             <dl class="cp-review-list" style="padding:0 16px">
                 <div><dt>{{ translate('Business') }}</dt><dd>{{ $partner->company_name ?: '—' }}</dd></div>
                 <div><dt>{{ translate('Type') }}</dt><dd>{{ translate($businessTypes[$partner->business_type] ?? '-') }}</dd></div>
-                <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}{{ $partner->designation ? ', ' . $partner->designation : '' }}</dd></div>
+                <div><dt>{{ translate('Contact') }}</dt><dd>{{ $partner->contact_person }}</dd></div>
                 <div><dt>{{ translate('Email') }}</dt><dd>{{ auth()->user()->email }}</dd></div>
                 <div><dt>{{ translate('Mobile') }}</dt><dd>{{ auth()->user()->phone ?: '—' }}</dd></div>
                 <div style="border-bottom:0"><dt>{{ translate('Address') }}</dt><dd>{{ $partner->address_line }}, {{ $partner->city }}, {{ $partner->state }} {{ $partner->postal_code }}</dd></div>
@@ -179,3 +180,56 @@
         </div>
     @endif
 @endsection
+
+@push('scripts')
+<script>
+(function () {
+    var stateEl = document.getElementById('state');
+    var cityEl = document.getElementById('city');
+    if (!stateEl || !cityEl) return;
+
+    function setOptions(names, placeholder, selected) {
+        cityEl.innerHTML = '';
+        var first = document.createElement('option');
+        first.value = '';
+        first.textContent = placeholder;
+        cityEl.appendChild(first);
+        names.forEach(function (name) {
+            var opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            if (name === selected) opt.selected = true;
+            cityEl.appendChild(opt);
+        });
+    }
+
+    function loadCities(selected) {
+        var state = stateEl.value;
+        if (!state) {
+            cityEl.disabled = true;
+            setOptions([], @json(translate('Select state first')), '');
+            return;
+        }
+        cityEl.disabled = true;
+        setOptions([], @json(translate('Loading cities…')), '');
+        fetch(cityEl.dataset.citiesUrl + '?state=' + encodeURIComponent(state), {
+            headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin'
+        })
+            .then(function (r) { return r.ok ? r.json() : { cities: [] }; })
+            .then(function (data) {
+                if (stateEl.value !== state) return; // state changed meanwhile
+                setOptions(data.cities || [], @json(translate('Select city')), selected);
+                cityEl.disabled = false;
+            })
+            .catch(function () {
+                setOptions([], @json(translate('Could not load cities. Please retry.')), '');
+                cityEl.disabled = false;
+            });
+    }
+
+    stateEl.addEventListener('change', function () { loadCities(''); });
+    if (stateEl.value) loadCities(cityEl.dataset.selected || '');
+})();
+</script>
+@endpush

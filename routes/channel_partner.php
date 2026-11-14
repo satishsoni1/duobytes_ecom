@@ -32,6 +32,7 @@ Route::prefix('partner')->name('channel_partner.')->group(function () {
         Route::controller(OnboardingController::class)->group(function () {
             Route::get('/onboarding', 'show')->name('onboarding');
             Route::post('/onboarding/business', 'saveBusiness')->name('onboarding.business');
+            Route::get('/onboarding/cities', 'cities')->name('onboarding.cities')->middleware('throttle:60,1');
             Route::post('/onboarding/documents', 'uploadDocument')->name('onboarding.documents.store')->middleware('throttle:30,1');
             Route::delete('/onboarding/documents/{document}', 'deleteDocument')->name('onboarding.documents.destroy');
             Route::post('/onboarding/submit', 'submit')->name('onboarding.submit');

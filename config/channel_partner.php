@@ -27,7 +27,10 @@ return [
     // Add types here (label, hint, required) to bring the upload step back.
     'document_types' => [],
 
+    // Labels for every business type ever stored (older partners may still
+    // carry one of the legacy types, so keep them for display).
     'business_types' => [
+        'channel_partner' => 'Channel Partner',
         'distributor' => 'Distributor',
         'wholesaler' => 'Wholesaler',
         'retailer' => 'Retail Store',
@@ -35,6 +38,12 @@ return [
         'reseller' => 'Online Reseller',
         'other' => 'Other',
     ],
+
+    // Business types a partner can pick on the onboarding form.
+    'onboarding_business_types' => ['channel_partner'],
+
+    // Country whose states/cities fill the onboarding address dropdowns.
+    'address_country' => 'India',
 
     // Payment type stored on orders placed through the partner portal.
     // Partners pay the full order value upfront; there is no credit.

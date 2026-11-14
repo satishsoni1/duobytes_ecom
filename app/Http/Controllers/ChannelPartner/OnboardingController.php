@@ -5,6 +5,9 @@ namespace App\Http\Controllers\ChannelPartner;
 use App\Http\Controllers\Controller;
 use App\Models\ChannelPartner;
 use App\Models\ChannelPartnerDocument;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\State;
 use App\Notifications\ChannelPartnerApplicationSubmitted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -17,6 +20,8 @@ class OnboardingController extends Controller
 {
     private const MAX_FILES_PER_TYPE = 5;
 
+    private $addressStates = null;
+
     public function show(Request $request)
     {
         $partner = $this->partner($request);
@@ -27,7 +32,20 @@ class OnboardingController extends Controller
 
         return view('channel_partner.onboarding.index', [
             'partner' => $partner,
-            'businessTypes' => config('channel_partner.business_types'),
+            'businessTypes' => $this->onboardingBusinessTypes(),
+            'states' => $this->addressStates()->pluck('name'),
+        ]);
+    }
+
+    /**
+     * Cities of one state, for the business address City dropdown.
+     */
+    public function cities(Request $request)
+    {
+        $state = $this->addressStates()->firstWhere('name', (string) $request->query('state'));
+
+        return response()->json([
+            'cities' => $state ? $this->cityNames($state->id) : [],
         ]);
     }
 
@@ -38,15 +56,25 @@ class OnboardingController extends Controller
 
         $data = $request->validate([
             'company_name' => ['nullable', 'string', 'max:150'],
-            'business_type' => ['required', Rule::in(array_keys(config('channel_partner.business_types')))],
+            'business_type' => ['required', Rule::in(array_keys($this->onboardingBusinessTypes()))],
             'contact_person' => ['required', 'string', 'max:100'],
-            'designation' => ['nullable', 'string', 'max:100'],
             'address_line' => ['required', 'string', 'max:500'],
+            'state' => ['required', 'string', 'max:100', Rule::in($this->addressStates()->pluck('name')->all())],
             'city' => ['required', 'string', 'max:100'],
-            'state' => ['required', 'string', 'max:100'],
             'postal_code' => ['required', 'string', 'max:20'],
-            'country' => ['nullable', 'string', 'max:100'],
+        ], [
+            'state.in' => translate('Please select your state from the list.'),
         ]);
+
+        $state = $this->addressStates()->firstWhere('name', $data['state']);
+        if (!in_array($data['city'], $this->cityNames($state->id), true)) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'city' => translate('Please select your city from the list.'),
+            ]);
+        }
+
+        $data['country'] = config('channel_partner.address_country');
+        $data['designation'] = null;
 
         $partner->fill($data)->save();
 
@@ -188,6 +216,36 @@ class OnboardingController extends Controller
             'url' => route('channel_partner.documents.show', $document),
             'delete_url' => route('channel_partner.onboarding.documents.destroy', $document),
         ];
+    }
+
+    private function onboardingBusinessTypes(): array
+    {
+        return array_intersect_key(
+            config('channel_partner.business_types'),
+            array_flip(config('channel_partner.onboarding_business_types'))
+        );
+    }
+
+    /**
+     * All states of the address country, active or not: partners can be based
+     * anywhere, not only where we deliver to customers.
+     */
+    private function addressStates()
+    {
+        if ($this->addressStates === null) {
+            $country = Country::where('name', config('channel_partner.address_country'))->first();
+
+            $this->addressStates = $country
+                ? State::where('country_id', $country->id)->orderBy('name')->get(['id', 'name'])
+                : collect();
+        }
+
+        return $this->addressStates;
+    }
+
+    private function cityNames(int $stateId): array
+    {
+        return City::where('state_id', $stateId)->orderBy('name')->pluck('name')->unique()->values()->all();
     }
 
     private function partner(Request $request): ChannelPartner

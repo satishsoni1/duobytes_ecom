@@ -292,28 +292,6 @@
         </div>
         <!--Shipping Notes End-->
 
-        <!--Warranty Start-->
-        <div class="warranty-section pb-20px">
-            <ul class="m-0 p-0">
-                @if ($detailedProduct->cash_on_delivery)
-                    <li class="d-flex align-items-center">
-                        <span class="d-block flex-shrink-0">
-                            <img src="{{ static_asset('/assets/img/warranty-check-circle.svg') }}" alt="warranty check circle">
-                        </span>
-                        <span class="d-block pl-10px pr-25px fs-14 fw-400 text-dark warranty-text">{{ translate('Cash on Delivery Available')}}</span>
-                    </li>
-                @endif
-                @if ($detailedProduct->shipping_type == 'free')
-                    <li class="d-flex align-items-center">
-                        <span class="d-block flex-shrink-0">
-                            <img src="{{ static_asset('/assets/img/warranty-check-circle.svg') }}" alt="warranty check circle">
-                        </span>
-                        <span class="d-block pl-10px pr-25px fs-14 fw-400 text-dark warranty-text">{{ translate('Free Shipping') }}</span>
-                    </li>
-                @endif
-            </ul>
-        </div>
-        <!--Warranty End-->
         <!-- For auction product End -->
     @else
         <form id="option-choice-form" class="product-details-page">
@@ -675,22 +653,6 @@
                     </div>
                 @endif
                 <ul class="m-0 p-0">
-                    @if ($detailedProduct->cash_on_delivery)
-                        <li class="d-flex align-items-center">
-                            <span class="d-block flex-shrink-0">
-                                <img src="{{ static_asset('/assets/img/warranty-check-circle.svg') }}" alt="warranty check circle">
-                            </span>
-                        <span class="d-block pl-10px pr-25px fs-14 fw-400 text-dark warranty-text">{{ translate('Cash on Delivery Available')}} @if($detailedProduct->show_delivery_notes==1 && $detailedProduct->delivery_note_id ) <a href="javascript:void(1);" data-toggle="modal" data-target="#cod-note-modal"><i data-toggle="tooltip" data-placement="top" title="{{translate('View Notes')}}" class="las la-info-circle fs-14 text-gray hov-text-dark has-transition"></i></a>@endif</span>
-                        </li>
-                    @endif
-                    @if ($detailedProduct->shipping_type == 'free')
-                        <li class="d-flex align-items-center">
-                            <span class="d-block flex-shrink-0">
-                                <img src="{{ static_asset('/assets/img/warranty-check-circle.svg') }}" alt="warranty check circle">
-                            </span>
-                            <span class="d-block pl-10px pr-25px fs-14 fw-400 text-dark warranty-text">{{ translate('Free Shipping') }}</span>
-                        </li>
-                    @endif
                     @if (addon_is_activated('refund_request') && $detailedProduct->refundable == 1)
                         <li class="d-flex align-items-center">
                             <span class="d-block flex-shrink-0">
