@@ -16,7 +16,7 @@
                     <input value="{{ $payment_method->name }}" class="online_payment" type="radio"
                         name="payment_option" checked>
                     <span class="d-flex align-items-center justify-content-between aiz-megabox-elem rounded-0 p-3">
-                        <span class="d-block fw-400 fs-14">{{ ucfirst(translate($payment_method->name)) }}</span>
+                        <span class="d-block fw-400 fs-14">{{ $payment_method->name === 'razorpay' ? translate('Online Payment') : ucfirst(translate($payment_method->name)) }}</span>
                         <span class="rounded-1 h-40px w-70px overflow-hidden flex-shrink-0">
                             <img src="{{ static_asset('assets/img/cards/'.$payment_method->name.'.png') }}"
                             class="img-fit h-100 w-100">
